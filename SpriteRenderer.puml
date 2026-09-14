@@ -1,0 +1,30 @@
+@startuml spriteRenderer
+
+class Sprite {
+  - image
+  - xPos
+  - yPos
+  - width
+  - height
+
+  + Sprite(image, xPos, yPos)
+  + move(xPos, yPos)
+  + getPositionX()
+  + getPositionY()
+
+}
+
+class SpriteRenderer {
+  - canvas
+  - context
+  - sprites
+  
+  + SpriteRenderer(canvas)
+  - setContext()
+  + add(sprite)
+  + remove(sprite)
+  + render()
+}
+
+
+@enduml
