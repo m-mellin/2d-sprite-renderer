@@ -5,14 +5,13 @@ class Sprite {
   - xPos
   - yPos
   - loaded
-  - width // Not implemented yet
-  - height // Not implemented yet
+  - width
+  - height
 
   + Sprite(src, xPos, yPos)
   - createImage()
-  - setSrc() // setImageSource ??
+  + setImageSource(src)
   + setPosition(xPos, yPos)
-  + move(xPos, yPos) // Not implemented yet
   + get positionX()
   - set positionX(xPos)
   + get positionY()
