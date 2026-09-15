@@ -38,6 +38,14 @@ document.addEventListener('keydown', async (event) => {
     mario.positionX = mario.positionX - 32
   }
 
+  if (event.key == 'Enter') {
+    renderer.remove(mario)
+  }
+
+  if (event.key == 'Backspace') {
+    renderer.clear()
+  }
+
   await renderer.render()
 })
 
