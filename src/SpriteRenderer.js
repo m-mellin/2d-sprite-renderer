@@ -16,18 +16,21 @@ export class SpriteRenderer {
 
   remove (sprite) {
     const index = this.#sprites.indexOf(sprite)
-    this.#sprites.splice(index, 1)
+
+    if (index !== -1) {
+      this.#sprites.splice(index, 1)
+    }
   }
 
   clear () {
     this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
   }
 
-  async render () {
+  render () {
     this.clear()
 
     for (const sprite of this.#sprites) {
-      await sprite.waitForLoad()
+      if (!sprite.isLoaded) continue
 
       this.#context.drawImage(
         sprite.image,
