@@ -4,6 +4,7 @@ export class Sprite {
   #xPos
   #yPos
   #loaded
+  #isLoaded
   #width
   #height
 
@@ -11,10 +12,24 @@ export class Sprite {
     this.#createImage()
     this.setPosition(xPos, yPos)
     this.#setSpriteSize(width, height)
+    this.#isLoaded = false
 
-    this.#loaded = new Promise((resolve, reject) => {
-      this.#image.onload = resolve
-      this.#image.onerror = reject
+    this.#loaded = this.#createLoadPromise(src)
+    this.#loaded.catch(() => {})
+  }
+
+  #createLoadPromise (src) {
+    return new Promise((resolve, reject) => {
+      this.#image.onload = () => {
+        this.#isLoaded = true
+        resolve()
+      }
+
+      this.#image.onerror = (err) => {
+        this.#isLoaded = false
+        reject(err)
+      }
+
       this.setImageSource(src)
     })
   }
@@ -69,6 +84,10 @@ export class Sprite {
     await this.#loaded
   }
 
+  get isLoaded () {
+    return this.#isLoaded
+  }
+
   get width () {
     return this.#width
   }
@@ -76,5 +95,7 @@ export class Sprite {
   get height () {
     return this.#height
   }
+
+
 }
 
