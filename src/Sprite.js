@@ -3,60 +3,54 @@ export class Sprite {
   #image
   #xPos
   #yPos
+  #loaded
 
-  constructor (image, xPos = 0, yPos = 0) {
-    this.image = image
-    this.xPos = xPos
-    this.yPos = yPos
+  constructor (src, xPos = 0, yPos = 0) {
+    this.#createImage()
+    this.setPosition(xPos, yPos)
+
+    this.#loaded = new Promise((resolve, reject) => {
+      this.#image.onload = resolve
+      this.#image.onerror = reject
+      this.#setSrc(src)
+    })
+  }
+
+  #createImage () {
+    this.#image = new Image()
+  }
+
+  #setSrc (src) {
+    this.#image.src = src
   }
 
   setPosition (xPos, yPos) {
-    this.xPos = xPos
-    this.yPos = yPos
+    this.#positionX = xPos
+    this.#positionY = yPos
   }
 
-  getPositionX () {
-    return this.xPos
+  get positionX () {
+    return this.#xPos
   }
 
-  getPositionY () {
-    return this.yPos
+  set #positionX (xPos) {
+    this.#xPos = xPos
   }
 
-  getImage() {
-    return this.image
-  }
-}
-
-export class SpriteRenderer {
-  #canvas
-  #context
-  #sprites
-
-  constructor (canvas) {
-    this.canvas = canvas
-    this.context = canvas.getContext('2d')
-    this.sprites = []
+  get positionY () {
+    return this.#yPos
   }
 
-  add (sprite) {
-    this.sprites.push(sprite)
+  set #positionY (yPos) {
+    this.#yPos = yPos
   }
 
-  render () {
-    this.context.clearRect(
-      0,
-      0,
-      800,
-      600
-    )
+  get image() {
+    return this.#image
+  }
 
-    for (const sprite of this.sprites) {
-      this.context.drawImage(
-        sprite.getImage(),
-        sprite.getPositionX(),
-        sprite.getPositionY()
-      )
-    }
+  async waitForLoad () {
+    await this.#loaded
   }
 }
+
