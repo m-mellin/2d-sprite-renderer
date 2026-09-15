@@ -1,3 +1,5 @@
+import { Sprite } from '../src/Sprite.js'
+
 export class SpriteRenderer {
   #canvas
   #context
@@ -25,7 +27,9 @@ export class SpriteRenderer {
       this.#context.drawImage(
         sprite.image,
         sprite.positionX,
-        sprite.positionY
+        sprite.positionY,
+        sprite.width,
+        sprite.height
       )
     }
   }
