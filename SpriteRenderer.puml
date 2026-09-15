@@ -1,16 +1,24 @@
 @startuml spriteRenderer
 
 class Sprite {
-  - image
+  - src
   - xPos
   - yPos
-  - width
-  - height
+  - loaded
+  - width // Not implemented yet
+  - height // Not implemented yet
 
-  + Sprite(image, xPos, yPos)
-  + move(xPos, yPos)
-  + getPositionX()
-  + getPositionY()
+  + Sprite(src, xPos, yPos)
+  - createImage()
+  - setSrc() // setImageSource ??
+  + setPosition(xPos, yPos)
+  + move(xPos, yPos) // Not implemented yet
+  + get positionX()
+  - set positionX(xPos)
+  + get positionY()
+  - set positionY(yPos)
+  + get image()
+  + waitForLoad()
 
 }
 
@@ -23,6 +31,7 @@ class SpriteRenderer {
   - setContext()
   + add(sprite)
   + remove(sprite)
+  - clear()
   + render()
 }
 
