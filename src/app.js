@@ -46,8 +46,8 @@ document.addEventListener('keydown', async (event) => {
     renderer.clear()
   }
 
-  renderer.render()
+  renderer.scheduleRender()
 })
 
 
-renderer.render()
+renderer.scheduleRender()
