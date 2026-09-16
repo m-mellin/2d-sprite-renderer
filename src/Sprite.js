@@ -9,7 +9,8 @@ export class Sprite {
   #region
 
   constructor (src, xPos = 0, yPos = 0, width, height, region = null) {
-    this.setPosition(xPos, yPos)
+    this.#xPos = xPos
+    this.#yPos = yPos
     this.#setSpriteSize(width, height)
     this.setImageSource(src)
     this.#region = region
