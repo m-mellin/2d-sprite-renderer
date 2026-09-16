@@ -24,11 +24,6 @@ export class Sprite {
     this.#asset = ImageAsset.get(src)
   }
 
-  setPosition (xPos, yPos) {
-    this.positionX = xPos
-    this.positionY = yPos
-  }
-
   get positionX () {
     return this.#xPos
   }
