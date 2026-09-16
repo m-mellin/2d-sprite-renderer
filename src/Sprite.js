@@ -18,7 +18,7 @@ export class Sprite {
   }
 
   setImageSource (src) {
-    this.#imageAsset = ImageAsset.get(src)
+    this.#imageAsset = ImageAsset.getAsset(src)
   }
 
   get positionX () {

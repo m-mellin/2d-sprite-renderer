@@ -21,7 +21,7 @@ class Sprite {
   + get width()
   + get height()
   + get region()
-
+  + set region()
 }
 
 class SpriteRenderer {
@@ -47,7 +47,7 @@ class ImageAsset {
   - loaded
 
   + ImageAsset(src)
-  + get(src)
+  + getAsset(src)
   - createLoadPromise(src)
   - setImageSource(src)
   + get image()

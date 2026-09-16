@@ -10,7 +10,7 @@ export class ImageAsset {
     this.#loaded.catch(() => {})
   }
 
-  static get (src) {
+  static getAsset (src) {
     let asset = ImageAsset.#cache.get(src)
 
     if (!asset) {
