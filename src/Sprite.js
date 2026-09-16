@@ -70,7 +70,7 @@ export class Sprite {
   }
 
   set region (region) {
-    this.region = region
+    this.#region = region
   }
 }
 
