@@ -11,14 +11,10 @@ export class Sprite {
   constructor (src, xPos = 0, yPos = 0, width, height, region = null) {
     this.#xPos = xPos
     this.#yPos = yPos
-    this.#setSpriteSize(width, height)
-    this.setImageSource(src)
-    this.#region = region
-  }
-
-  #setSpriteSize (width, height) {
     this.#width = width
     this.#height = height
+    this.setImageSource(src)
+    this.#region = region
   }
 
   setImageSource (src) {
