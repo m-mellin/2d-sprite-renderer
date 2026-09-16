@@ -52,13 +52,28 @@ export class SpriteRenderer {
     for (const sprite of this.#sprites) {
       if (!sprite.isLoaded) continue
 
-      this.#context.drawImage(
-        sprite.image,
-        sprite.positionX,
-        sprite.positionY,
-        sprite.width,
-        sprite.height
-      )
+      if (!sprite.region) {
+        this.#context.drawImage(
+          sprite.image,
+          sprite.positionX,
+          sprite.positionY,
+          sprite.width,
+          sprite.height
+        )
+      } else {
+        this.#context.drawImage(
+          sprite.image,
+          sprite.region.sourceX,
+          sprite.region.sourceY,
+          sprite.region.width,
+          sprite.region.height,
+          sprite.positionX,
+          sprite.positionY,
+          sprite.width,
+          sprite.height
+        )
+      }
+
     }
   }
 }
