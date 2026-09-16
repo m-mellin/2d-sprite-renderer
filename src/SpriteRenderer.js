@@ -18,7 +18,7 @@ export class SpriteRenderer {
 
     if (!sprite.isLoaded) {
       sprite.waitForLoad()
-        .then(() => this.render())
+        .then(() => this.#scheduleRender())
         .catch(() => {})
     }
   }
@@ -41,7 +41,7 @@ export class SpriteRenderer {
   }
 
   // Om en render redan kallats, return. Annars lägg in id i #frame och rendera. (Undvik dubbelrendering)
-  scheduleRender () {
+  #scheduleRender () {
     if (this.#frame !== null) return
 
     this.#frame = requestAnimationFrame(() => {
@@ -77,7 +77,6 @@ export class SpriteRenderer {
           sprite.height
         )
       }
-
     }
   }
 }
