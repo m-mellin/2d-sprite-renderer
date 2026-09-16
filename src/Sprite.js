@@ -68,5 +68,9 @@ export class Sprite {
   get region () {
     return this.#region
   }
+
+  set region (region) {
+    this.region = region
+  }
 }
 
