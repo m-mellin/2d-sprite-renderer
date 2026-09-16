@@ -1,5 +1,3 @@
-import { Sprite } from '../src/Sprite.js'
-
 export class SpriteRenderer {
   #canvas
   #context
@@ -12,6 +10,12 @@ export class SpriteRenderer {
 
   add (sprite) {
     this.#sprites.push(sprite)
+
+    if (!sprite.isLoaded) {
+      sprite.waitForLoad()
+        .then(() => this.render())
+        .catch(() => {})
+    }
   }
 
   remove (sprite) {
@@ -23,11 +27,16 @@ export class SpriteRenderer {
   }
 
   clear () {
+    this.#sprites = []
+    this.#clearCanvas()
+  }
+
+  #clearCanvas() {
     this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
   }
 
   render () {
-    this.clear()
+    this.#clearCanvas()
 
     for (const sprite of this.#sprites) {
       if (!sprite.isLoaded) continue
