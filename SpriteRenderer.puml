@@ -11,7 +11,6 @@ class Sprite {
   + Sprite(src, xPos, yPos, width, height, region)
   - setSpriteSize(width, height)
   + setImageSource(src)
-  + setPosition(xPos, yPos)
   + get positionX()
   - set positionX(xPos)
   + get positionY()
@@ -37,7 +36,7 @@ class SpriteRenderer {
   + remove(sprite)
   + clear()
   - clearCanvas()
-  + scheduleRender()
+  - scheduleRender()
   + render()
 }
 
