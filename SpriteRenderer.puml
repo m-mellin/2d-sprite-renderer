@@ -42,7 +42,7 @@ class SpriteRenderer {
 }
 
 class ImageAsset {
-  - cache
+  - {static} cache
   - image
   - isLoaded
   - loaded
@@ -69,5 +69,9 @@ class SpriteRegion {
   + get height()
 }
 
+
+SpriteRenderer "1" --> "*" Sprite : uses
+Sprite "*" --> "1" ImageAsset : uses
+Sprite "1" *-- "0..1" SpriteRegion : has
 
 @enduml
