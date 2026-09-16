@@ -6,7 +6,11 @@ export class SpriteRenderer {
 
   constructor (canvas) {
     this.#canvas = canvas
-    this.#context = canvas.getContext('2d')
+    this.#setContext()
+  }
+
+  #setContext() {
+    this.#context = this.#canvas.getContext('2d')
   }
 
   add (sprite) {

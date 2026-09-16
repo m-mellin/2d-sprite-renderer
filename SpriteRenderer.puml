@@ -1,15 +1,15 @@
 @startuml spriteRenderer
 
 class Sprite {
-  - src
+  - asset
   - xPos
   - yPos
-  - loaded
   - width
   - height
+  - region
 
-  + Sprite(src, xPos, yPos)
-  - createImage()
+  + Sprite(src, xPos, yPos, width, height, region)
+  - setSpriteSize(width, height)
   + setImageSource(src)
   + setPosition(xPos, yPos)
   + get positionX()
@@ -17,7 +17,11 @@ class Sprite {
   + get positionY()
   - set positionY(yPos)
   + get image()
+  + get isLoaded()
   + waitForLoad()
+  + get width()
+  + get height()
+  + get region()
 
 }
 
@@ -25,13 +29,44 @@ class SpriteRenderer {
   - canvas
   - context
   - sprites
+  - frame
   
   + SpriteRenderer(canvas)
   - setContext()
   + add(sprite)
   + remove(sprite)
-  - clear()
+  + clear()
+  - clearCanvas()
+  + scheduleRender()
   + render()
+}
+
+class ImageAsset {
+  - cache
+  - image
+  - isLoaded
+  - loaded
+
+  + ImageAsset(src)
+  + get(src)
+  - createLoadPromise(src)
+  - setImageSource(src)
+  + get image()
+  + get isLoaded()
+  + waitForLoad()
+}
+
+class SpriteRegion {
+  - sourceX
+  - sourceY
+  - width
+  - height
+
+  + SpriteRegion(sourceX, sourceY, width, height)
+  + get sourceX()
+  + get sourceY()
+  + get width()
+  + get height()
 }
 
 
