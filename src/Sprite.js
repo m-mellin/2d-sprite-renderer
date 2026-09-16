@@ -1,37 +1,16 @@
+import { ImageAsset } from './ImageAsset.js'
 
 export class Sprite {
-  #image
+  #asset
   #xPos
   #yPos
-  #loaded
-  #isLoaded
   #width
   #height
 
   constructor (src, xPos = 0, yPos = 0, width, height) {
-    this.#createImage()
     this.setPosition(xPos, yPos)
     this.#setSpriteSize(width, height)
-    this.#isLoaded = false
-
-    this.#loaded = this.#createLoadPromise(src)
-    this.#loaded.catch(() => {})
-  }
-
-  #createLoadPromise (src) {
-    return new Promise((resolve, reject) => {
-      this.#image.onload = () => {
-        this.#isLoaded = true
-        resolve()
-      }
-
-      this.#image.onerror = (err) => {
-        this.#isLoaded = false
-        reject(err)
-      }
-
-      this.setImageSource(src)
-    })
+    this.setImageSource(src)
   }
 
   #setSpriteSize (width, height) {
@@ -39,12 +18,8 @@ export class Sprite {
     this.#height = height
   }
 
-  #createImage () {
-    this.#image = new Image()
-  }
-
   setImageSource (src) {
-    this.#image.src = src
+    this.#asset = ImageAsset.get(src)
   }
 
   setPosition (xPos, yPos) {
@@ -77,15 +52,15 @@ export class Sprite {
   }
 
   get image() {
-    return this.#image
-  }
-
-  async waitForLoad () {
-    await this.#loaded
+    return this.#asset.image
   }
 
   get isLoaded () {
-    return this.#isLoaded
+    return this.#asset.isLoaded
+  }
+
+  async waitForLoad () {
+    await this.#asset.waitForLoad()
   }
 
   get width () {
