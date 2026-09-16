@@ -1,7 +1,7 @@
 import { ImageAsset } from './ImageAsset.js'
 
 export class Sprite {
-  #asset
+  #imageAsset
   #xPos
   #yPos
   #width
@@ -22,7 +22,7 @@ export class Sprite {
   }
 
   setImageSource (src) {
-    this.#asset = ImageAsset.get(src)
+    this.#imageAsset = ImageAsset.get(src)
   }
 
   get positionX () {
@@ -50,15 +50,15 @@ export class Sprite {
   }
 
   get image() {
-    return this.#asset.image
+    return this.#imageAsset.image
   }
 
   get isLoaded () {
-    return this.#asset.isLoaded
+    return this.#imageAsset.isLoaded
   }
 
   async waitForLoad () {
-    await this.#asset.waitForLoad()
+    await this.#imageAsset.waitForLoad()
   }
 
   get width () {
