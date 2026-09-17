@@ -1,5 +1,6 @@
 import { Sprite } from '../src/Sprite.js'
 import { SpriteRenderer } from '../src/SpriteRenderer.js'
+import { SpriteAnimation } from './SpriteAnimation.js'
 import { SpriteRegion } from './SpriteRegion.js'
 
 const canvas = document.createElement('canvas')
@@ -19,46 +20,61 @@ for (let j = 0; j < (1080/32); j++) {
   }
 }
 
-const x = 77.625
-const y = 87.2
+const idleFrames = [
+  new SpriteRegion(0, 0, 57, 66),
+  new SpriteRegion(84, 0, 57, 66),
+  new SpriteRegion(167, 0, 57, 66),
+  new SpriteRegion(248, 0, 57, 66)
+]
 
-const frame = {
-  x: 2,
-  y: 3
-}
+const walkingFrames = [
+  new SpriteRegion(0, 99, 57, 66),
+  new SpriteRegion(84, 99, 57, 66),
+  new SpriteRegion(167, 99, 57, 66),
+  new SpriteRegion(248, 99, 57, 66)
+]
 
-const region = new SpriteRegion(x * frame.x, y * frame.y, 60, 64)
-const character = new Sprite('../src/spritesheet.png', 0, 0, 60, 64, region)
+const walking = new SpriteAnimation(walkingFrames, 100)
+const idle = new SpriteAnimation(idleFrames, 150)
+
+let currentAnimation = idle
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'ArrowRight') {
+    currentAnimation = walking
+    character.positionX += 5
+  }
+})
+
+document.addEventListener('keyup', (event) => {
+  if (event.key === 'ArrowRight') {
+    currentAnimation = idle
+  }
+})
+
+const character = new Sprite(
+  '../src/spritesheet.png',
+  100,
+  100,
+  60,
+  64,
+  idle.region
+)
 
 renderer.add(character)
 
-document.addEventListener('keydown', async (event) => {
-  if (event.key == 'ArrowUp') {
-    character.positionY -= 32
-  }
+let previousTimestamp = 0
 
-  if (event.key == 'ArrowDown') {
-    character.positionY += 32
-  }
+function gameLoop (timestamp) {
+  const deltaTime = timestamp - previousTimestamp
+  previousTimestamp = timestamp
 
-  if (event.key == 'ArrowRight') {
-    character.positionX += 32
-  }
-
-  if (event.key == 'ArrowLeft') {
-    character.positionX += 32
-  }
-
-  if (event.key == 'Enter') {
-    renderer.remove(character)
-  }
-
-  if (event.key == 'Backspace') {
-    renderer.clear()
-  }
+  currentAnimation.update(deltaTime)
+  character.region = currentAnimation.region
 
   renderer.render()
-})
 
+  requestAnimationFrame(gameLoop)
+}
 
-renderer.render()
+requestAnimationFrame(gameLoop)
