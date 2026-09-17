@@ -68,6 +68,18 @@ class SpriteRegion {
   + get height()
 }
 
+class SpriteAnimation {
+  - frames
+  - frameDuration
+  - currentFrame = 0
+  - elasped = 0
+
+  + SpriteAnimation(frames, frameDuration)
+  + update()
+  - resetCurrentFrame()
+  + get region
+}
+
 
 SpriteRenderer "1" --> "*" Sprite : uses
 Sprite "*" --> "1" ImageAsset : uses
