@@ -40,7 +40,6 @@ export class SpriteRenderer {
     this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
   }
 
-  // Om en render redan kallats, return. Annars lägg in id i #frame och rendera. (Undvik dubbelrendering)
   #scheduleRender () {
     if (this.#frame !== null) return
 
