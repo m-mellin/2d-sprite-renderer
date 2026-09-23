@@ -128,8 +128,8 @@ export class SpriteRenderer {
       if (!sprite.region) {
         this.#context.drawImage(
           sprite.image,
-          sprite.positionX,
-          sprite.positionY,
+          sprite.x,
+          sprite.y,
           sprite.width,
           sprite.height
         )
@@ -140,8 +140,8 @@ export class SpriteRenderer {
           sprite.region.sourceY,
           sprite.region.width,
           sprite.region.height,
-          sprite.positionX,
-          sprite.positionY,
+          sprite.x,
+          sprite.y,
           sprite.width,
           sprite.height
         )
