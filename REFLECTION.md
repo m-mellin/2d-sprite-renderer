@@ -116,8 +116,103 @@ Den tydligaste bristen i min namngivning var `xPos` / `positionX` och `yPos` / `
 Slutligen tycker jag att reglerna fungerar bäst som en fråga att ställa sig när man granskar sin kod, till exempel "skulle någon annan förstå detta utan att läsa implementationen?", snarare än som en checklista där saker ska bockas av.
 
 
-
-
-
-
 # Funktioner
+
+Small
+- Blocks and Indenting
+Do One Thing
+One Level of Abstraction per Function
+- The Stepdown Rule
+Switch Statements
+Use Descriptive Names
+Function Arguments
+- Flaggargument
+- Monadic Functions
+- Dyadic Functions
+- Triadic Functions
+- Argument Objects
+- Argument Lists
+- Verbs and Keywords
+Have No Side Effects
+Command Query Separation
+Prefer Exceptions to Returning Error Codes
+Don't Repeat Yourself
+Structured Programming
+How Do You Write Functions Like This?
+
+
+## `SpriteRenderer.render()`
+
+### Förklaring
+Renderar alla laddade sprites på canvasen. Metoden rensar först canvasen och går sedan igenom alla sprites. Sprites vars bild inte är laddad hoppas över. Sprites med en `region` (ett utsnitt ur en sprite sheet) ritas med utsnittet, övriga ritas med hela bilden.
+
+### Reflektion
+
+**Small:**
+Metoden är 27 rader lång. Enligt boken (s. 34–35) ska funktioner vara små, och sedan ännu mindre än så. De bör sällan vara över ca 20 rader, och exemplen i boken är ofta bara 2–4 rader. Denna metod bryter därmed mot regeln.
+
+**Blocks and Indenting:**
+Boken säger att blocken i `if`, `else` och `while` bör vara en rad långa (helst ett funktionsanrop) och att indenteringsnivån inte bör vara över en eller två. Här finns två `if`-satser inuti en `for`-loop, vilket ger indenteringsnivå på 2, och `if`-satsen är alltså nästlad i loopen.
+
+**Do One Thing / One Level of Abstraction per Function:**
+Metoden gör flera saker på olika abstraktionsnivåer: den rensar canvasen, loopar, filtrerar bort ej laddade sprites, väljer ritsätt och anger alla detaljerade `drawImage`-argument. Den bryter därför mot båda reglerna.
+
+**Function Arguments:**
+Funktionen använder inga argument vilket är idealiskt enligt författaren, s. 40.
+
+### Förbättring & Analys
+En förbättring är att dela upp metoden i flera mindre metoder. Jag anser dock själv att detta inte är något jag hade gjort utanför kursen då det skapar, enligt mig, onödigt många metoder för en väldigt enkel metod. Jag förstår dock syftet och kan anse att läsbarheten absolut förbättras. Efter uppdelningen är render() 6 rader, #drawSprite() 8, #drawWhole() 9 och #drawRegion() 14. Alla ligger under 20 rader och ingen har mer än en indenteringsnivå.
+
+```javascript
+render () {
+  this.#clearCanvas()
+
+  for (const sprite of this.#sprites) {
+    this.#drawSprite(sprite)
+  }
+} 
+
+#drawSprite (sprite) {
+  if (!sprite.isLoaded) return
+
+  if (sprite.region) {
+    this.#drawRegion(sprite)
+  } else {
+    this.#drawWhole(sprite)
+  }
+}
+
+#drawRegion (sprite) {
+  const region = sprite.region
+
+  this.#context.drawImage(
+    sprite.image,
+    region.sourceX,
+    region.sourceY,
+    region.width,
+    region.height,
+    sprite.x,
+    sprite.y,
+    sprite.width,
+    sprite.height
+  )
+}
+
+#drawWhole (sprite) {
+  this.#context.drawImage(
+    sprite.image,
+    sprite.x,
+    sprite.y,
+    sprite.width,
+    sprite.height
+  )
+}
+```
+
+## `SpriteAnimation.update()`
+
+## `ImageAsset.getAsset()`
+
+## `SpriteRenderer.add()`
+
+## `SpriteRenderer.remove()`
