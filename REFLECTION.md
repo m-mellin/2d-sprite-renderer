@@ -1,4 +1,4 @@
-## Namngivning (kapitel 2)
+# Namngivning (kapitel 2)
 
 Readability
 Understandability
@@ -20,8 +20,6 @@ Make Meaningful Distinctions
 Use Solution Domain Names
 Use Problem Domain Names
 Don't Add Gratuitous Context
-
-
 
 
 ## `Sprite`, `SpriteRenderer`, `SpriteRegion`, `SpriteAnimation` och `ImageAsset`
@@ -105,6 +103,21 @@ Jag funderade på om `isLoaded` betyder exakt samma sak i båda klasserna efters
 **Slutsats:** Jag behåller `isLoaded` i båda klasserna eftersom det är samma koncept som förs vidare, inte två olika betydelser som råkar dela namn.
 
 
+## Reflektion
+
+Jag tycker att det finns mycket i kapitel 2 som är bra. En del är överdrivet, men jag tar med mig mycket till framtiden, bland annat att sätta mig i användarens ögon istället för mina egna. Jag har flera gånger gått tillbaka och ändrat variabelnamn, och vissa delar missade jag helt. I början av laborationen hade jag redan läst båda kapitlen och förstått syftet med uppgiften. Jag började därför tidigt med att namnge variabler och separera funktioner enligt bokens lärosätt. Vissa delar hade jag dock inte full koll på och fick gå tillbaka och kontrollera.
+
+En sak jag tar med mig är att bra namngivning handlar mer om avvägningar än om fastbestämda regler. Exempelvis kan readability och understandability ibland vara motpoler. Den ena säger att koden ska vara så läsbar som möjligt, medan den andra säger att namnen ska vara så förståeliga som möjligt. Ett exempel är `x`, som för många är en okänd variabel: vad betyder den? För att förbättra namnet kan man välja `xPos`, `positionX` eller `xPosition`. Alla är oftast mer förståeliga än enbart `x`, men de är också mer omständiga att använda. Mitt resonemang är att den som använder modulen vet att den handlar om sprites och att syftet är att rendera dem på en canvas. Modulen heter 2D-sprite-renderer, vilket säger att det finns två dimensioner, något man lär sig i skolan med koordinatsystem och grafer i matematiken. Jag ansåg därför att `sprite.x = 10` var mer intuitivt för användaren än `sprite.xPos = 10` eller `sprite.xPosition = 10`.
+
+Om jag hänvisar till boken säger regeln **Use Searchable Names** att `x` och `y` är för korta namn, medan **Avoid Mental Mapping** och **Use Solution Domain Names** talar för dem. Jag anser därför att boken är lite för svartvit. Sökbarhet spelar mindre roll för namn som bara lever i en enda klass, och jag tycker att sammanhanget är viktigare än namnets längd.
+
+Den tydligaste bristen i min namngivning var `xPos` / `positionX` och `yPos` / `positionY`. Jag visste om problemet men sköt upp det med tanken att fixa det senare. I det fallet bröt jag mot regeln **Pick One Word per Concept** och borde ha tagit tag i det direkt för att undvika inkonsekvenser i koden.
+
+Slutligen tycker jag att reglerna fungerar bäst som en fråga att ställa sig när man granskar sin kod, till exempel "skulle någon annan förstå detta utan att läsa implementationen?", snarare än som en checklista där saker ska bockas av.
 
 
 
+
+
+
+# Funktioner
