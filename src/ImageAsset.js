@@ -14,9 +14,15 @@ export class ImageAsset {
     let asset = ImageAsset.#cache.get(src)
 
     if (!asset) {
-      asset = new ImageAsset(src)
-      ImageAsset.#cache.set(src, asset)
+      asset = this.#createAsset(src)
     }
+
+    return asset
+  }
+
+  static #createAsset (src) {
+    const asset = new ImageAsset(src)
+    ImageAsset.#cache.set(src, asset)
 
     return asset
   }
