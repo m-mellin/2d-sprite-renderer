@@ -98,11 +98,11 @@ export class Sprite {
   /**
    * Sets the X coordinate of the Sprite
    * 
-   * @param {number} xPos The X coordinate in pixels.
+   * @param {number} x The X coordinate in pixels.
    */
   set x (x) {
-    if (typeof xPos !== 'number') {
-      throw new TypeError('xPos must be a number')
+    if (typeof x !== 'number') {
+      throw new TypeError('x must be a number')
     } else {
       this.#x = x
     }
@@ -120,11 +120,11 @@ export class Sprite {
   /**
    * Sets the Y coordinate of the Sprite
    * 
-   * @param {number} yPos The Y coordinate in pixels.
+   * @param {number} y The Y coordinate in pixels.
    */
   set y (y) {
     if (typeof y !== 'number') {
-      throw new TypeError('yPos must be a number')
+      throw new TypeError('y must be a number')
     } else {
       this.#y = y
     }
