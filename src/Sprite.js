@@ -21,7 +21,7 @@ export class Sprite {
    * @type {number}
    * @private
    */
-  #xPos
+  #x
 
   /**
    * The Y coordinate of the sprite in pixels.
@@ -29,7 +29,7 @@ export class Sprite {
    * @type {number}
    * @private
    */
-  #yPos
+  #y
   
   /**
    * The width of the sprite in pixels.
@@ -65,23 +65,24 @@ export class Sprite {
    * @param {number} height The height of the sprite in pixels.
    * @param {SpriteRegion|null} region The region of the source image to use (default: null).
    */
-  constructor (src, xPos = 0, yPos = 0, width, height, region = null) {
-    this.positionX = xPos
-    this.positionY = yPos
+  constructor (src, x = 0, y = 0, width, height, region = null) {
+    this.#x = x
+    this.#y = y
     this.#width = width
     this.#height = height
-    this.setImageSource(src)
     this.#region = region
+    this.assignImageAsset(src)
   }
 
   /**
    * Sets the image asset for the sprite.
+   * 
    * Uses an existing ImageAsset from the cache or creates a new one
    * if no asset exists for the given source.
    *
    * @param {string} src The source of the image.
    */
-  setImageSource (src) {
+  assignImageAsset (src) {
     this.#imageAsset = ImageAsset.getAsset(src)
   }
 
@@ -90,8 +91,8 @@ export class Sprite {
    * 
    * @returns {number} The X coordinate in pixels.
    */
-  get positionX () {
-    return this.#xPos
+  get x () {
+    return this.#x
   }
 
   /**
@@ -99,11 +100,11 @@ export class Sprite {
    * 
    * @param {number} xPos The X coordinate in pixels.
    */
-  set positionX (xPos) {
+  set x (x) {
     if (typeof xPos !== 'number') {
       throw new TypeError('xPos must be a number')
     } else {
-      this.#xPos = xPos
+      this.#x = x
     }
   }
 
@@ -112,8 +113,8 @@ export class Sprite {
    * 
    * @returns {number} The Y coordinate in pixels.
    */
-  get positionY () {
-    return this.#yPos
+  get y () {
+    return this.#y
   }
 
   /**
@@ -121,11 +122,11 @@ export class Sprite {
    * 
    * @param {number} yPos The Y coordinate in pixels.
    */
-  set positionY (yPos) {
-    if (typeof yPos !== 'number') {
+  set y (y) {
+    if (typeof y !== 'number') {
       throw new TypeError('yPos must be a number')
     } else {
-      this.#yPos = yPos
+      this.#y = y
     }
   }
 
