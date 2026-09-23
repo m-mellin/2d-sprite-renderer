@@ -1,125 +1,110 @@
-# Reflektion
+## Namngivning (kapitel 2)
 
-## Namngivning
+Readability
+Understandability
+Intention-revealing names
+Implicity of code
+Magic Numbers
+Avoid Disinformation
+Avoid Encodings
+Avoid mental mapping
+Class Names - noun
+Method Names - verb
+Painted types
+Don't be cute
+Don't pun
+Pick One Word per Concept
+Use Searchable Names
+Use Pronounceable Names
+Make Meaningful Distinctions
+Use Solution Domain Names
+Use Problem Domain Names
+Don't Add Gratuitous Context
 
-### 1. Sprite
 
-#### Variabler
 
-**Namn:** `imageAsset`
 
-**Förklaring:** Variabelnamn för `ImageAsset`-objektet i `Sprite`.
+## `Sprite`, `SpriteRenderer`, `SpriteRegion`, `SpriteAnimation` och `ImageAsset`
 
-**Reflektion:** Jag använde tidigare namnen `asset` och `image`. Efter att jag implementerade klassen `ImageAsset` blev dessa namn inte lika tydliga. `image` kan exempelvis tolkas som själva bilden, medan `asset` inte säger särskilt mycket om vad variabeln innehåller. `imageAsset` beskriver därför tydligare vad variabeln faktiskt representerar.
+### Förklaring:
+Klassen som representerar en sprite som kan renderas på en canvas.
 
-**Slutsats:** `imageAsset`
+### Reflektion:
 
----
+**Class Names:**
+Enligt s.25 skall klassnamn och objekt ha substantiv som namn. Detta stämmer överens med alla mina klassnamn. Ett klassnamn skall inte vara ett verb.
 
-**Namn:** `xPos` och `yPos`
-
-**Förklaring:** Variabelnamn för `Sprite`-objektets x- och y-koordinater.
-
-**Reflektion:** Här har jag funderat fram och tillbaka på hur tydliga namnen behöver vara. Ett alternativ är att använda `x` och `y`, medan ett annat är `xPosition` och `yPosition`. Enligt boken behöver man tänka på både tydlighet och läsbarhet. Jag tycker att `x` och `y` är tillräckligt tydliga i detta sammanhang eftersom de används för koordinater. Det blir också enklare att använda klassen, t.ex. `sprite.x = 0` istället för `sprite.xPosition = 0`. Eftersom en `Sprite` arbetar med koordinater anser jag därför att sammanhanget gör `x` och `y` tillräckligt tydliga.
-
-**Slutsats:** `x` och `y`
-
----
-
-**Namn:** `width` och `height`
-
-**Förklaring:** Bredden och höjden på `Sprite`-objektet.
-
-**Reflektion:** Det hade gått att göra namnen mer specifika, exempelvis `spriteWidth` och `spriteHeight`. Det hade gjort det tydligare vad bredden och höjden tillhör. Samtidigt blir namnen längre utan att ge särskilt mycket extra information i detta sammanhang. Eftersom variablerna finns i `Sprite`-klassen tycker jag att `width` och `height` är tillräckligt tydliga. Det gör också koden enklare att läsa.
-
-**Slutsats:** Behåller `width` och `height`.
-
----
-
-**Namn:** `region`
-
-**Förklaring:** En rektangulär region av bilden som ska användas av spriten.
-
-**Reflektion:** Här tycker jag att namnet `region` hade kunnat vara tydligare. I JSDoc framgår det att variabeln är av typen `SpriteRegion`, men det hjälper inte lika mycket när man bara läser själva variabelnamnet. Ett alternativ är `spriteRegion`, vilket tydligare visar vad regionen tillhör. Jag har även funderat på namn som `area`, men det tycker jag blir mer otydligt eftersom en area kan betyda flera olika saker. Jag tycker att `spriteRegion` ger en bättre beskrivning utan att namnet blir onödigt långt. Däremot anser jag att när användaren ska hämta en region genom `Sprite.region` så är det ett bättre metodnamn än `Sprite.spriteRegion`, då man upprepar "sprite" ytterligare en gång, något som boken Clean Code nämner.
-
-**Slutsats:** `region` behålls.
-
-#### Funktioner
-
-**Namn:** `setImageSource`
-
-**Förklaring:** Tilldelar `imageAsset` ett `ImageAsset`-objekt.
-
-**Reflektion:** Här tänkte jag att metoden tilldelar en variabel ett värde och valde därför namnet `setImageSource`. Efter att ha arbetat vidare med modulen började jag fundera på om namnet verkligen beskriver vad metoden gör. Metoden hämtar, eller skapar, ett `ImageAsset`-objekt, vilket skulle kunna tala för ett namn som `getImageSource`. I min `ImageAsset`-klass har jag också en metod som heter `setImageSource` vilket skulle kunna skapa förvirring. Även om metoderna gör olika saker, `ImageAsset` metoden `setImageSource` sätter `<img>`-elementets `src`-attribut och den är privat anser jag att namnet ändå bör bytas för att undvika förvirring. Jag kommer därför ändra metodens namn till `assignImageAsset` i `Sprite`-klassen.
-
-**Slutsats:** `setImageSource` blir `assignImageAsset`.
+**Avoid Encodings:**
+Ingen av mina klassnamn innehåller encoding (ex. `SpriteClass` eller `ISprite`) något som boken nämner, s. 23, att man inte skall använda. Jag har själv inte jobbat med exempelvis Hungarion Notation, jag har sett det tidigare men inte använt mig själv av det. Det var därför lätt att undvika det.
 
 ---
 
-**Namn:** `get positionX` & `get positionY`
+## `setImageSource` --> `assignImageAsset`
 
-**Förklaring:** Returnerar x och y-koordinaten av sprite-objektet.
+### Förklaring
+Metod i `Sprite` som hämtar (eller skapar) ett `ImageAsset`-objekt via en cache och tilldelar det till fältet `#imageAsset`
 
-**Reflektion:** Efter att ha beslutat mig om att ändra variabelnamnet från `xPos` & `yPos` blir det lite osemantiskt att använda andra namn när man hämtar. Det var det redan innan, då metoderna borde ha hetat `get posX` om det ska vara enhetligt.
+### Reflektion
+**Use Intention-Revealing Names:**
+Ursprungligen hette metoden `setImageSource`, vilket antydde att det enbart sätter en src-sträng på spriten. Egentligen så hämtar metoden ett `ImageAsset`-objekt från en cache och tilldelar fältet `#imageAsset` objektet. Namnet avslöjade allstå inte riktigt vad metoden faktiskt gjorde. Jag valde därför att byta namn till `assignImageAsset` för att förtydliga vad metoden faktiskt gör.
 
-**Slutsats:** `get x` & `get y` är bättre metodnamn.
+**Avoid Disinformation:**
+Det gamla namnet `setImageSource` krockade också med `ImageAssets`s privata metod `#setImageSource(src)`, som faktiskt gjorde det som namnet beskrev den. Det var därför inte mer än rätt att byta namn på metoden.
 
----
-
-**Namn:** `set positionX` & `set positionY`
-
-**Förklaring:** Sätter x och y-koordinaten av sprite-objektet.
-
-**Reflektion:** Samma som tidigare, gör allt enhetligt.
-
-**Slutsats:** `set x` & `set y` kommer användas.
+**Method Names:**
+Enligt boken, s. 25, bör metoder namges som verb eller verbfraser eftersom de utför en handling. `assign...` är fortfarande ett verb men pekar nu istället på att det är ett `ImageAsset`-objekt som tilldelas, inte en sträng till en bild.
 
 ---
 
-**Namn:** `get width` & `get height`
+## `xPos` / `yPos` + `positionX`/ `positionY` --> `x` / `y`
 
-**Förklaring:** Returnerar bredden och höjden på spriten.
+### Förklaring
+Privata fält och publika metoder i `Sprite` som representerar spritens position i pixlar.
 
-**Reflektion:** Eftersom `width` och `height` redan är tydliga substantiv blir accessor-namnen naturliga rakt av. Enligt boken bör en accessor för ett fält heta samma sak som fältet (get/set-konventionen), vilket jag redan följer här. Jag har inte funderat på att lägga till `get`/`Get` i namnet (t.ex. `getWidth`) eftersom JS:s inbyggda `get`-syntax redan signalerar att det är en accessor – att då även skriva ut "get" i namnet hade varit ett onödigt brusord.
+### Reflektion
+**Pick One Word per Concept:**
+Tidigare hette de privata fälten `#xPos` / `#yPos` något som jag redan vid skapandet reflekterade över. Jag dividerade mellan att döpa dessa till `positionX` / `positionY`, `xPos` / `yPos` och enbart `x`/ `y`. Någonstans hamnade jag i mitten under utvecklingen och döpte dem till olika, med tanken att längre fram justera detta. Jag valde att använda mig av enbart `x`/ `y`. Genom att konsekvent använda samma namn för både fälten och accessorerna säkerställer jag att samma ord används för samma koncept genomgående i klassen.
 
-**Slutsats:** Jag behåller `width` och `height`.
+**Use Searchable Names:**
+Boken, s. 26, varnar för att alltför korta namn som `x` och `y` kan vara svåra att söka fram i en stor kodbas. Jag valde ändå att behålla dem eftersom de bara används inom det lilla scopet av `Sprite`-klassen (som fält, accessor och i konstruktorn), och sökningar efter t.ex. `sprite.x` blir ändå specifika nog tack vare kontexten runt omkring.
 
----
-
-**Namn:** `get region` & `set region`
-
-**Förklaring:** Returnerar respektive sätter regionen av källbilden som spriten använder.
-
-**Reflektion:** Samma resonemang som för `width`/`height`.
-
-**Slutsats:** Jag behåller `get region` & `set region`.
+**Avoid Mental Mapping**
+Ett alternativ hade varit att behålla längre namn som `xPosition` / `positionX` för att undvika att läsaren behöver "översätta" `x` till position. Jag anser dock att `x` och `y` är så etablerat inom matematik, grafer och grafik att ingen mental mapping egentligen krävs.
 
 ---
 
-**Namn:** `get isLoaded`
+## `sourceX` / `sourceY`
 
-**Förklaring:** Returnerar om bildens tillgång har laddats klart eller inte.
+### Förklaring
+Privata fält och publika accessorer i `SpriteRegion`, vilket representerar regionens position i pixlar på spriten.
 
-**Reflektion:** Boken rekommenderar att booleska metoder/egenskaper namnges som predikat, t.ex. med prefix som `is` eller `has`, för att namnet ska läsas som en fråga eller ett påstående. `isLoaded` följer redan detta mönster och jag ser ingen anledning att ändra det.
+### Reflektion
+**Use Solution Domain Names:**
+Efter att ha tänkt igenom det mer kom jag fram till att `sourceX` / `sourceY` faktiskt är rätt val, snarare än att byta till `x`/`y`. `SpriteRegion` är i praktiken bara en wrapper runt argumenten till `CanvasRenderingContext2D.drawImage()`, och där heter parametrarna redan `sx`/`sy` (source x/y) i Canvas-API:et. Boken nämner att man ska använda namn från lösningsdomänen när det gör namnet tydligare för andra programmerare, och eftersom `drawImage` redan är en etablerad konvention tycker jag `sourceX`/`sourceY` blir tydligare än ett bytt `x`/`y` hade blivit.
 
-**Slutsats:** Jag behåller `isLoaded`.
+**Avoid Disinformation:**
+Om jag istället bytt `SpriteRegion` till `x`/`y` för att matcha `Sprite` hade jag nog skapat förvirring åt andra hållet istället. `sprite.x` och `region.x` hade sett ut att betyda samma sak, fast den ena är var spriten ska ritas på canvasen och den andra är varifrån i källbilden man klipper ut en region. Det är typ två helt olika saker som råkar vara samma datatyp. `source`-prefixet gör det tydligt att det är skillnad, vilket märks extra mycket i `SpriteRenderer.render()` där båda används i samma `drawImage`-anrop.
 
----
-
-**Namn:** `waitForLoad`
-
-**Förklaring:** En asynkron metod som väntar tills bildens tillgång har laddats klart.
-
-**Reflektion:** Boken menar att funktionsnamn bör vara verb eller verbfraser eftersom en funktion utför en handling. `waitForLoad` beskriver tydligt vad metoden gör (väntar tills laddning är klar) och läses naturligt vid anropsplatsen: `await sprite.waitForLoad()`. Jag har inte hittat något bättre alternativ.
-
-**Slutsats:** Jag behåller `waitForLoad`.
+**Pick One Word per Concept:**
+Jag trodde tidigare att "ett ord per koncept" betydde att jag borde byta namn så att både `Sprite` och `SpriteRegion` använder `x`/`y`. Men nu inser jag att det inte är samma koncept egentligen, bara samma typ av värde (en koordinat). Den ena är en destination, den andra är en källposition. Regeln handlar om att inte kalla *samma sak* för olika namn, inte om att tvinga fram samma namn på två olika saker bara för att de råkar vara siffror av samma typ. Så jag behåller `sourceX`/`sourceY` som eget namn istället för att byta.
 
 ---
 
-**Namn:** `image`
+## `isLoaded`
 
-**Förklaring:** Returnerar `HTMLImageElement` från spritens `ImageAsset`.
+### Förklaring
+Getter i både `Sprite` och `ImageAsset` som returnerar om bildens tillgång har laddats klart eller inte.
 
-**Reflektion:** Jag har funderat på om `image` är tillräckligt tydligt, eftersom namnet inte avslöjar att det handlar om ett `HTMLImageElement` specifikt. Ett alternativ hade varit `imageElement`. Men eftersom JSDoc redan anger returtypen, och eftersom kontexten (en `Sprite`) gör det tydligt att det rör sig om bilden som ska ritas, tycker jag att `image` är tillräckligt tydligt utan att bli missvisande.
+### Reflektion
+**Method Names:**
+Boken nämner att booleska metoder/attribut bör namnges så att de läses som en fråga eller ett påstående, gärna med prefix som `get`, `set` eller `is`. `isLoaded` följer det här mönstret rakt av, det är tydligt att det handlar om ett sant/falskt-värde redan av namnet.
 
-**Slutsats:** Jag behåller `image`.
+**Don't Pun:**
+Jag funderade på om `isLoaded` betyder exakt samma sak i båda klasserna eftersom namnet är identiskt i `Sprite` och `ImageAsset`. Efter att ha kollat igenom koden ser jag att `Sprite.isLoaded` bara vidarebefordrar värdet från `this.#imageAsset.isLoaded`, så det är faktiskt samma koncept i båda fallen, bara på olika nivåer i kedjan. Det är alltså inte ett exempel på pun (samma namn men olika betydelse) s.26, utan snarare ett medvetet val att låta samma namn följa med genom lagren, vilket jag tycker känns rätt eftersom det är samma information som bara "syns igenom" `Sprite`.
+
+**Slutsats:** Jag behåller `isLoaded` i båda klasserna eftersom det är samma koncept som förs vidare, inte två olika betydelser som råkar dela namn.
+
+
+
+
+
