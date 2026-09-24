@@ -186,6 +186,13 @@ describe('Sprite', () => {
     })
   })
 
+  it('allows position to be negative', () => {
+    const sprite = new Sprite(src, {x: -10, y: -5})
+
+    expect(sprite.x).toBe(-10)
+    expect(sprite.y).toBe(-5)
+  })
+
   describe('Image', () => {
     it('assignImageAsset changes the image source', () => {
       const sprite = new Sprite(src)
