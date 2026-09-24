@@ -209,9 +209,85 @@ render () {
 }
 ```
 
+## `ImageAsset.#createLoadPromise()`
+
+
 ## `SpriteAnimation.update()`
 
-## `ImageAsset.getAsset()`
+### Förklaring
+Uppdaterar animationen med hjälp av förfluten tid. Den förflutna tiden läggs till i en räknare. När räknaren har nått bildrutans varaktighet går animationen vidare till nästa bildruta. Om animationen har nått den sista bildrutan återställs den till den första.
+
+### Reflektion
+
+**Small:**
+Metoden är 8 rader lång, vilket jag anser inte är så farligt, dock så går nog det att minska.
+
+**Blocks and Indenting:**
+Metoden har en indenteringsnivå, vilket följer regeln. Däremot innehåller blocket inuti `if`-satsen flera rader. Boken, s. 35, beskriver att ett sådant block helst enbart ska innehålla ett funktionsanrop. Detta kan därför förbättras genom att flytta ansvaret till separata metoder.
+
+**Do One Thing:**
+Metoden gör flera saker. Den räknar upp den förflutna tiden (`this.#elapsedTime += deltaTime`), kontrollerar om det är dags att byta bildruta och uppdaterar sedan den aktuella bildrutan. Den ansvarar även för att återställa animationen när den sista bildrutan har nåtts.
+
+**Function Arguments:**
+Metoden tar endast ett argument, vilket gör den monadisk, s. 40. Enligt boken är en monadisk funktion att föredra framför funktioner med flera argument, även om en funktion utan argument är ännu bättre.
+
+**Have No Side Effects:**
+Metoden har en sidoeffekt eftersom den ändrar animationens interna tillstånd genom att uppdatera `elapsedTime` och `currentFrame`. Detta är dock en del av metodens avsedda ansvar eftersom syftet med `update()` är att uppdatera animationens tillstånd. Metoden gör alltså det som förväntas av den: den för animationen framåt och börjar om från den första bildrutan när den sista har nåtts.
+
+### Förbättring och analys
+Jag anser att det finns ett par saker som kan göras annorlunda för att lösa de problem som har identifierats. Genom att dela upp ansvaret i mindre metoder blir `update()` kortare och varje metod får ett tydligare ansvar.
+
+Jag anser även att namnet `resetCurrentFrame` är något missvisande. Metoden återställer inte den aktuella bildrutan varje gång den anropas, utan gör det endast när animationen har nått slutet. Jag väljer därför att ändra namnet till `resetCurrentFrameIfFinished`, eftersom namnet bättre beskriver när återställningen sker.
+
+Jag valde först att samla flera operationer i metoden `advanceOneFrame()`:
+
+```javascript
+update (deltaTime) {
+  this.#elapsedTime += deltaTime
+
+  if (this.#elapsedTime >= this.#frameDuration) {
+    this.#advanceOneFrame()
+  }
+}
+
+#advanceOneFrame () {
+  this.#elapsedTime -= this.#frameDuration
+  this.#currentFrame++
+  this.#resetCurrentFrameIfFinished()
+}
+```
+
+Detta gör `update()` kortare, men `advanceOneFrame()` får fortfarande flera ansvarsområden. Den ändrar både den förflutna tiden, den aktuella bildrutan och återställer bildrutan vid behov.
+
+Jag valde därför att dela upp detta ytterligare:
+
+```javascript
+update (deltaTime) {
+  this.#elapsedTime += deltaTime
+
+  if (this.#elapsedTime >= this.#frameDuration) {
+    this.#subtractFrameDuration()
+    this.#advanceFrame()
+    this.#resetCurrentFrameIfFinished()
+  }
+}
+
+#subtractFrameDuration () {
+  this.#elapsedTime -= this.#frameDuration
+}
+
+#advanceFrame () {
+  this.#currentFrame++
+}
+
+#resetCurrentFrameIfFinished () {
+  if (this.#currentFrame >= this.#frames.length) {
+    this.#currentFrame = 0
+  }
+}
+```
+
+På detta sätt har varje metod ett mer avgränsat ansvar och namnen beskriver vad respektive metod gör. `update()` blir samtidigt enklare att läsa eftersom den beskriver animationens flöde på en högre nivå.
 
 ## `SpriteRenderer.add()`
 
