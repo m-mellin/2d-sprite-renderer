@@ -65,7 +65,7 @@ export class Sprite {
    * @param {number} height The height of the sprite in pixels.
    * @param {SpriteRegion|null} region The region of the source image to use (default: null).
    */
-  constructor (src, {x = 0, y = 0, width, height, region = null} = {}) {
+  constructor (src, {x = 0, y = 0, width = 0, height = 0, region = null} = {}) {
     this.x = x
     this.y = y
     this.width = width
@@ -167,11 +167,15 @@ export class Sprite {
   }
 
   set width (width) {
+    if (typeof width !== 'number' || Number.isNaN(width)) {
+      throw new TypeError('width must be of type number')
+    }
+
     if (width < 0) {
       throw new RangeError('width can\'t be negative')
-    } else {
-      this.#width = width
     }
+
+    this.#width = width
   }
 
   /**
@@ -184,11 +188,15 @@ export class Sprite {
   }
 
   set height (height) {
+    if (typeof height !== 'number' || Number.isNaN(height)) {
+      throw new TypeError('height must be of type number')
+    }
+
     if (height < 0) {
       throw new RangeError('height can\'t be negative')
-    } else {
-      this.#height = height
     }
+
+    this.#height = height
   }
 
   /**

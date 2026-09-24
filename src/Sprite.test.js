@@ -9,8 +9,8 @@ describe('Sprite', () => {
     const sprite = new Sprite(src)
 
     expect(sprite.image).toBeInstanceOf(HTMLImageElement)
-    expect(sprite.width).toBeUndefined()
-    expect(sprite.height).toBeUndefined()
+    expect(sprite.width).toBe(0)
+    expect(sprite.height).toBe(0)
     expect(sprite.x).toBe(0)
     expect(sprite.y).toBe(0)
     expect(sprite.region).toBeNull()
@@ -33,6 +33,13 @@ describe('Sprite', () => {
   it('sprite size can\'t be negative', () => {
     expect(() => new Sprite(src, {width: -50, height: 0})).toThrow()
     expect(() => new Sprite(src, {width: 0, height: -100})).toThrow()
+  })
+
+  it('should throw a exception if size is not a number', () => {
+    expect(() => new Sprite(src, {width: NaN, height: 0})).toThrow()
+    expect(() => new Sprite(src, {width: 0, height: NaN})).toThrow()
+    expect(() => new Sprite(src, {width: 'test', height: 0})).toThrow()
+    expect(() => new Sprite(src, {width: 0, height: 'test'})).toThrow()
   })
 
   it('changes x and y value after creating sprite', () => {
