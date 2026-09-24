@@ -552,3 +552,18 @@ Jag väljer därför options-objektet som lösning. Det minskar antalet argument
 ---
 
 ## Reflektion kring kapitel 3
+Jag tycker att det finns mycket bra att ta med sig från kapitlet. Att tänka efter vad en funktion faktiskt gör, och inte bara vad jag tror att den gör, ger mycket renare kod. De viktigaste reglerna tycker jag är **Do One Thing**, **Small**, **Blocks and Indenting** och **Function Arguments**. Det tydligaste exemplet i min egen kod var `SpriteRenderer.render()`, som rensade canvasen, loopade, filtrerade bort sprites, valde ritsätt och innehöll ett `drawImage`-anrop med nio argument. Först när jag räknade rader och såg de nästlade `if`-satserna blev det svårt att hävda att den gjorde en sak. **Blocks and Indenting** är den regel jag tycker är enklast att använda i praktiken, eftersom ett block på flera rader inuti en `if`-sats direkt visar att något borde flyttas till en egen metod, och namnet på metoden blir en form av dokumentation.
+
+Den största överraskningen var **Function Arguments**. `Sprite`-konstruktorn hade sex argument, och jag hade inte tänkt på att standardvärdena på `x` och `y` inte går att använda när `width` och `height` kommer efter dem. Ett anrop som `new Sprite(src, 0, 0, 32, 32)` säger dessutom inget om vad siffrorna betyder. Jag kände inte till options-objekt som lösning och tog hjälp av en LLM för att hitta den. Jag övervägde också att skapa egna klasser för position och storlek, som boken föreslår, men det kändes för tungt för den som ska använda modulen.
+
+Jag håller dock inte med om allt. När jag delade upp `update()` blev två av metoderna bara en rad var, och `render()` blev fyra metoder för något som egentligen är enkelt, så man får hoppa mer mellan metoder för att förstå helheten. Även **Have No Side Effects** ser jag som ett sätt att upptäcka problem snarare än en regel som alltid måste följas. Jag tog bort ordningsberoendet i `#createLoadPromise()`, men behöll att metoden startar laddningen, eftersom löftet och laddningen hör ihop, och dokumenterade det i stället. Precis som i kapitel 2 handlar det alltså om avvägningar, och det jag tar med mig är målet snarare än siffrorna: en metod ska göra en sak, ligga på en abstraktionsnivå och gå att förklara utan ordet "och".
+
+---
+
+## Användning av LLM/AI
+
+Jag har använt LLM i den här laborationen för mer komplexa problem. Bland annat behövde jag hjälp med att minska tiden det tog att ladda in sprites, och där föreslog LLM:en att jag skulle använda en cache i `ImageAsset`, något jag inte hade tänkt på själv. Det är ett bra exempel på hur jag vill använda AI: som stöd för att hitta lösningar jag inte känner till, medan jag själv fattar besluten.
+
+I övrigt vill jag inte att LLM ska programmera åt mig. Programmeringen är det jag själv vill göra, och jag vill att AI ska hjälpa mig att lära mig, ge tips och öka min egen förmåga, inte göra mitt jobb. Jag har även använt LLM för att formulera vissa JSDoc-kommentarer bättre. Då har jag alltid skrivit kommentaren själv först och sedan bett om råd för att formulera den korrekt. Det tycker jag är det bästa sättet att använda AI utan att ge bort ansvaret.
+
+Just nu vill jag inte heller använda AI direkt i VS Code. Jag upplever att det stör mitt arbetsflöde, och jag tror dessutom att det finns en risk att man tappar både förståelsen och greppet om sitt eget lärande.
