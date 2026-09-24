@@ -5,110 +5,141 @@ import { SpriteRegion } from './SpriteRegion.js'
 const src = '../src/mario.bmp'
 
 describe('Sprite', () => {
-  it('creates a Sprite with default values', () => {
-    const sprite = new Sprite(src)
+  describe('constructor', () => {
+    it('creates a Sprite with default values', () => {
+      const sprite = new Sprite(src)
 
-    expect(sprite.image).toBeInstanceOf(HTMLImageElement)
-    expect(sprite.width).toBe(0)
-    expect(sprite.height).toBe(0)
-    expect(sprite.x).toBe(0)
-    expect(sprite.y).toBe(0)
-    expect(sprite.region).toBeNull()
+      expect(sprite.image).toBeInstanceOf(HTMLImageElement)
+      expect(sprite.width).toBe(0)
+      expect(sprite.height).toBe(0)
+      expect(sprite.x).toBe(0)
+      expect(sprite.y).toBe(0)
+      expect(sprite.region).toBeNull()
+    })
+
+    it('creates a Sprite with specified position', () => {
+      const sprite = new Sprite(src, {x: 5, y: 10})
+
+      expect(sprite.x).toBe(5)
+      expect(sprite.y).toBe(10)
+    })
+
+    it('creates a Sprite with specified size', () => {
+      const sprite = new Sprite(src, {width: 50, height: 100})
+
+      expect(sprite.width).toBe(50)
+      expect(sprite.height).toBe(100)
+    })
+
+    it('creates a Sprite with specified region', () => {
+      const region = new SpriteRegion(0, 0, 25, 25)
+      const sprite = new Sprite(src, {region})
+
+      expect(sprite.region).toBe(region)
+    })
   })
+  describe('Position', () => {
+    it('get x returns correct position', () => {
+      const sprite = new Sprite(src, {x: 5})
 
-  it('creates a Sprite with specified position', () => {
-    const sprite = new Sprite(src, {x: 5, y: 10})
+      expect(sprite.x).toBe(5)
+    })
 
-    expect(sprite.x).toBe(5)
-    expect(sprite.y).toBe(10)
+    it('get y returns correct position', () => {
+      const sprite = new Sprite(src, {y: 5})
+
+      expect(sprite.y).toBe(5)
+    })
+
+    it('set x assigns correct position', () => {
+      const sprite = new Sprite(src)
+
+      sprite.x = 10
+      expect(sprite.x).toBe(10)
+    })
+
+    it('set y assigns correct position', () => {
+      const sprite = new Sprite(src)
+
+      sprite.y = 10
+      expect(sprite.y).toBe(10)
+    })
   })
+  describe('Size', () => {
+    it('get width returns correct size', () => {
+      const sprite = new Sprite(src, {width: 5})
 
-  it('creates a Sprite with specified size', () => {
-    const sprite = new Sprite(src, {width: 50, height: 100})
+      expect(sprite.width).toBe(5)
+    })
 
-    expect(sprite.width).toBe(50)
-    expect(sprite.height).toBe(100)
+    it('get height returns correct size', () => {
+      const sprite = new Sprite(src, {height: 5})
+
+      expect(sprite.height).toBe(5)
+    })
+
+    it('set width assigns correct size', () => {
+      const sprite = new Sprite(src)
+      sprite.width = 10
+
+      expect(sprite.width).toBe(10)
+    })
+
+    it('set height assigns correct size', () => {
+      const sprite = new Sprite(src)
+      sprite.height = 10
+      
+      expect(sprite.height).toBe(10)
+    })
   })
+  describe('Region', () => {
+    it('get region returns correct region', () => {
+      const region = new SpriteRegion(0, 0, 25, 25)
+      const sprite = new Sprite(src, { region })
 
-  it('sprite size can\'t be negative', () => {
-    expect(() => new Sprite(src, {width: -50, height: 0})).toThrow()
-    expect(() => new Sprite(src, {width: 0, height: -100})).toThrow()
+      expect(sprite.region).toBe(region)
+    })
+    it('set region assigns correct region', () => {
+      const region = new SpriteRegion(25, 25, 50, 50)
+      const sprite = new Sprite(src, { region })
+
+      const newRegion = new SpriteRegion(2, 2, 30, 30)
+      sprite.region = newRegion
+
+      expect(sprite.region).toBe(newRegion)
+    })
   })
+  describe('Validation', () => {
+    it('should throw an exception if size is negative', () => {
+      expect(() => new Sprite(src, {width: -50, height: 0})).toThrow()
+      expect(() => new Sprite(src, {width: 0, height: -100})).toThrow()
+    })
 
-  it('should throw a exception if size is not a number', () => {
-    expect(() => new Sprite(src, {width: NaN, height: 0})).toThrow()
-    expect(() => new Sprite(src, {width: 0, height: NaN})).toThrow()
-    expect(() => new Sprite(src, {width: 'test', height: 0})).toThrow()
-    expect(() => new Sprite(src, {width: 0, height: 'test'})).toThrow()
+    it('should throw an exception if size is not a number', () => {
+      expect(() => new Sprite(src, {width: NaN, height: 0})).toThrow()
+      expect(() => new Sprite(src, {width: 0, height: NaN})).toThrow()
+      expect(() => new Sprite(src, {width: 'test', height: 0})).toThrow()
+      expect(() => new Sprite(src, {width: 0, height: 'test'})).toThrow()
+    })
+
+    it('should throw an exception if position is not a number', () => {
+      expect(() => new Sprite(src, {x: NaN, y: 0})).toThrow()
+      expect(() => new Sprite(src, {x: 0, y: NaN})).toThrow()
+      expect(() => new Sprite(src, {x: 'test', y: 0})).toThrow()
+      expect(() => new Sprite(src, {x: 0, y: 'test'})).toThrow()
+    })
   })
+  describe('Loading', () => {
+    it('isLoaded returns false while sprite isn\'t loaded', () => {
+      const sprite = new Sprite(src)
 
-  it('should throw a exception if position is not a number', () => {
-    expect(() => new Sprite(src, {x: NaN, y: 0})).toThrow()
-    expect(() => new Sprite(src, {x: 0, y: NaN})).toThrow()
-    expect(() => new Sprite(src, {x: 'test', y: 0})).toThrow()
-    expect(() => new Sprite(src, {x: 0, y: 'test'})).toThrow()
+      expect(sprite.isLoaded).toBe(false)
+    })
+
+    it('waitForLoad() returns promise', () => {
+      const sprite = new Sprite(src)
+
+      expect(sprite.waitForLoad()).toBeInstanceOf(Promise)
+    })
   })
-
-  it('changes x and y value after creating sprite', () => {
-    const sprite = new Sprite(src, {x: 5, y: 5})
-
-    sprite.x = 10
-    sprite.y = 15
-    expect(sprite.x).toBe(10)
-    expect(sprite.y).toBe(15)
-  })
-
-  it('get x returns correct coordinate', () => {
-    const sprite = new Sprite(src, {x: 5})
-
-    expect(sprite.x).toBe(5)
-  })
-
-  it('get y returns correct coordinate', () => {
-    const sprite = new Sprite(src, {y: 5})
-
-    expect(sprite.y).toBe(5)
-  })
-
-  it('get width returns correct width', () => {
-    const sprite = new Sprite(src, {width: 5})
-
-    expect(sprite.width).toBe(5)
-  })
-
-  it('get height returns correct height', () => {
-    const sprite = new Sprite(src, {height: 5})
-
-    expect(sprite.height).toBe(5)
-  })
-
-  it('get region returns correct region', () => {
-    const region = new SpriteRegion(25, 25, 50, 50)
-    const sprite = new Sprite(src, { region })
-
-    expect(sprite.region).toBe(region)
-  })
-
-  it('set region sets new region', () => {
-    const region = new SpriteRegion(25, 25, 50, 50)
-    const sprite = new Sprite(src, { region })
-
-    const newRegion = new SpriteRegion(2, 2, 30, 30)
-    sprite.region = newRegion
-
-    expect(sprite.region).toBe(newRegion)
-  })
-
-  it('isLoaded returns false while sprite isn\'t loaded', () => {
-    const sprite = new Sprite(src)
-
-    expect(sprite.isLoaded).toBe(false)
-  })
-
-  it('waitForLoad() returns promise', () => {
-    const sprite = new Sprite(src)
-
-    expect(sprite.waitForLoad()).toBeInstanceOf(Promise)
-  })
-
 })
