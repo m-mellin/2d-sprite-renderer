@@ -160,6 +160,16 @@ describe('Sprite', () => {
     })
   })
 
+  describe('Image', () => {
+    it('assignImageAsset changes the image source', () => {
+      const sprite = new Sprite(src)
+
+      sprite.assignImageAsset('../src/grass2.png')
+
+      expect(sprite.image).toBeInstanceOf(HTMLImageElement)
+    })
+  })
+
   describe('Loading', () => {
     it('isLoaded returns false while sprite isn\'t loaded', () => {
       const sprite = new Sprite(src)
