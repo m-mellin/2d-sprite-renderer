@@ -133,29 +133,58 @@ export class SpriteRenderer {
     this.#clearCanvas()
 
     for (const sprite of this.#sprites) {
-      if (!sprite.isLoaded) continue
-
-      if (!sprite.region) {
-        this.#context.drawImage(
-          sprite.image,
-          sprite.x,
-          sprite.y,
-          sprite.width,
-          sprite.height
-        )
-      } else {
-        this.#context.drawImage(
-          sprite.image,
-          sprite.region.sourceX,
-          sprite.region.sourceY,
-          sprite.region.width,
-          sprite.region.height,
-          sprite.x,
-          sprite.y,
-          sprite.width,
-          sprite.height
-        )
-      }
+      this.#drawSprite(sprite)
     }
+  }
+
+  /**
+   * Draws a loaded sprite using either its whole image or a selected region.
+   *
+   * @param {Sprite} sprite - Sprite to draw.
+   */
+  #drawSprite (sprite) {
+    if (!sprite.isLoaded) return
+
+    if (sprite.region) {
+      this.#drawRegion(sprite)
+    } else {
+      this.#drawWhole(sprite)
+    }
+  }
+
+  /**
+   * Draws a selected region of a sprite's image on the canvas.
+   *
+   * @param {Sprite} sprite - Sprite containing the image region to draw.
+   */
+  #drawRegion (sprite) {
+    const region = sprite.region
+
+    this.#context.drawImage(
+      sprite.image,
+      region.sourceX,
+      region.sourceY,
+      region.width,
+      region.height,
+      sprite.x,
+      sprite.y,
+      sprite.width,
+      sprite.height
+    )
+  }
+
+  /**
+   * Draws the entire image of a sprite on the canvas.
+   *
+   * @param {Sprite} sprite - Sprite to draw.
+   */
+  #drawWhole (sprite) {
+    this.#context.drawImage(
+      sprite.image,
+      sprite.x,
+      sprite.y,
+      sprite.width,
+      sprite.height
+    )
   }
 }
