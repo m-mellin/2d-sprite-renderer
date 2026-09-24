@@ -130,5 +130,4 @@ describe('SpriteRegion', () => {
       expect(region.y).toBe(-5)
     })
   })
-
 })
