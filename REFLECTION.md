@@ -224,7 +224,6 @@ Namnet på metoden `#createLoadPromise()` antyder att metoden enbart skapar ett 
 
 Metoden är även beroende av att `this.#image = new Image()` har körts innan metoden anropas. Genom att skapa bilden direkt vid deklarationen försvinner detta beroende på ordningen i konstruktorn.
 
-
 ### Förbättring och analys
 Jag skulle göra två förändringar här. Den första är att flytta det som händer när bilden laddas till en egen metod. På så sätt kan `onload` endast innehålla ett funktionsanrop och metoden får ett tydligare ansvar.
 
@@ -347,5 +346,62 @@ update (deltaTime) {
 På detta sätt har varje metod ett mer avgränsat ansvar och namnen beskriver vad respektive metod gör. `update()` blir samtidigt enklare att läsa eftersom den beskriver animationens flöde på en högre nivå.
 
 ## `SpriteRenderer.add()`
+
+### Förklaring
+Lägger till en sprite i renderaren. Om spritens bild inte är laddad ännu väntar metoden på att bilden ska laddas och schemalägger därefter en ny rendering. Om laddningen misslyckas ignoreras felet och spriten ritas då inte.
+
+### Reflektion
+
+**Small:**
+Metoden är 8 rader lång, vilket enligt författaren ligger inom en den nivå som tagits upp tidigare (max 20, men gärna runt 6 rader). Metoden skulle dock kunna förbättras genom att flytta delar av ansvaret till en separat metod.
+
+**Blocks and Indenting:**
+Metoden har endast en indenteringsnivå, vilket är i enlighet med regeln, s. 35. Däremot innehåller `if`-blocket inte endast ett enkelt funktionsanrop i den ursprungliga implementationen:
+
+`sprite.waitForLoad().then(() => this.#scheduleRender()).catch(() => {})`
+
+Enligt boken bör blocken helst endast innehålla ett funktionsanrop. Detta kan förbättras genom att flytta ansvaret för att vänta på laddningen till en separat metod.
+
+**Do One Thing:**
+Metoden gör för närvarande två saker. Den lägger till spriten i arrayen (`this.#sprites.push(sprite)`) och ser samtidigt till att renderingen uppdateras när bilden har laddats.
+
+Detta innebär att metoden både hanterar lagringen av spriten och laddningen av dess bild. Ansvaret för att vänta på laddningen kan därför flyttas till en separat metod.
+
+**Have No Side Effects:**
+Metoden ändrar renderarens interna tillstånd genom att lägga till spriten i `this.#sprites`. Detta är dock inte en oväntad sidoeffekt, eftersom det är själva syftet med metoden `add()`.
+
+Metoden påverkar däremot även renderingen genom att schemalägga en ny rendering när bilden har laddats. Detta är en del av det beteende som krävs för att en ny sprite ska kunna visas även om bilden ännu inte är laddad. Jag väljer därför att behålla detta ansvar i `SpriteRenderer`, men flyttar väntan på laddningen till en separat metod för att göra `add()` enklare.
+
+### Förbättring och analys
+Jag valde efter genomgången av reglerna att flytta ut väntan på laddningen till en egen metod. På så sätt blir `if`-blocket endast en rad och ett funktionsanrop.
+
+Jag döper metoden till `#renderWhenLoaded()`, vilket beskriver vad metoden gör: den ser till att en ny rendering schemaläggs när spritens bild har laddats.
+
+```javascript
+  /**
+   * Adds a sprite to the renderer.
+   * If the sprite is not loaded yet, a render is scheduled once it has loaded.
+   *
+   * @param {Sprite} sprite - Sprite to add.
+   */
+  add (sprite) {
+    this.#sprites.push(sprite)
+
+    if (!sprite.isLoaded) {
+      this.#renderWhenLoaded(sprite)
+    }
+  }
+
+  /**
+   * Schedules a render when the sprite has loaded.
+   *
+   * @param {Sprite} sprite - The sprite to wait for.
+   */
+  #renderWhenLoaded (sprite) {
+    sprite.waitForLoad()
+      .then(() => this.#scheduleRender())
+      .catch(() => {})
+  }
+```
 
 ## `SpriteRenderer.remove()`
