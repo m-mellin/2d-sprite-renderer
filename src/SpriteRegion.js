@@ -70,10 +70,6 @@ export class SpriteRegion {
       throw new TypeError('x must be a finite number')
     }
 
-    if (x < 0) {
-      throw new RangeError('x can\'t be negative')
-    }
-
     this.#x = x
   }
 
@@ -94,10 +90,6 @@ export class SpriteRegion {
   set y (y) {
     if (!Number.isFinite(y)) {
       throw new TypeError('y must be a finite number')
-    }
-
-    if (y < 0) {
-      throw new RangeError('y can\'t be negative')
     }
 
     this.#y = y
