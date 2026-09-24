@@ -102,8 +102,8 @@ export class Sprite {
    * @param {number} x The X coordinate in pixels.
    */
   set x (x) {
-    if (typeof x !== 'number' || Number.isNaN(x)) {
-      throw new TypeError('x must be of type number')
+    if (!Number.isFinite(x)) {
+      throw new TypeError('x must be a finite number')
     }
 
     if (x < 0) {
@@ -128,8 +128,8 @@ export class Sprite {
    * @param {number} y The Y coordinate in pixels.
    */
   set y (y) {
-    if (typeof y !== 'number' || Number.isNaN(y)) {
-      throw new TypeError('y must be of type number')
+    if (!Number.isFinite(y)) {
+      throw new TypeError('y must be a finite number')
     }
 
     if (y < 0) {
@@ -175,9 +175,14 @@ export class Sprite {
     return this.#width
   }
 
+  /**
+   * Sets the width of the sprite.
+   *
+   * @param {number} width The width in pixels.
+   */
   set width (width) {
-    if (typeof width !== 'number' || Number.isNaN(width)) {
-      throw new TypeError('width must be of type number')
+    if (!Number.isFinite(width)) {
+      throw new TypeError('width must be a finite number')
     }
 
     if (width < 0) {
@@ -196,9 +201,14 @@ export class Sprite {
     return this.#height
   }
 
+  /**
+   * Sets the height of the sprite.
+   *
+   * @param {number} height The height in pixels.
+   */
   set height (height) {
-    if (typeof height !== 'number' || Number.isNaN(height)) {
-      throw new TypeError('height must be of type number')
+    if (!Number.isFinite(height)) {
+      throw new TypeError('height must be a finite number')
     }
 
     if (height < 0) {

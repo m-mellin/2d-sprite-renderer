@@ -133,24 +133,36 @@ describe('Sprite', () => {
       expect(() => new Sprite(src, {width: 0, height: -100})).toThrow(RangeError)
     })
 
-    it('throws a TypeError when width is not a number', () => {
-      expect(() => new Sprite(src, { width: NaN, height: 0 })).toThrow(TypeError)
-      expect(() => new Sprite(src, { width: 'test', height: 0 })).toThrow(TypeError)
+    it('throws a TypeError when width is not a finite number', () => {
+      const sprite = new Sprite(src)
+
+      expect(() => sprite.width = 'test').toThrow(TypeError)
+      expect(() => sprite.width = NaN).toThrow(TypeError)
+      expect(() => sprite.width = Infinity).toThrow(TypeError)
     })
 
-    it('throws a TypeError when height is not a number', () => {
-      expect(() => new Sprite(src, { width: 0, height: NaN })).toThrow(TypeError)
-      expect(() => new Sprite(src, { width: 0, height: 'test' })).toThrow(TypeError)
+    it('throws a TypeError when height is not a finite number', () => {
+      const sprite = new Sprite(src)
+
+      expect(() => sprite.height = 'test').toThrow(TypeError)
+      expect(() => sprite.height = NaN).toThrow(TypeError)
+      expect(() => sprite.height = Infinity).toThrow(TypeError)
     })
 
-    it('throws a TypeError when x is not a number', () => {
-      expect(() => new Sprite(src, { x: NaN, y: 0 })).toThrow(TypeError)
-      expect(() => new Sprite(src, { x: 'test', y: 0 })).toThrow(TypeError)
+    it('throws a TypeError when x is not a finite number', () => {
+      const sprite = new Sprite(src)
+
+      expect(() => sprite.x = NaN).toThrow(TypeError)
+      expect(() => sprite.x = 'test').toThrow(TypeError)
+      expect(() => sprite.x = Infinity).toThrow(TypeError)
     })
 
-    it('throws a TypeError when y is not a number', () => {
-      expect(() => new Sprite(src, { x: 0, y: NaN })).toThrow(TypeError)
-      expect(() => new Sprite(src, { x: 0, y: 'test' })).toThrow(TypeError)
+    it('throws a TypeError when y is not a finite number', () => {
+      const sprite = new Sprite(src)
+
+      expect(() => sprite.y = NaN).toThrow(TypeError)
+      expect(() => sprite.y = 'test').toThrow(TypeError)
+      expect(() => sprite.y = Infinity).toThrow(TypeError)
     })
 
     it('throws a TypeError if region is invalid type', () => {
