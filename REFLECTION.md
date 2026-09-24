@@ -1,5 +1,15 @@
 # Namngivning
 
+| Namn | Regler som tas upp | Ändring |
+| --- | --- | --- |
+| [Klassnamn](#sprite-spriterenderer-spriteregion-spriteanimation-och-imageasset) | Class Names, Avoid Encodings | Ingen |
+| [`setImageSource` → `assignImageAsset`](#setimagesource-assignimageasset) | Use Intention-Revealing Names, Avoid Disinformation, Method Names | Namnbyte |
+| [`xPos` / `yPos` → `x` / `y`](#xpos-ypos-positionx-positiony-x-y) | Pick One Word per Concept, Use Searchable Names, Avoid Mental Mapping | Namnbyte |
+| [`sourceX` / `sourceY`](#sourcex-sourcey) | Use Solution Domain Names, Avoid Disinformation, Pick One Word per Concept | Behölls |
+| [`isLoaded`](#isloaded) | Method Names, Don't Pun | Behölls |
+ 
+Övergripande reflektion: [Reflektion kring kapitel 2](#reflektion-kring-kapitel-2)
+
 ## `Sprite`, `SpriteRenderer`, `SpriteRegion`, `SpriteAnimation` och `ImageAsset`
 
 ### Förklaring:
@@ -80,8 +90,9 @@ Jag funderade på om `isLoaded` betyder exakt samma sak i båda klasserna efters
 
 **Slutsats:** Jag behåller `isLoaded` i båda klasserna eftersom det är samma koncept som förs vidare, inte två olika betydelser som råkar dela namn.
 
+---
 
-## Reflektion
+## Reflektion kring kapitel 2
 
 Jag tycker att det finns mycket i kapitel 2 som är bra. En del är överdrivet, men jag tar med mig mycket till framtiden, bland annat att sätta mig i användarens ögon istället för mina egna. Jag har flera gånger gått tillbaka och ändrat variabelnamn, och vissa delar missade jag helt. I början av laborationen hade jag redan läst båda kapitlen och förstått syftet med uppgiften. Jag började därför tidigt med att namnge variabler och separera funktioner enligt bokens lärosätt. Vissa delar hade jag dock inte full koll på och fick gå tillbaka och kontrollera.
 
@@ -95,6 +106,16 @@ Slutligen tycker jag att reglerna fungerar bäst som en fråga att ställa sig n
 
 
 # Funktioner
+
+| Metod | Regler som tas upp | Förändring |
+| --- | --- | --- |
+| [`SpriteRenderer.render()`](#spriterendererrender) | Small, Blocks and Indenting, Do One Thing, Function Arguments | Delas upp i `#drawSprite()`, `#drawRegion()` och `#drawWhole()` |
+| [`ImageAsset.#createLoadPromise()`](#imageassetcreateloadpromise) | Blocks and Indenting, Have No Side Effects | `#handleLoad()` och `#image` som fält |
+| [`SpriteAnimation.update()`](#spriteanimationupdate) | Small, Blocks and Indenting, Do One Thing, Function Arguments, Have No Side Effects | Delas upp i tre metoder |
+| [`SpriteRenderer.add()`](#spriterendereradd) | Small, Blocks and Indenting, Do One Thing, Have No Side Effects | `#renderWhenLoaded()` |
+| [`Sprite.constructor()`](#spriteconstructor) | Function Arguments | Options-objekt |
+
+Övergripande reflektion: [Reflektion kring kapitel 3](#reflektion-kring-kapitel-3)
 
 ## `SpriteRenderer.render()`
 
@@ -308,7 +329,7 @@ Lägger till en sprite i renderaren. Om spritens bild inte är laddad ännu vän
 ### Reflektion
 
 **Small:**
-Metoden är 8 rader lång, vilket enligt författaren ligger inom en den nivå som tagits upp tidigare (max 20, men gärna runt 6 rader). Metoden skulle dock kunna förbättras genom att flytta delar av ansvaret till en separat metod.
+Metoden är 8 rader lång, vilket enligt författaren ligger inom en den nivå som tagits upp tidigare. Metoden skulle dock kunna förbättras genom att flytta delar av ansvaret till en separat metod.
 
 **Blocks and Indenting:**
 Metoden har endast en indenteringsnivå, vilket är i enlighet med regeln, s. 35. Däremot innehåller `if`-blocket inte endast ett enkelt funktionsanrop i den ursprungliga implementationen:
@@ -444,3 +465,6 @@ new Sprite(
 Jag kan förstå hur detta kan vara en fördel ur ett objektorienterat perspektiv, eftersom `Point` och `Size` samlar värden som hör ihop i egna objekt. Däremot anser jag att det blir onödigt komplext för användaren av min modul. Användaren behöver då skapa två extra objekt för att skapa en enkel sprite.
 
 Jag väljer därför options-objektet som lösning. Det minskar antalet argument från sex till två, gör anropet tydligare och gör det möjligt att använda standardvärden för `x` och `y`, utan att introducera ytterligare klasser som jag inte anser tillför tillräckligt mycket funktionalitet.
+
+## Reflektion kring kapitel 3
+
