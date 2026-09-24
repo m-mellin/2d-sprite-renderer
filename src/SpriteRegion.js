@@ -10,7 +10,7 @@ export class SpriteRegion {
    * @type {number}
    * @private
    */
-  #sourceX
+  #x
 
   /**
    * The Y coordinate of the region in pixels.
@@ -18,7 +18,7 @@ export class SpriteRegion {
    * @type {number}
    * @private
    */
-  #sourceY
+  #y
 
   /**
    * The width of the region in pixels.
@@ -39,14 +39,14 @@ export class SpriteRegion {
   /**
    * Creates a SpriteRegion.
    *
-   * @param {number} sourceX - X coordinate of the region in the source image.
-   * @param {number} sourceY - Y coordinate of the region in the source image.
+   * @param {number} x - X coordinate of the region in the source image.
+   * @param {number} y - Y coordinate of the region in the source image.
    * @param {number} width - Width of the region.
    * @param {number} height - Height of the region.
    */
-  constructor (sourceX, sourceY, width, height) {
-    this.#sourceX = sourceX
-    this.#sourceY = sourceY
+  constructor (x, y, width, height) {
+    this.#x = x
+    this.#y = y
     this.#width = width
     this.#height = height
   }
@@ -56,8 +56,8 @@ export class SpriteRegion {
    * 
    * @returns {number} The X coordinate in pixels.
    */
-  get sourceX () {
-    return this.#sourceX
+  get x () {
+    return this.#x
   }
 
   /**
@@ -65,8 +65,8 @@ export class SpriteRegion {
    * 
    * @returns {number} The Y coordinate in pixels.
    */
-  get sourceY () {
-    return this.#sourceY
+  get y () {
+    return this.#y
   }
 
   /**
