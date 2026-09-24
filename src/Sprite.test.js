@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest'
 import { Sprite } from './Sprite.js'
 import { SpriteRegion } from './SpriteRegion.js'
+import { SpriteAnimation } from './SpriteAnimation.js'
 
 const src = '../src/mario.bmp'
 
@@ -18,14 +19,14 @@ describe('Sprite', () => {
     })
 
     it('creates a Sprite with specified position', () => {
-      const sprite = new Sprite(src, {x: 5, y: 10})
+      const sprite = new Sprite(src, { x: 5, y: 10 })
 
       expect(sprite.x).toBe(5)
       expect(sprite.y).toBe(10)
     })
 
     it('creates a Sprite with specified size', () => {
-      const sprite = new Sprite(src, {width: 50, height: 100})
+      const sprite = new Sprite(src, { width: 50, height: 100 })
 
       expect(sprite.width).toBe(50)
       expect(sprite.height).toBe(100)
@@ -33,20 +34,21 @@ describe('Sprite', () => {
 
     it('creates a Sprite with specified region', () => {
       const region = new SpriteRegion(0, 0, 25, 25)
-      const sprite = new Sprite(src, {region})
+      const sprite = new Sprite(src, { region })
 
       expect(sprite.region).toBe(region)
     })
   })
+
   describe('Position', () => {
     it('get x returns correct position', () => {
-      const sprite = new Sprite(src, {x: 5})
+      const sprite = new Sprite(src, { x: 5 })
 
       expect(sprite.x).toBe(5)
     })
 
     it('get y returns correct position', () => {
-      const sprite = new Sprite(src, {y: 5})
+      const sprite = new Sprite(src, { y: 5 })
 
       expect(sprite.y).toBe(5)
     })
@@ -65,15 +67,16 @@ describe('Sprite', () => {
       expect(sprite.y).toBe(10)
     })
   })
+
   describe('Size', () => {
     it('get width returns correct size', () => {
-      const sprite = new Sprite(src, {width: 5})
+      const sprite = new Sprite(src, { width: 5 })
 
       expect(sprite.width).toBe(5)
     })
 
     it('get height returns correct size', () => {
-      const sprite = new Sprite(src, {height: 5})
+      const sprite = new Sprite(src, { height: 5 })
 
       expect(sprite.height).toBe(5)
     })
@@ -92,6 +95,7 @@ describe('Sprite', () => {
       expect(sprite.height).toBe(10)
     })
   })
+
   describe('Region', () => {
     it('get region returns correct region', () => {
       const region = new SpriteRegion(0, 0, 25, 25)
@@ -99,6 +103,7 @@ describe('Sprite', () => {
 
       expect(sprite.region).toBe(region)
     })
+
     it('set region assigns correct region', () => {
       const region = new SpriteRegion(25, 25, 50, 50)
       const sprite = new Sprite(src, { region })
@@ -108,27 +113,44 @@ describe('Sprite', () => {
 
       expect(sprite.region).toBe(newRegion)
     })
+    
+    it('sets region to null', () => {
+      const region = new SpriteRegion(25, 25, 50, 50)
+      const sprite = new Sprite(src, { region })
+
+      sprite.region = null
+
+      expect(sprite.region).toBeNull()
+    })
   })
+
   describe('Validation', () => {
     it('should throw an exception if size is negative', () => {
-      expect(() => new Sprite(src, {width: -50, height: 0})).toThrow()
-      expect(() => new Sprite(src, {width: 0, height: -100})).toThrow()
+      expect(() => new Sprite(src, {width: -50, height: 0})).toThrow(RangeError)
+      expect(() => new Sprite(src, {width: 0, height: -100})).toThrow(RangeError)
     })
 
     it('should throw an exception if size is not a number', () => {
-      expect(() => new Sprite(src, {width: NaN, height: 0})).toThrow()
-      expect(() => new Sprite(src, {width: 0, height: NaN})).toThrow()
-      expect(() => new Sprite(src, {width: 'test', height: 0})).toThrow()
-      expect(() => new Sprite(src, {width: 0, height: 'test'})).toThrow()
+      expect(() => new Sprite(src, { width: NaN, height: 0 })).toThrow(TypeError)
+      expect(() => new Sprite(src, { width: 0, height: NaN })).toThrow(TypeError)
+      expect(() => new Sprite(src, { width: 'test', height: 0 })).toThrow(TypeError)
+      expect(() => new Sprite(src, { width: 0, height: 'test' })).toThrow(TypeError)
     })
 
     it('should throw an exception if position is not a number', () => {
-      expect(() => new Sprite(src, {x: NaN, y: 0})).toThrow()
-      expect(() => new Sprite(src, {x: 0, y: NaN})).toThrow()
-      expect(() => new Sprite(src, {x: 'test', y: 0})).toThrow()
-      expect(() => new Sprite(src, {x: 0, y: 'test'})).toThrow()
+      expect(() => new Sprite(src, { x: NaN, y: 0 })).toThrow(TypeError)
+      expect(() => new Sprite(src, { x: 0, y: NaN })).toThrow(TypeError)
+      expect(() => new Sprite(src, { x: 'test', y: 0 })).toThrow(TypeError)
+      expect(() => new Sprite(src, { x: 0, y: 'test' })).toThrow(TypeError)
+    })
+
+    it('should throw an exception if region is invalid type', () => {
+      expect(() => new Sprite(src, { region: 4 })).toThrow(TypeError)
+      expect(() => new Sprite(src, { region: new SpriteAnimation([], 150) })).toThrow(TypeError)
+      expect(() => new Sprite(src, { region: new Sprite(src) })).toThrow(TypeError)
     })
   })
+
   describe('Loading', () => {
     it('isLoaded returns false while sprite isn\'t loaded', () => {
       const sprite = new Sprite(src)
