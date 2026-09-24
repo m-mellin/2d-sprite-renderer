@@ -1,4 +1,5 @@
 import { ImageAsset } from './ImageAsset.js'
+import { SpriteRegion } from './SpriteRegion.js'
 
 /**
  * Represents a sprite that can be rendered on a canvas.
@@ -70,7 +71,7 @@ export class Sprite {
     this.y = y
     this.width = width
     this.height = height
-    this.#region = region
+    this.region = region
     this.assignImageAsset(src)
   }
 
@@ -222,7 +223,11 @@ export class Sprite {
    * @param {SpriteRegion|null} region The sprite region, or null to use the entire image.
    */
   set region (region) {
-    this.#region = region
+    if (region === null || region instanceof SpriteRegion) {
+      this.#region = region
+    } else {
+      throw new TypeError('region must be null or of type SpriteRegion')
+    }
   }
 }
 
