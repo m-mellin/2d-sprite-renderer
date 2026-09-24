@@ -109,7 +109,15 @@ export class SpriteRegion {
    * @returns {number} The width in pixels.
    */
   get width () {
-    return this.#width
+    if (!Number.isFinite(width)) {
+      throw new TypeError('width must be a finite number')
+    }
+
+    if (width < 0) {
+      throw new RangeError('width can\'t be negative')
+    }
+
+    this.#width = width
   }
 
   /**
@@ -118,6 +126,14 @@ export class SpriteRegion {
    * @returns {number} The height in pixels.
    */
   get height () {
-    return this.#height
+    if (!Number.isFinite(height)) {
+      throw new TypeError('height must be a finite number')
+    }
+
+    if (height < 0) {
+      throw new RangeError('height can\'t be negative')
+    }
+
+    this.#height = height
   }
 }
