@@ -15,7 +15,7 @@ body.appendChild(canvas)
 
 for (let j = 0; j < (1080/32); j++) {
   for (let i = 0; i < (1920/32); i++) {
-    const grass = new Sprite('../src/grass2.png', 32 * i, j * 32, 32, 32)
+    const grass = new Sprite('../src/grass2.png', {x: 32 * i, y: j * 32, width: 32, height: 32})
     renderer.add(grass)
   }
 }
@@ -42,7 +42,7 @@ let currentAnimation = idle
 document.addEventListener('keydown', (event) => {
   if (event.key === 'ArrowRight') {
     currentAnimation = walking
-    character.positionX += 5
+    character.x += 5
   }
 })
 
@@ -52,13 +52,7 @@ document.addEventListener('keyup', (event) => {
   }
 })
 
-const character = new Sprite(
-  '../src/spritesheet.png',
-  100,
-  100,
-  60,
-  64,
-  idle.region
+const character = new Sprite('../src/spritesheet.png',{x: 100, y: 100, width: 60, height: 64, region: idle.region}
 )
 
 renderer.add(character)
