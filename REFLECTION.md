@@ -567,3 +567,5 @@ Jag har använt LLM i den här laborationen för mer komplexa problem. Bland ann
 I övrigt vill jag inte att LLM ska programmera åt mig. Programmeringen är det jag själv vill göra, och jag vill att AI ska hjälpa mig att lära mig, ge tips och öka min egen förmåga, inte göra mitt jobb. Jag har även använt LLM för att formulera vissa JSDoc-kommentarer bättre. Då har jag alltid skrivit kommentaren själv först och sedan bett om råd för att formulera den korrekt. Det tycker jag är det bästa sättet att använda AI utan att ge bort ansvaret.
 
 Just nu vill jag inte heller använda AI direkt i VS Code. Jag upplever att det stör mitt arbetsflöde, och jag tror dessutom att det finns en risk att man tappar både förståelsen och greppet om sitt eget lärande.
+
+Jag har däremot använt AI för att formatera det här dokumentet, till exempel för att göra rubriker och radbrytningar enhetliga. Det är monotont och tidskrävande arbete, och jag tycker att det är bättre att lägga tiden på att göra själva uppgifterna och låta LLM:en se till att dokumentet blir enhetligt.
