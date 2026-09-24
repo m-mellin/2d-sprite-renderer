@@ -60,8 +60,8 @@ export class Sprite {
    * Creates an instance of the Sprite class.
    *
    * @param {string} src The source of the image.
-   * @param {number} xPos The X coordinate in pixels (default: 0).
-   * @param {number} yPos The Y coordinate in pixels (default: 0).
+   * @param {number} x The X coordinate in pixels (default: 0).
+   * @param {number} y The Y coordinate in pixels (default: 0).
    * @param {number} width The width of the sprite in pixels.
    * @param {number} height The height of the sprite in pixels.
    * @param {SpriteRegion|null} region The region of the source image to use (default: null).
