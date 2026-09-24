@@ -211,6 +211,63 @@ render () {
 
 ## `ImageAsset.#createLoadPromise()`
 
+### Förklaring
+Skapar ett löfte (promise) som löses när bilden har laddats och avvisas om laddningen misslyckas. Metoden kopplar `onload` och `onerror` till bilden och startar sedan laddningen genom att sätta bildens källa. När bilden har laddats sätts även flaggan `#isLoaded`.
+
+### Reflektion
+
+**Blocks and Indenting:**
+Metoden har två indenteringsnivåer. Blocket i `onload` innehåller dessutom två instruktioner: det sätter flaggan `this.#isLoaded` och löser löftet. Enligt boken, s. 35, bör indenteringsnivån inte vara större än en eller två nivåer. Blocken inuti `if`, `else` och `while` bör dessutom helst endast innehålla en rad, gärna ett funktionsanrop. Samma princip kan tillämpas här genom att flytta ansvaret för vad som händer när bilden har laddats till en separat metod.
+
+**Have No Side Effects:**
+Namnet på metoden `#createLoadPromise()` antyder att metoden enbart skapar ett löfte. Metoden gör dock även flera andra saker. Den startar laddningen av bilden genom `this.#setImageSource()`, sätter händelsehanterare för `onload` och `onerror` samt ändrar flaggan `#isLoaded`.
+
+Metoden är även beroende av att `this.#image = new Image()` har körts innan metoden anropas. Genom att skapa bilden direkt vid deklarationen försvinner detta beroende på ordningen i konstruktorn.
+
+
+### Förbättring och analys
+Jag skulle göra två förändringar här. Den första är att flytta det som händer när bilden laddas till en egen metod. På så sätt kan `onload` endast innehålla ett funktionsanrop och metoden får ett tydligare ansvar.
+
+Jag skulle även flytta skapandet av bilden från konstruktorn till fältdeklarationen. På så sätt är `#image` initierad innan konstruktorn börjar köras och metoden blir inte beroende av att en viss ordning används i konstruktorn.
+
+Sidoeffekten att `#createLoadPromise()` startar laddningen av bilden ser jag däremot ingen anledning att bryta ut. Att skapa löftet och starta laddningen hör ihop eftersom löftet representerar resultatet av just den laddning som metoden startar. Jag har därför valt att behålla detta i samma metod och istället tydliggjort ansvaret i JSDoc-kommentaren.
+
+Jag hade tidigare inte skrivit några JSDoc-kommentarer för metoderna i `ImageAsset`, vilket jag ser som en miss. I samband med analysen har jag därför även lagt till kommentarer som beskriver metodernas ansvar och parametrar.
+
+```javascript
+  #image = new Image()
+
+  constructor (src) {
+    this.#loaded = this.#createLoadPromise(src)
+    this.#loaded.catch(() => {})
+  }
+
+  /**
+   * Starts loading the image and creates a promise for the result.
+   *
+   * @param {string} src - Source of the image.
+   * @returns {Promise<HTMLImageElement>} A promise that resolves with the image when it has loaded.
+   */
+  #createLoadPromise (src) {
+    return new Promise((resolve, reject) => {
+      this.#image.onload = () => this.#handleLoad(resolve)
+      this.#image.onerror = (err) => reject(err)
+
+      this.#setImageSource(src)
+    })
+  }
+
+  /**
+   * Marks the asset as loaded and resolves the load promise.
+   *
+   * @param {Function} resolve - Resolves the load promise with the image.
+   */
+  #handleLoad (resolve) {
+    this.#isLoaded = true
+    resolve(this.#image)
+  }
+
+```
 
 ## `SpriteAnimation.update()`
 
