@@ -125,7 +125,7 @@ describe('Sprite', () => {
   })
 
   describe('Validation', () => {
-    it('throws a RangeRrror when width is negative', () => {
+    it('throws a RangeError when width is negative', () => {
       expect(() => new Sprite(src, {width: -50, height: 0})).toThrow(RangeError)
     })
 
@@ -170,6 +170,20 @@ describe('Sprite', () => {
       expect(() => new Sprite(src, { region: new SpriteAnimation([], 150) })).toThrow(TypeError)
       expect(() => new Sprite(src, { region: new Sprite(src) })).toThrow(TypeError)
     })
+
+    it('allows zero as position and size', () => {
+      const sprite = new Sprite(src)
+
+      sprite.x = 0
+      sprite.y = 0
+      sprite.width = 0
+      sprite.height = 0
+
+      expect(sprite.x).toBe(0)
+      expect(sprite.y).toBe(0)
+      expect(sprite.width).toBe(0)
+      expect(sprite.height).toBe(0)
+    })
   })
 
   describe('Image', () => {
@@ -178,7 +192,7 @@ describe('Sprite', () => {
 
       sprite.assignImageAsset('../src/grass2.png')
 
-      expect(sprite.image).toBeInstanceOf(HTMLImageElement)
+      expect(sprite.image.src).toContain('grass2.png')
     })
   })
 
