@@ -168,7 +168,7 @@ export class Sprite {
 
   set width (width) {
     if (width < 0) {
-      throw new TypeError('width can\'t be negative')
+      throw new RangeError('width can\'t be negative')
     } else {
       this.#width = width
     }
@@ -185,7 +185,7 @@ export class Sprite {
 
   set height (height) {
     if (height < 0) {
-      throw new TypeError('height can\'t be negative')
+      throw new RangeError('height can\'t be negative')
     } else {
       this.#height = height
     }
