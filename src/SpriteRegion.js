@@ -52,7 +52,7 @@ export class SpriteRegion {
   }
 
   /**
-   * Returns the X coordinate of the region.
+   * Returns the X coordinate of the SpriteRegion.
    * 
    * @returns {number} The X coordinate in pixels.
    */
@@ -61,12 +61,46 @@ export class SpriteRegion {
   }
 
   /**
-   * Returns the Y coordinate of the region.
+   * Sets the X coordinate of the SpriteRegion.
+   * 
+   * @param {number} x The X coordinate in pixels.
+   */
+  set x (x) {
+    if (!Number.isFinite(x)) {
+      throw new TypeError('x must be a finite number')
+    }
+
+    if (x < 0) {
+      throw new RangeError('x can\'t be negative')
+    }
+
+    this.#x = x
+  }
+
+  /**
+   * Returns the Y coordinate of the SpriteRegion.
    * 
    * @returns {number} The Y coordinate in pixels.
    */
   get y () {
     return this.#y
+  }
+
+  /**
+   * Sets the Y coordinate of the SpriteRegion.
+   * 
+   * @param {number} y The Y coordinate in pixels.
+   */
+  set y (y) {
+    if (!Number.isFinite(y)) {
+      throw new TypeError('y must be a finite number')
+    }
+
+    if (y < 0) {
+      throw new RangeError('y can\'t be negative')
+    }
+
+    this.#y = y
   }
 
   /**
