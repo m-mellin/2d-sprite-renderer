@@ -1,26 +1,4 @@
-# Namngivning (kapitel 2)
-
-Readability
-Understandability
-Intention-revealing names
-Implicity of code
-Magic Numbers
-Avoid Disinformation
-Avoid Encodings
-Avoid mental mapping
-Class Names - noun
-Method Names - verb
-Painted types
-Don't be cute
-Don't pun
-Pick One Word per Concept
-Use Searchable Names
-Use Pronounceable Names
-Make Meaningful Distinctions
-Use Solution Domain Names
-Use Problem Domain Names
-Don't Add Gratuitous Context
-
+# Namngivning
 
 ## `Sprite`, `SpriteRenderer`, `SpriteRegion`, `SpriteAnimation` och `ImageAsset`
 
@@ -117,29 +95,6 @@ Slutligen tycker jag att reglerna fungerar bäst som en fråga att ställa sig n
 
 
 # Funktioner
-
-Small
-- Blocks and Indenting
-Do One Thing
-One Level of Abstraction per Function
-- The Stepdown Rule
-Switch Statements
-Use Descriptive Names
-Function Arguments
-- Flaggargument
-- Monadic Functions
-- Dyadic Functions
-- Triadic Functions
-- Argument Objects
-- Argument Lists
-- Verbs and Keywords
-Have No Side Effects
-Command Query Separation
-Prefer Exceptions to Returning Error Codes
-Don't Repeat Yourself
-Structured Programming
-How Do You Write Functions Like This?
-
 
 ## `SpriteRenderer.render()`
 
@@ -404,4 +359,88 @@ Jag döper metoden till `#renderWhenLoaded()`, vilket beskriver vad metoden gör
   }
 ```
 
-## `SpriteRenderer.remove()`
+## `Sprite.constructor()`
+
+### Förklaring
+Skapar en sprite med en bildkälla, position, storlek och eventuellt en region. Konstruktorn sätter fälten och hämtar bildtillgången genom `assignImageAsset()`.
+
+### Reflektion
+**Function Arguments:**
+Här bryter konstruktorn tydligt mot regeln om antalet argument. Konstruktorn har sex argument (`src`, `x`, `y`, `width`, `height` och `region`). Boken beskriver att fler än tre argument kräver särskild motivering och att man helst bör undvika så många argument (s. 40).
+
+Boken föreslår att argument som hör ihop istället kan samlas i ett objekt, s. 43. I det här fallet hör `x`, `y`, `width`, `height` och `region` ihop eftersom de beskriver spritens egenskaper.
+
+Anropet `new Sprite(src, 0, 0, 32, 32)` är dessutom svårt att läsa eftersom det inte framgår vad de olika värdena representerar. Det är också lätt att råka ange argumenten i fel ordning.
+
+Det finns även ett problem med standardvärdena. `x` och `y` har standardvärdet `0`, medan `width` och `height` saknar standardvärden. Eftersom JavaScript inte tillåter att man hoppar över argument i mitten måste en användare ändå ange `x` och `y` om den vill ange `width` och `height`. Detta var något jag inte hade reflekterat över tidigare.
+
+### Förbättring
+
+Jag tog hjälp av en LLM (Claude Sonnet 5 Medium) för att undersöka hur detta kunde lösas, eftersom jag inte hade tidigare kunskap om options-objekt som lösning på många funktionsargument. Förslaget var att använda ett objekt för position, storlek och region:
+
+> Jag skulle ta emot positionen, storleken och regionen i ett objekt. Antalet rader ändras inte (8), men argumenten går från sex till två, anropen blir läsbara (`new Sprite('hero.png', { width: 32, height: 32 })`) och standardvärdena för `x` och `y` går att använda. Nackdelen är att alla anrop av konstruktorn måste ändras. Om jag följde boken strikt hade jag skapat en egen klass för position och storlek, men det känns som överkonstruktion i ett litet spritebibliotek.
+>
+>  ```javascript
+>    /**
+>    * Creates an instance of the Sprite class.
+>    *
+>    * @param {string} src The source of the image.
+>    * @param {object} options The position, size and region of the sprite.
+>    * @param {number} [options.x] The X coordinate in pixels (default: 0).
+>    * @param {number} [options.y] The Y coordinate in pixels (default: 0).
+>    * @param {number} options.width The width of the sprite in pixels.
+>    * @param {number} options.height The height of the sprite in pixels.
+>    * @param {SpriteRegion|null} [options.region] The region of the source image to use (default: null).
+>    */
+>    constructor (src, { x = 0, y = 0, width, height, region = null }) {
+>      this.#x = x
+>      this.#y = y
+>      this.#width = width
+>      this.#height = height
+>      this.#region = region
+>      this.assignImageAsset(src)
+>    }
+> ```
+
+Ett annat alternativ är att följa bokens förslag mer strikt och skapa egna klasser för värden som hör ihop. Positionen skulle då kunna representeras av en Point-klass:
+
+```javascript
+export class Point {
+  #x = 0
+  #y = 0
+
+  constructor(x, y) {
+    this.#x = x
+    this.#y = y
+  }
+}
+```
+
+På samma sätt skulle storleken kunna representeras av en Size-klass:
+
+```javascript
+export class Size {
+  #width = 0
+  #height = 0
+
+  constructor(width, height) {
+    this.#width = width
+    this.#height = height
+  }
+}
+
+```
+
+Konstruktorn skulle då kunna användas på följande sätt:
+
+```javascript
+new Sprite(
+  `hero.png`,
+  new Point(0, 0),
+  new Size(32, 32)
+)
+```
+
+Jag kan förstå hur detta kan vara en fördel ur ett objektorienterat perspektiv, eftersom `Point` och `Size` samlar värden som hör ihop i egna objekt. Däremot anser jag att det blir onödigt komplext för användaren av min modul. Användaren behöver då skapa två extra objekt för att skapa en enkel sprite.
+
+Jag väljer därför options-objektet som lösning. Det minskar antalet argument från sex till två, gör anropet tydligare och gör det möjligt att använda standardvärden för `x` och `y`, utan att introducera ytterligare klasser som jag inte anser tillför tillräckligt mycket funktionalitet.
