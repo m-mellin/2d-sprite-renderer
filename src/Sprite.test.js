@@ -125,26 +125,35 @@ describe('Sprite', () => {
   })
 
   describe('Validation', () => {
-    it('should throw an exception if size is negative', () => {
+    it('throws a RangeRrror when width is negative', () => {
       expect(() => new Sprite(src, {width: -50, height: 0})).toThrow(RangeError)
+    })
+
+    it('throws a RangeError when height is negative', () => {
       expect(() => new Sprite(src, {width: 0, height: -100})).toThrow(RangeError)
     })
 
-    it('should throw an exception if size is not a number', () => {
+    it('throws a TypeError when width is not a number', () => {
       expect(() => new Sprite(src, { width: NaN, height: 0 })).toThrow(TypeError)
-      expect(() => new Sprite(src, { width: 0, height: NaN })).toThrow(TypeError)
       expect(() => new Sprite(src, { width: 'test', height: 0 })).toThrow(TypeError)
+    })
+
+    it('throws a TypeError when height is not a number', () => {
+      expect(() => new Sprite(src, { width: 0, height: NaN })).toThrow(TypeError)
       expect(() => new Sprite(src, { width: 0, height: 'test' })).toThrow(TypeError)
     })
 
-    it('should throw an exception if position is not a number', () => {
+    it('throws a TypeError when x is not a number', () => {
       expect(() => new Sprite(src, { x: NaN, y: 0 })).toThrow(TypeError)
-      expect(() => new Sprite(src, { x: 0, y: NaN })).toThrow(TypeError)
       expect(() => new Sprite(src, { x: 'test', y: 0 })).toThrow(TypeError)
+    })
+
+    it('throws a TypeError when y is not a number', () => {
+      expect(() => new Sprite(src, { x: 0, y: NaN })).toThrow(TypeError)
       expect(() => new Sprite(src, { x: 0, y: 'test' })).toThrow(TypeError)
     })
 
-    it('should throw an exception if region is invalid type', () => {
+    it('throws a TypeError if region is invalid type', () => {
       expect(() => new Sprite(src, { region: 4 })).toThrow(TypeError)
       expect(() => new Sprite(src, { region: new SpriteAnimation([], 150) })).toThrow(TypeError)
       expect(() => new Sprite(src, { region: new Sprite(src) })).toThrow(TypeError)
