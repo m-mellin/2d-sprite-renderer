@@ -65,7 +65,7 @@ export class Sprite {
    * @param {number} height The height of the sprite in pixels.
    * @param {SpriteRegion|null} region The region of the source image to use (default: null).
    */
-  constructor (src, x = 0, y = 0, width, height, region = null) {
+  constructor (src, {x = 0, y = 0, width, height, region = null}) {
     this.#x = x
     this.#y = y
     this.#width = width
