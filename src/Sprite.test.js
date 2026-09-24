@@ -42,6 +42,13 @@ describe('Sprite', () => {
     expect(() => new Sprite(src, {width: 0, height: 'test'})).toThrow()
   })
 
+  it('should throw a exception if position is not a number', () => {
+    expect(() => new Sprite(src, {x: NaN, y: 0})).toThrow()
+    expect(() => new Sprite(src, {x: 0, y: NaN})).toThrow()
+    expect(() => new Sprite(src, {x: 'test', y: 0})).toThrow()
+    expect(() => new Sprite(src, {x: 0, y: 'test'})).toThrow()
+  })
+
   it('changes x and y value after creating sprite', () => {
     const sprite = new Sprite(src, {x: 5, y: 5})
 

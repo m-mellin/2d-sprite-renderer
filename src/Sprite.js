@@ -101,11 +101,15 @@ export class Sprite {
    * @param {number} x The X coordinate in pixels.
    */
   set x (x) {
-    if (typeof x !== 'number') {
-      throw new TypeError('x must be a number')
-    } else {
-      this.#x = x
+    if (typeof x !== 'number' || Number.isNaN(x)) {
+      throw new TypeError('x must be of type number')
     }
+
+    if (x < 0) {
+      throw new RangeError('x can\'t be negative')
+    }
+
+    this.#x = x
   }
 
   /**
@@ -123,11 +127,15 @@ export class Sprite {
    * @param {number} y The Y coordinate in pixels.
    */
   set y (y) {
-    if (typeof y !== 'number') {
-      throw new TypeError('y must be a number')
-    } else {
-      this.#y = y
+    if (typeof y !== 'number' || Number.isNaN(y)) {
+      throw new TypeError('y must be of type number')
     }
+
+    if (y < 0) {
+      throw new RangeError('y can\'t be negative')
+    }
+
+    this.#y = y
   }
 
   /**
