@@ -2,8 +2,6 @@ import { describe, it, expect } from 'vitest'
 import { SpriteRegion } from './SpriteRegion.js'
 import { SpriteAnimation } from './SpriteAnimation.js'
 
-const src = '../src/spritesheet.png'
-
 describe('SpriteAnimation', () => {
   const frame1 = new SpriteRegion(0, 0, 25, 25)
   const frame2 = new SpriteRegion(25, 0, 25, 25)
@@ -15,6 +13,7 @@ describe('SpriteAnimation', () => {
 
       expect(animation.region).toBe(frame1)
     })
+  })
 
   describe('Update', () => {
     it('does not change frame while elapsed time is less than frame duration', () => {
@@ -50,6 +49,4 @@ describe('SpriteAnimation', () => {
       expect(animation.region).toBe(frame1)
     })
   })
-  })
-
 })
