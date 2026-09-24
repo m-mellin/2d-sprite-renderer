@@ -184,13 +184,13 @@ describe('Sprite', () => {
       expect(sprite.width).toBe(0)
       expect(sprite.height).toBe(0)
     })
-  })
 
-  it('allows position to be negative', () => {
-    const sprite = new Sprite(src, {x: -10, y: -5})
+    it('allows position to be negative', () => {
+      const sprite = new Sprite(src, {x: -10, y: -5})
 
-    expect(sprite.x).toBe(-10)
-    expect(sprite.y).toBe(-5)
+      expect(sprite.x).toBe(-10)
+      expect(sprite.y).toBe(-5)
+    })
   })
 
   describe('Image', () => {
