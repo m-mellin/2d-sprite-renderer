@@ -13,20 +13,26 @@ describe('Sprite', () => {
     expect(sprite.height).toBeUndefined()
     expect(sprite.x).toBe(0)
     expect(sprite.y).toBe(0)
+    expect(sprite.region).toBeNull()
   })
 
-  it('creates a Sprite with specified x and y coordinates', () => {
-    const sprite = new Sprite(src, {x: 5, y: 5})
+  it('creates a Sprite with specified position', () => {
+    const sprite = new Sprite(src, {x: 5, y: 10})
 
     expect(sprite.x).toBe(5)
-    expect(sprite.y).toBe(5)
+    expect(sprite.y).toBe(10)
   })
 
-  it('creates a Sprite with specified width and height', () => {
-    const sprite = new Sprite(src, {width: 5, height: 5})
+  it('creates a Sprite with specified size', () => {
+    const sprite = new Sprite(src, {width: 50, height: 100})
 
-    expect(sprite.width).toBe(5)
-    expect(sprite.height).toBe(5)
+    expect(sprite.width).toBe(50)
+    expect(sprite.height).toBe(100)
+  })
+
+  it('sprite size can\'t be negative', () => {
+    expect(() => new Sprite(src, {width: -50, height: 0})).toThrow()
+    expect(() => new Sprite(src, {width: 0, height: -100})).toThrow()
   })
 
   it('changes x and y value after creating sprite', () => {

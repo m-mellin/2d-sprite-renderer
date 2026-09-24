@@ -66,10 +66,10 @@ export class Sprite {
    * @param {SpriteRegion|null} region The region of the source image to use (default: null).
    */
   constructor (src, {x = 0, y = 0, width, height, region = null} = {}) {
-    this.#x = x
-    this.#y = y
-    this.#width = width
-    this.#height = height
+    this.x = x
+    this.y = y
+    this.width = width
+    this.height = height
     this.#region = region
     this.assignImageAsset(src)
   }
@@ -166,6 +166,14 @@ export class Sprite {
     return this.#width
   }
 
+  set width (width) {
+    if (width < 0) {
+      throw new TypeError('width can\'t be negative')
+    } else {
+      this.#width = width
+    }
+  }
+
   /**
    * Returns the height of the sprite.
    * 
@@ -173,6 +181,14 @@ export class Sprite {
    */
   get height () {
     return this.#height
+  }
+
+  set height (height) {
+    if (height < 0) {
+      throw new TypeError('height can\'t be negative')
+    } else {
+      this.#height = height
+    }
   }
 
   /**
