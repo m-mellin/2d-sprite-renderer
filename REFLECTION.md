@@ -76,33 +76,28 @@ Ett alternativ hade varit att behålla längre namn som `xPosition` / `positionX
 
 ---
 
-## `sourceX` / `sourceY`
+**## `x` / `y`**
 
-### Förklaring
+**### Förklaring**
 
-Privata fält och publika accessorer i `SpriteRegion`, vilket representerar regionens position i pixlar på spriten.
+Privata fält och publika accessorer i `SpriteRegion`, vilka representerar regionens position i källbilden i pixlar.
 
-### Reflektion
+**### Reflektion**
 
-**Use Solution Domain Names:**
+****Avoid Mental Mapping:****
 
-Efter att ha tänkt igenom det mer kom jag fram till att `sourceX` / `sourceY` faktiskt är rätt val, snarare än att byta till `x`/`y`. `SpriteRegion` är i praktiken bara en wrapper runt argumenten till `CanvasRenderingContext2D.drawImage()`, och där heter parametrarna redan `sx`/`sy` (source x/y) i Canvas-API:et.
+Jag använde först namnen `sourceX` och `sourceY` eftersom de tydligt beskrev att koordinaterna kommer från källbilden. När jag började testa och använda modulen mer insåg jag dock att det blev onödigt för användaren att behöva tänka på koordinaterna som ett separat koncept.
 
-Boken nämner att man ska använda namn från lösningsdomänen när det gör namnet tydligare för andra programmerare, och eftersom `drawImage` redan är en etablerad konvention tycker jag `sourceX`/`sourceY` blir tydligare än ett bytt `x`/`y` hade blivit.
+En användare som arbetar med både `Sprite` och `SpriteRegion` förväntar sig naturligt att kunna använda `x` och `y` för att komma åt objektens position. Med `sourceX` och `sourceY` behöver användaren istället komma ihåg att en region använder ett annat namn för sin x- och y-koordinat.
 
-**Avoid Disinformation:**
+Det skapar en form av mental mapping där `sourceX` måste översättas till "regionens x-position". Jag valde därför att byta till `x` och `y`. Skillnaden mellan en sprites position på canvasen och en regions position i källbilden framgår av vilket objekt koordinaten tillhör, så jag tycker inte längre att `source`-prefixet tillför tillräckligt mycket för att motivera det extra namnet.
 
-Om jag istället bytt `SpriteRegion` till `x`/`y` för att matcha `Sprite` hade jag nog skapat förvirring åt andra hållet istället. `sprite.x` och `region.x` hade sett ut att betyda samma sak, fast den ena är var spriten ska ritas på canvasen och den andra är varifrån i källbilden man klipper ut en region. Det är typ två helt olika saker som råkar vara samma datatyp.
+****Pick One Word per Concept:****
 
-`source`-prefixet gör det tydligt att det är skillnad, vilket märks extra mycket i `SpriteRenderer.render()` där båda används i samma `drawImage`-anrop.
+Det här gjorde också att jag omvärderade hur jag såg på "Pick One Word per Concept". Tidigare tänkte jag att `sourceX` och `sourceY` var tydligare eftersom de beskrev vilken typ av koordinat det var. Vid testningen blev det istället tydligare att `x` och `y` är ett mer konsekvent namn för en koordinat i modulen.
 
-**Pick One Word per Concept:**
+Även om `sprite.x` och `region.x` används för olika ändamål representerar båda en x-position för det objekt som de tillhör. Jag tycker därför att `x` och `y` ger ett enklare gränssnitt och minskar mängden information användaren behöver hålla reda på.
 
-Jag trodde tidigare att "ett ord per koncept" betydde att jag borde byta namn så att både `Sprite` och `SpriteRegion` använder `x`/`y`. Men nu inser jag att det inte är samma koncept egentligen, bara samma typ av värde (en koordinat). Den ena är en destination, den andra är en källposition.
-
-Regeln handlar om att inte kalla *samma sak* för olika namn, inte om att tvinga fram samma namn på två olika saker bara för att de råkar vara siffror av samma typ. Så jag behåller `sourceX`/`sourceY` som eget namn istället för att byta.
-
----
 
 ## `isLoaded`
 
