@@ -565,6 +565,8 @@ Just nu vill jag inte heller använda AI direkt i VS Code. Jag upplever att det 
 
 Jag har däremot använt AI för att formatera det här dokumentet, till exempel för att göra rubriker och radbrytningar enhetliga. Det är monotont och tidskrävande arbete, och jag tycker att det är bättre att lägga tiden på att göra själva uppgifterna och låta LLM:en se till att dokumentet blir enhetligt.
 
+Jag har även använt mig av LLM när jag behövde mocka upp canvasen till mina tester.
+
 ---
 
 ## Reflektion över egen kodkvalitet
