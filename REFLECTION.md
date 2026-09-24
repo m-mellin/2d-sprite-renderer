@@ -569,3 +569,13 @@ I övrigt vill jag inte att LLM ska programmera åt mig. Programmeringen är det
 Just nu vill jag inte heller använda AI direkt i VS Code. Jag upplever att det stör mitt arbetsflöde, och jag tror dessutom att det finns en risk att man tappar både förståelsen och greppet om sitt eget lärande.
 
 Jag har däremot använt AI för att formatera det här dokumentet, till exempel för att göra rubriker och radbrytningar enhetliga. Det är monotont och tidskrävande arbete, och jag tycker att det är bättre att lägga tiden på att göra själva uppgifterna och låta LLM:en se till att dokumentet blir enhetligt.
+
+---
+
+## Reflektion över egen kodkvalitet
+
+Jag tycker att min kodkvalitet överlag är hyfsat god. Jag gick in i laborationen väl förberedd och har tidigare skrivit kod som jag är nöjd med. Samtidigt har jag en del kvar att lära mig, framför allt när det gäller regeln **Do One Thing**. Ibland tror jag att jag följer den när jag skriver koden för att få den att fungera, men när jag nu har gått igenom koden flera gånger ser jag att det absolut finns förbättringspotential.
+
+Jag vill också bli mer oberoende av AI när jag lär mig. Jag sitter mycket med StackOverflow, MDN och andra uppslagsverk/forum, men när jag inte har skrivit JavaScript på ett tag blir även inbyggda metoder som `split`, `push` och `pop` svåra att använda. JavaScript är dessutom ett ganska löst språk, till skillnad från Java där jag känner mig mer insatt i hur man arbetar objektorienterat.
+
+Därför behöver jag arbeta mer med båda språken, och kanske bygga saker som jag egentligen inte "behöver" men som är bra för lärandet. Jag har till exempel inte byggt några webbkomponenter sedan 1dv025, medan jag har hållit på en hel del med backend sedan 1dv026, bland annat i projektarbetet 1dv613.
