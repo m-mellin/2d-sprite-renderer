@@ -55,17 +55,27 @@ export class SpriteRenderer {
 
   /**
    * Adds a sprite to the renderer.
-   * 
+   * If the sprite is not loaded yet, a render is scheduled once it has loaded.
+   *
    * @param {Sprite} sprite - Sprite to add.
    */
   add (sprite) {
     this.#sprites.push(sprite)
 
     if (!sprite.isLoaded) {
-      sprite.waitForLoad()
-        .then(() => this.#scheduleRender())
-        .catch(() => {})
+      this.#renderWhenLoaded(sprite)
     }
+  }
+
+  /**
+   * Schedules a render when the sprite has loaded.
+   *
+   * @param {Sprite} sprite - The sprite to wait for.
+   */
+  #renderWhenLoaded (sprite) {
+    sprite.waitForLoad()
+      .then(() => this.#scheduleRender())
+      .catch(() => {})
   }
 
   /**
