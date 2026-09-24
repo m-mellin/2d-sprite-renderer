@@ -88,7 +88,7 @@ export class Sprite {
   }
 
   /**
-   * Returns the X coordinate of the Sprite.
+   * Returns the X coordinate of the sprite.
    * 
    * @returns {number} The X coordinate in pixels.
    */
@@ -97,7 +97,7 @@ export class Sprite {
   }
 
   /**
-   * Sets the X coordinate of the Sprite.
+   * Sets the X coordinate of the sprite.
    * 
    * @param {number} x The X coordinate in pixels.
    */
@@ -114,7 +114,7 @@ export class Sprite {
   }
 
   /**
-   * Returns the Y coordinate of the Sprite.
+   * Returns the Y coordinate of the sprite.
    * 
    * @returns {number} The Y coordinate in pixels.
    */
@@ -123,7 +123,7 @@ export class Sprite {
   }
 
   /**
-   * Sets the Y coordinate of the Sprite.
+   * Sets the Y coordinate of the sprite.
    * 
    * @param {number} y The Y coordinate in pixels.
    */

@@ -44,15 +44,15 @@ export class SpriteRegion {
    * @param {number} width - Width of the region.
    * @param {number} height - Height of the region.
    */
-  constructor (x, y, width, height) {
-    this.#x = x
-    this.#y = y
-    this.#width = width
-    this.#height = height
+  constructor ({x = 0, y = 0, width = 0, height = 0} = {}) {
+    this.x = x
+    this.y = y
+    this.width = width
+    this.height = height
   }
 
   /**
-   * Returns the X coordinate of the SpriteRegion.
+   * Returns the X coordinate of the region.
    * 
    * @returns {number} The X coordinate in pixels.
    */
@@ -61,7 +61,7 @@ export class SpriteRegion {
   }
 
   /**
-   * Sets the X coordinate of the SpriteRegion.
+   * Sets the X coordinate of the region.
    * 
    * @param {number} x The X coordinate in pixels.
    */
@@ -78,7 +78,7 @@ export class SpriteRegion {
   }
 
   /**
-   * Returns the Y coordinate of the SpriteRegion.
+   * Returns the Y coordinate of the region.
    * 
    * @returns {number} The Y coordinate in pixels.
    */
@@ -87,7 +87,7 @@ export class SpriteRegion {
   }
 
   /**
-   * Sets the Y coordinate of the SpriteRegion.
+   * Sets the Y coordinate of the region.
    * 
    * @param {number} y The Y coordinate in pixels.
    */
@@ -109,6 +109,15 @@ export class SpriteRegion {
    * @returns {number} The width in pixels.
    */
   get width () {
+    return this.#width
+  }
+
+  /**
+   * Sets the width of the region.
+   *
+   * @param {number} width The width in pixels.
+   */
+  set width (width) {
     if (!Number.isFinite(width)) {
       throw new TypeError('width must be a finite number')
     }
@@ -126,6 +135,15 @@ export class SpriteRegion {
    * @returns {number} The height in pixels.
    */
   get height () {
+    return this.#height
+  }
+
+  /**
+   * Sets the height of the region.
+   *
+   * @param {number} height The height in pixels.
+   */
+  set height (height) {
     if (!Number.isFinite(height)) {
       throw new TypeError('height must be a finite number')
     }
