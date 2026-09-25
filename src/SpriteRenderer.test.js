@@ -37,4 +37,61 @@ describe('SpriteRenderer', () => {
       expect(canvas.getContext).toHaveBeenCalledWith('2d')
     })
   })
+
+  describe('add', () => {
+    it('adds a loaded sprite to the renderer', () => {
+      const { canvas, context } = createCanvas()
+      const renderer = new SpriteRenderer(canvas)
+      const sprite = {
+        isLoaded: true,
+        image: {},
+        x: 10,
+        y: 20,
+        width: 32,
+        height: 32,
+        region: null
+      }
+
+      renderer.add(sprite)
+      renderer.render()
+
+      expect(context.drawImage).toHaveBeenCalled(
+        sprite.image,
+        sprite.x,
+        sprite.y,
+        sprite.width,
+        sprite.height,
+        sprite.region
+      )
+    })
+  })
+
+  describe('remove', () => {
+    it('removes a sprite from the renderer', () => {
+      const { canvas, context } = createCanvas()
+      const renderer = new SpriteRenderer(canvas)
+      const sprite = {
+        isLoaded: true,
+        image: {},
+        x: 10,
+        y: 20,
+        width: 32,
+        height: 32,
+        region: null
+      }
+
+      renderer.add(sprite)
+      renderer.remove(sprite)
+      renderer.render()
+
+      expect(context.drawImage).not.toHaveBeenCalled(
+        sprite.image,
+        sprite.x,
+        sprite.y,
+        sprite.width,
+        sprite.height,
+        sprite.region
+      )
+    })
+  })
 })
