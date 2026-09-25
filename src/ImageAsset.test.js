@@ -67,4 +67,25 @@ describe('ImageAsset', () => {
       expect(asset.isLoaded).toBe(false)
     })
   })
+
+  describe('getAsset', () => {
+    it('returns the same instance for the same source', () => {
+      new ImageAsset('test-image-one.png')
+
+      const assetOne = ImageAsset.getAsset('test-image-one.png')
+      const assetTwo = ImageAsset.getAsset('test-image-one.png')
+
+      expect(assetOne).toBe(assetTwo)
+    })
+
+    it('returns different instances for different source', () => {
+      new ImageAsset('test-image-one.png')
+      new ImageAsset('test-image-two.png')
+
+      const assetOne = ImageAsset.getAsset('test-image-one.png')
+      const assetTwo = ImageAsset.getAsset('test-image-two.png')
+
+      expect(assetOne).not.toBe(assetTwo)
+    })
+  })
 })
