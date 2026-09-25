@@ -20,24 +20,47 @@ const createCanvas = () => {
   return { canvas, context }
 }
 
+/**
+ * Simulates the browser finishing loading an image.
+ * This is needed because of the limitations of JSDOM.
+ * 
+ * @param {Sprite} sprite 
+ */
+const simulateImageLoad = (sprite) => {
+  sprite.image.dispatchEvent(new Event('load'))
+}
+
+let sourceCounter = 0
+
+/**
+ * Used to generate a unique string so that the sprites
+ * in different test use a cached ImageAsset, already loaded.
+ * 
+ * @returns unique string
+ */
+const createUniqueSource = () => {
+  return `/dir/image-${++sourceCounter}.png`
+}
+
+
 describe('Integration', () => {
   describe('Sprite + ImageAsset', () => {
     it('reflects the real loading of the image', async () => {
-      const sprite = new Sprite('../test-app/assets/grass2.png')
+      const sprite = new Sprite(createUniqueSource())
 
       expect(sprite.isLoaded).toBe(false)
 
       const loaded = sprite.waitForLoad()
-      sprite.image.dispatchEvent(new Event('load'))
+      simulateImageLoad(sprite)
       await loaded
 
       expect(sprite.isLoaded).toBe(true)
     })
 
     it('assignImageAsset swaps the image and resets the loading state', () => {
-      const sprite = new Sprite('../test-app/assets/grass2.png')
+      const sprite = new Sprite(createUniqueSource())
 
-      sprite.assignImageAsset('../test-app/assets/mario.bmp')
+      sprite.assignImageAsset(createUniqueSource())
 
       expect(sprite.image).toBeInstanceOf(HTMLImageElement)
       expect(sprite.isLoaded).toBe(false)
@@ -49,12 +72,12 @@ describe('Integration', () => {
       const { canvas, context } = createCanvas()
       const renderer = new SpriteRenderer(canvas)
 
-      const sprite = new Sprite('../test-app/assets/orc1_walk_full.png', {x: 10, y: 10, width: 64, height: 64})
+      const sprite = new Sprite(createUniqueSource(), {x: 10, y: 10, width: 64, height: 64})
       
       expect(sprite.isLoaded).toBe(false)
 
       const loaded = sprite.waitForLoad()
-      sprite.image.dispatchEvent(new Event('load'))
+      simulateImageLoad(sprite)
       await loaded
       
       expect(sprite.isLoaded).toBe(true)
@@ -77,12 +100,12 @@ describe('Integration', () => {
 
       const region = new SpriteRegion({x: 0, y: 0, width: 64, height: 64})
 
-      const sprite = new Sprite('../test-app/assets/orc1_idle_full.png', {x: 10, y: 10, width: 64, height: 64, region})
+      const sprite = new Sprite(createUniqueSource(), {x: 10, y: 10, width: 64, height: 64, region})
       
       expect(sprite.isLoaded).toBe(false)
 
       const loaded = sprite.waitForLoad()
-      sprite.image.dispatchEvent(new Event('load'))
+      simulateImageLoad(sprite)
       await loaded
       
       expect(sprite.isLoaded).toBe(true)
