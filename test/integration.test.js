@@ -1,6 +1,5 @@
 import { describe, it, expect, vi } from 'vitest'
 
-import { ImageAsset } from '../src/ImageAsset.js'
 import { Sprite } from '../src/Sprite.js'
 import { SpriteRegion } from '../src/SpriteRegion.js'
 import { SpriteRenderer } from '../src/SpriteRenderer.js'
