@@ -565,7 +565,7 @@ Just nu vill jag inte heller använda AI direkt i VS Code. Jag upplever att det 
 
 Jag har däremot använt AI för att formatera det här dokumentet, till exempel för att göra rubriker och radbrytningar enhetliga. Det är monotont och tidskrävande arbete, och jag tycker att det är bättre att lägga tiden på att göra själva uppgifterna och låta LLM:en se till att dokumentet blir enhetligt.
 
-Jag har även använt mig av LLM för att hjälpa mig för att mocka upp vissa delar av SpriteRenderer.test.js. Detta då jag fortfarande tycker det är lite klurigt, samt att jag enbart tidigare skrivit tester under 1dv613, och då med jest.
+Jag har även tagit hjälp av en LLM för att mocka upp vissa delar av `SpriteRenderer.test.js`, dels för att jag tycker det fortfarande är lite klurigt, dels för att jag bara skrivit tester tidigare under 1DV613 och då med Jest. Jag fick också hjälp med hur man triggar asynkrona events, till exempel när en `Image` laddar eller misslyckas ladda, i `ImageAsset.test.js.`
 
 ---
 
