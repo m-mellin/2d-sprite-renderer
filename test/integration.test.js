@@ -6,6 +6,11 @@ import { SpriteRegion } from '../src/SpriteRegion.js'
 import { SpriteRenderer } from '../src/SpriteRenderer.js'
 import { SpriteAnimation } from '../src/SpriteAnimation.js'
 
+/**
+ * Creates a canvas with a mocked 2D context, for use in tests.
+ *
+ * @returns {{canvas: HTMLCanvasElement, context: object}} The canvas and its mocked context.
+ */
 const createCanvas = () => {
   const context = {
     clearRect: vi.fn(),
@@ -24,7 +29,7 @@ const createCanvas = () => {
  * Simulates the browser finishing loading an image.
  * This is needed because of the limitations of JSDOM.
  * 
- * @param {Sprite} sprite 
+ * @param {Sprite} sprite - The sprite which image should be marked as loaded.
  */
 const simulateImageLoad = (sprite) => {
   sprite.image.dispatchEvent(new Event('load'))
@@ -33,10 +38,10 @@ const simulateImageLoad = (sprite) => {
 let sourceCounter = 0
 
 /**
- * Used to generate a unique string so that the sprites
- * in different test use a cached ImageAsset, already loaded.
- * 
- * @returns unique string
+ * Creates a unique image source, so that sprites in different tests
+ * don't accidentally share the same cached ImageAsset.
+ *
+ * @returns {string} A unique image source.
  */
 const createUniqueSource = () => {
   return `/dir/image-${++sourceCounter}.png`
@@ -127,4 +132,57 @@ describe('Integration', () => {
     })
   })
 
+  describe('Sprite + SpriteAnimation + SpriteRenderer + SpriteRegion', () => {
+    it('draws the frame matching the animation', async () => {
+      const { canvas, context } = createCanvas()
+
+      const renderer = new SpriteRenderer(canvas)
+      const sprite = new Sprite(createUniqueSource(), {x: 10, y: 10, width: 64, height: 64})
+
+      const frame1 = new SpriteRegion({ x: 0, y: 0, width: 64, height: 64 })
+      const frame2 = new SpriteRegion({ x: 64, y: 0, width: 64, height: 64 })
+
+      const animation = new SpriteAnimation([frame1, frame2], 100)
+
+      const loaded = sprite.waitForLoad()
+      simulateImageLoad(sprite)
+      await loaded
+
+      expect(sprite.isLoaded).toBe(true)
+
+      renderer.add(sprite)
+
+      animation.update(60)
+      sprite.region = animation.region
+      renderer.render()
+
+      expect(context.drawImage).toHaveBeenCalledWith(
+        sprite.image,
+        frame1.x,
+        frame1.y,
+        frame1.width,
+        frame1.height,
+        sprite.x,
+        sprite.y,
+        sprite.width,
+        sprite.height
+      )
+
+      animation.update(60)
+      sprite.region = animation.region
+      renderer.render()
+
+      expect(context.drawImage).toHaveBeenCalledWith(
+        sprite.image,
+        frame2.x,
+        frame2.y,
+        frame2.width,
+        frame2.height,
+        sprite.x,
+        sprite.y,
+        sprite.width,
+        sprite.height
+      )
+    })
+  })
 })
