@@ -162,8 +162,8 @@ export class SpriteRenderer {
 
     this.#context.drawImage(
       sprite.image,
-      region.sourceX,
-      region.sourceY,
+      region.x,
+      region.y,
       region.width,
       region.height,
       sprite.x,
