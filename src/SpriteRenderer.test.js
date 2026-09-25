@@ -24,6 +24,7 @@ const createSprite = (overrides = {}) => ({
   width: 32,
   height: 32,
   region: null,
+  waitForLoad: vi.fn(() => Promise.resolve()),
   ...overrides
 })
 
@@ -62,6 +63,19 @@ describe('SpriteRenderer', () => {
         sprite.width,
         sprite.height
       )
+    })
+
+    it('waits for an unloaded sprite before rendering', () => {
+      const { canvas } = createCanvas()
+      const renderer = new SpriteRenderer(canvas)
+
+      const sprite = createSprite({
+        isLoaded: false
+      })
+
+      renderer.add(sprite)
+
+      expect(sprite.waitForLoad).toHaveBeenCalled()
     })
   })
 
