@@ -48,7 +48,7 @@ describe('SpriteRenderer', () => {
   })
 
   describe('add', () => {
-    it('adds a sprite to the renderer', () => {
+    it('adds a loaded sprite to the renderer', () => {
       const { canvas, context } = createCanvas()
       const renderer = new SpriteRenderer(canvas)
       const sprite = createSprite()
@@ -139,6 +139,19 @@ describe('SpriteRenderer', () => {
         canvas.width,
         canvas.height
       )
+    })
+
+    it('does not render an unloaded sprite', () => {
+      const { canvas, context } = createCanvas()
+      const renderer = new SpriteRenderer(canvas)
+      const sprite = createSprite({
+        isLoaded: false
+      })
+
+      renderer.add(sprite)
+      renderer.render()
+
+      expect(context.drawImage).not.toHaveBeenCalled()
     })
 
     it('renders a sprite using its whole image', () => {
