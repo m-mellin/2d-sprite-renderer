@@ -28,4 +28,43 @@ describe('ImageAsset', () => {
       expect(assetOne).not.toBe(assetTwo)
     })
   })
+
+  describe('Loading', () => {
+    it('sets isLoaded to true when image is loaded', () => {
+      const asset = new ImageAsset('test-image.png')
+
+      asset.image.dispatchEvent(new Event('load'))
+
+      expect(asset.isLoaded).toBe(true)
+    })
+
+    it('waitForLoad() resolves once the image has loaded', async () => {
+      const asset = new ImageAsset('test-image.png')
+
+      const pending = asset.waitForLoad()
+      asset.image.dispatchEvent(new Event('load'))
+
+      await expect(pending).resolves.toBeUndefined()
+    })
+
+    it('waitForLoad() rejects if the image fails to load', async () => {
+      const asset = new ImageAsset('test-image.png')
+
+      const pending = asset.waitForLoad()
+      asset.image.dispatchEvent(new Event('error'))
+
+      await expect(pending).rejects.toBeDefined()
+    })
+
+    it('isLoaded remnains false if the image fails to load', async () => {
+      const asset = new ImageAsset('test-image.png')
+
+      const pending = asset.waitForLoad()
+      asset.image.dispatchEvent(new Event('error'))
+
+      await pending.catch(() => {})
+
+      expect(asset.isLoaded).toBe(false)
+    })
+  })
 })
