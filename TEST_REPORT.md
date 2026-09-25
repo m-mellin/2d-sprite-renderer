@@ -6,10 +6,20 @@
 
 ## Summary
 
-*Briefly describe how you tested your module, and why you chose that approach — clearly enough
-that someone else could carry out the same tests.*
+The `2d-sprite-renderer` module was tested primarily using automated unit tests with Vitest. Each public class was tested separetly to verify that it behavec correctly for both valid and invalid input.
 
-Answer:
+The test covers:
+- Sprite creation
+- Sprite regions
+- Image asset loading and caching
+- Sprite rendering
+- Animation frame handling
+
+The module was also tested manually through the Test-App to verify that sprites and animations are rendered correctly on an `HTMLCanvasElement`.
+
+Automated tests were used for testing functionality of each method.
+
+Manual testing was used to verify that the visual result that was expected showed correctly.
 
 ## Test Results
 
