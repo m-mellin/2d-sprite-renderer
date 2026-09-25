@@ -6,15 +6,15 @@ The `2d-sprite-renderer` module was tested primarily using automated unit tests 
 One test file per class. Each test file is split into different `describe`-blocks per method/property  
 (example: `constructor`, `position`, `size` etc.).
 
-The tests are easily reproducable by running the following command from the project root folder:
+The tests are easily reproducible by running the following command from the project root folder:
 
 ```bash
 npm run test
 ```
 
 The module was also tested manually through the Test-App to verify that sprites and animations are  
-rendered correctly on an `HTMLCanvasElement`. Automated tests were used for testing functionality of  
-each method. Manual testing was used to verify that the visual result that was expected showed correctly.
+rendered correctly on an `HTMLCanvasElement`. Automated tests covered the functionality of each  
+method, while manual testing verified the expected visual result.
 
 ## Test Results
 
@@ -36,4 +36,7 @@ each method. Manual testing was used to verify that the visual result that was e
 | `SpriteRenderer.remove()` removes a sprite or does nothing if not found. | Vitest: removed added and non-added sprite, checked `drawImage`. | ✅ Passed. |
 | `SpriteRenderer.clear()` clears canvas and removes all sprites. | Vitest: added sprite, called `clear()`, checked `clearRect` and subsequent `render()`. | ✅ Passed. |
 | `SpriteRenderer.render()` clears canvas, skips unloaded sprites, draws with/without `region`. | Vitest: mocked sprites, checked `clearRect`/`drawImage` calls. | ✅ Passed. |
+| `ImageAsset` constructor default state, image src, and instance identity. | Vitest: created assets with different/same src, checked `isLoaded`, `image.src`, and instance equality. | ✅ Passed. |
+| `ImageAsset` loading state and `waitForLoad()` on success and failure. | Vitest: dispatched `load`/`error` events on the image, checked `isLoaded` and the resolved/rejected promise. | ✅ Passed. |
+| `ImageAsset.getAsset()` caching (same instance for same src, different instances for different src). | Vitest: called `getAsset` with matching and differing sources, checked instance equality. | ✅ Passed. |
 | Visual rendering, movement, and animation switching in the browser (`app.js`). | Manual: ran the app, pressed arrow keys, observed movement and animations. | ✅ Passed. |
