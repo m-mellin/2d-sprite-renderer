@@ -68,17 +68,6 @@ export class SpriteRenderer {
   }
 
   /**
-   * Schedules a render when the sprite has loaded.
-   *
-   * @param {Sprite} sprite - The sprite to wait for.
-   */
-  #renderWhenLoaded (sprite) {
-    sprite.waitForLoad()
-      .then(() => this.#scheduleRender())
-      .catch(() => {})
-  }
-
-  /**
    * Removes a sprite from the renderer.
    * 
    * Does nothing if the sprite is not in the renderer.
@@ -111,6 +100,17 @@ export class SpriteRenderer {
   }
 
   /**
+   * Schedules a render when the sprite has loaded.
+   *
+   * @param {Sprite} sprite - The sprite to wait for.
+   */
+  #renderWhenLoaded (sprite) {
+    sprite.waitForLoad()
+      .then(() => this.#scheduleRender())
+      .catch(() => {})
+  }
+
+  /**
    * Schedules a render for the next animation frame.
    * 
    * Does nothing if the render is already scheduled.
@@ -125,6 +125,7 @@ export class SpriteRenderer {
       this.render()
     })
   }
+  
 
   /**
    * Renders all loaded sprites on the canvas
