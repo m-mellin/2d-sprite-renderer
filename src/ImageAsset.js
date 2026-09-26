@@ -84,7 +84,19 @@ export class ImageAsset {
    */
   #createLoadPromise (src) {
     return new Promise((resolve, reject) => {
+      /**
+       * Handles the image's load event.
+       *
+       * @returns {void}
+       */
       this.#image.onload = () => this.#handleLoad(resolve)
+
+      /**
+       * Handles the image's error event.
+       *
+       * @param {Event} err - The error event dispatched by the image.
+       * @returns {void}
+       */
       this.#image.onerror = (err) => reject(err)
 
       this.#setImageSource(src)
@@ -94,7 +106,7 @@ export class ImageAsset {
   /**
    * Marks the asset as loaded and resolves the load promise.
    *
-   * @param {Function} resolve - Resolves the load promise with the image.
+   * @param {(image: HTMLImageElement) => void} resolve - Resolves the load promise with the image.
    */
   #handleLoad (resolve) {
     this.#isLoaded = true
