@@ -58,7 +58,6 @@ const walkRightRegion = [
   new SpriteRegion({x: 320, y: 192, width: 64, height: 64})
 ]
 
-
 const idleDownRegion = [
   new SpriteRegion({x: 0, y: 0, width: 64, height: 64}),
   new SpriteRegion({x: 64, y: 0, width: 64, height: 64}),
@@ -87,7 +86,6 @@ const idleRightRegion = [
   new SpriteRegion({x: 192, y: 192, width: 64, height: 64}),
 ]
 
-
 const walkingDown = new SpriteAnimation(walkDownRegion, 100)
 const walkingUp = new SpriteAnimation(walkUpRegion, 100)
 const walkingLeft = new SpriteAnimation(walkLeftRegion, 100)
@@ -100,7 +98,14 @@ const idleRight = new SpriteAnimation(idleRightRegion, 100)
 
 let currentAnimation = idleDown
 
-document.addEventListener('keydown', (event) => {
+/**
+ * Handles keydown events, switching the character to its walking
+ * animation and moving it in the pressed arrow key's direction.
+ *
+ * @param {KeyboardEvent} event - The keydown event.
+ * @returns {void}
+ */
+const handleKeyDown = (event) => {
   if (event.key === 'ArrowDown') {
     character.assignImageAsset(walkSrc)
     currentAnimation = walkingDown
@@ -124,9 +129,16 @@ document.addEventListener('keydown', (event) => {
     currentAnimation = walkingRight
     character.x += 5
   }
-})
+}
 
-document.addEventListener('keyup', (event) => {
+/**
+ * Handles keyup events, switching the character back to its idle
+ * animation for the direction it was last facing.
+ *
+ * @param {KeyboardEvent} event - The keyup event.
+ * @returns {void}
+ */
+const handleKeyUp = (event) => {
   if (event.key === 'ArrowDown') {
     character.assignImageAsset(idleSrc)
     currentAnimation = idleDown
@@ -146,10 +158,20 @@ document.addEventListener('keyup', (event) => {
     character.assignImageAsset(idleSrc)
     currentAnimation = idleRight
   }
-})
+}
+
+document.addEventListener('keydown', handleKeyDown)
+document.addEventListener('keyup', handleKeyUp)
 
 let previousTimestamp = 0;
 
+/**
+ * Runs the main game loop, updating the current animation and
+ * re-rendering the character each frame.
+ *
+ * @param {number} timestamp - The current frame time, provided by requestAnimationFrame.
+ * @returns {void}
+ */
 function gameLoop (timestamp) {
   const deltaTime = timestamp - previousTimestamp
   previousTimestamp = timestamp
