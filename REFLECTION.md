@@ -1,129 +1,96 @@
-# Namngivning
+# Reflektion: Laboration 2 – Skriv en modul, inte en app
 
-| Namn | Regler som tas upp | Ändring |
+## 1. Namngivning
+
+| Namn | Förklaring | Reflektion och regler från Clean Code |
 | --- | --- | --- |
-| [Klassnamn](#sprite-spriterenderer-spriteregion-spriteanimation-och-imageasset) | Class Names, Avoid Encodings | Ingen |
-| [`setImageSource` → `assignImageAsset`](#setimagesource-assignimageasset) | Use Intention-Revealing Names, Avoid Disinformation, Method Names | Namnbyte |
-| [`xPos` / `yPos` → `x` / `y`](#xpos-ypos-positionx-positiony-x-y) | Pick One Word per Concept, Use Searchable Names, Avoid Mental Mapping | Namnbyte |
-| [`sourceX` / `sourceY`](#sourcex-sourcey) | Use Solution Domain Names, Avoid Disinformation, Pick One Word per Concept | Behölls |
-| [`isLoaded`](#isloaded) | Method Names, Don't Pun | Behölls |
-
-Övergripande reflektion: [Reflektion kring kapitel 2](#reflektion-kring-kapitel-2)
+| [Klassnamn](#sprite-spriterenderer-spriteregion-spriteanimation-och-imageasset) | Klassnamnen i modulen. | Class Names, Avoid Encodings |
+| [`setImageSource` → `assignImageAsset`](#setimagesource--assignimageasset) | Metod i `Sprite` som hämtar/skapar ett `ImageAsset` via cache och tilldelar `#imageAsset`. | Use Intention-Revealing Names, Avoid Disinformation, Method Names |
+| [`xPos`/`yPos` → `x`/`y`](#xposypos--positionxpositiony--xy) | Position i `Sprite`. | Pick One Word per Concept, Use Searchable Names, Avoid Mental Mapping |
+| [`sourceX`/`sourceY` → `x`/`y`](#sourcexsourcey--xy) | Position i `SpriteRegion`. | Avoid Mental Mapping, Pick One Word per Concept |
+| [`isLoaded`](#isloaded) | Getter i `Sprite` och `ImageAsset`. | Method Names, Don't Pun |
 
 ---
 
-## `Sprite`, `SpriteRenderer`, `SpriteRegion`, `SpriteAnimation` och `ImageAsset`
+### `Sprite`, `SpriteRenderer`, `SpriteRegion`, `SpriteAnimation` och `ImageAsset`
 
-### Förklaring
+#### Förklaring
 
-Klassen som representerar en sprite som kan renderas på en canvas.
+De fem klasserna som tillsammans utgör modulen: `Sprite` representerar en ritbar bild med position, storlek och eventuell region, `SpriteRegion` beskriver ett utsnitt ur en spritesheet, `SpriteAnimation` växlar mellan flera `SpriteRegion`-bildrutor över tid, `ImageAsset` hanterar och cachar laddningen av själva bildfilerna, och `SpriteRenderer` ritar ut allt på en `HTMLCanvasElement`.
 
-### Reflektion
+#### Reflektion
 
-**Class Names:**
-
-Enligt s.25 skall klassnamn och objekt ha substantiv som namn. Detta stämmer överens med alla mina klassnamn. Ett klassnamn skall inte vara ett verb.
-
-**Avoid Encodings:**
-
-Ingen av mina klassnamn innehåller encoding (ex. `SpriteClass` eller `ISprite`) något som boken nämner, s. 23, att man inte skall använda. Jag har själv inte jobbat med exempelvis Hungarion Notation, jag har sett det tidigare men inte använt mig själv av det. Det var därför lätt att undvika det.
+| Regel | Reflektion |
+| --- | --- |
+| **Class Names** | Enligt s. 25 skall klassnamn och objekt ha substantiv som namn. Detta stämmer överens med alla mina klassnamn. Ett klassnamn skall inte vara ett verb. |
+| **Avoid Encodings** | Ingen av mina klassnamn innehåller encoding (ex. `SpriteClass` eller `ISprite`), något boken (s. 23) nämner att man inte skall använda. Jag har själv inte jobbat med exempelvis Hungarian Notation, jag har sett det tidigare men inte använt mig själv av det. Det var därför lätt att undvika det. |
 
 ---
 
-## `setImageSource` --> `assignImageAsset`
+### `setImageSource` → `assignImageAsset`
 
-### Förklaring
+#### Förklaring
 
-Metod i `Sprite` som hämtar (eller skapar) ett `ImageAsset`-objekt via en cache och tilldelar det till fältet `#imageAsset`
+Metod i `Sprite` som hämtar (eller skapar) ett `ImageAsset`-objekt via en cache och tilldelar det till fältet `#imageAsset`.
 
-### Reflektion
+#### Reflektion
 
-**Use Intention-Revealing Names:**
-
-Ursprungligen hette metoden `setImageSource`, vilket antydde att det enbart sätter en src-sträng på spriten. Egentligen så hämtar metoden ett `ImageAsset`-objekt från en cache och tilldelar fältet `#imageAsset` objektet. Namnet avslöjade allstå inte riktigt vad metoden faktiskt gjorde. Jag valde därför att byta namn till `assignImageAsset` för att förtydliga vad metoden faktiskt gör.
-
-**Avoid Disinformation:**
-
-Det gamla namnet `setImageSource` krockade också med `ImageAssets`s privata metod `#setImageSource(src)`, som faktiskt gjorde det som namnet beskrev den. Det var därför inte mer än rätt att byta namn på metoden.
-
-**Method Names:**
-
-Enligt boken, s. 25, bör metoder namges som verb eller verbfraser eftersom de utför en handling. `assign...` är fortfarande ett verb men pekar nu istället på att det är ett `ImageAsset`-objekt som tilldelas, inte en sträng till en bild.
+| Regel | Reflektion |
+| --- | --- |
+| **Use Intention-Revealing Names** | Ursprungligen hette metoden `setImageSource`, vilket antydde att det enbart sätter en src-sträng på spriten. Egentligen så hämtar metoden ett `ImageAsset`-objekt från en cache och tilldelar fältet `#imageAsset` objektet. Namnet avslöjade alltså inte riktigt vad metoden faktiskt gjorde. Jag valde därför att byta namn till `assignImageAsset` för att förtydliga vad metoden faktiskt gör. |
+| **Avoid Disinformation** | Det gamla namnet `setImageSource` krockade också med `ImageAsset`s privata metod `#setImageSource(src)`, som faktiskt gjorde det som namnet beskrev den. Det var därför inte mer än rätt att byta namn på metoden. |
+| **Method Names** | Enligt boken, s. 25, bör metoder namges som verb eller verbfraser eftersom de utför en handling. `assign...` är fortfarande ett verb men pekar nu istället på att det är ett `ImageAsset`-objekt som tilldelas, inte en sträng till en bild. |
 
 ---
 
-## `xPos` / `yPos` + `positionX`/ `positionY` --> `x` / `y`
+### `xPos`/`yPos` + `positionX`/`positionY` → `x`/`y`
 
-### Förklaring
+#### Förklaring
 
 Privata fält och publika metoder i `Sprite` som representerar spritens position i pixlar.
 
-### Reflektion
+#### Reflektion
 
-**Pick One Word per Concept:**
-
-Tidigare hette de privata fälten `#xPos` / `#yPos` något som jag redan vid skapandet reflekterade över. Jag dividerade mellan att döpa dessa till `positionX` / `positionY`, `xPos` / `yPos` och enbart `x`/ `y`. Någonstans hamnade jag i mitten under utvecklingen och döpte dem till olika, med tanken att längre fram justera detta.
-
-Jag valde att använda mig av enbart `x`/ `y`. Genom att konsekvent använda samma namn för både fälten och accessorerna säkerställer jag att samma ord används för samma koncept genomgående i klassen.
-
-**Use Searchable Names:**
-
-Boken, s. 26, varnar för att alltför korta namn som `x` och `y` kan vara svåra att söka fram i en stor kodbas. Jag valde ändå att behålla dem eftersom de bara används inom det lilla scopet av `Sprite`-klassen (som fält, accessor och i konstruktorn), och sökningar efter t.ex. `sprite.x` blir ändå specifika nog tack vare kontexten runt omkring.
-
-**Avoid Mental Mapping:**
-
-Ett alternativ hade varit att behålla längre namn som `xPosition` / `positionX` för att undvika att läsaren behöver "översätta" `x` till position. Jag anser dock att `x` och `y` är så etablerat inom matematik, grafer och grafik att ingen mental mapping egentligen krävs.
+| Regel | Reflektion |
+| --- | --- |
+| **Pick One Word per Concept** | Tidigare hette de privata fälten `#xPos`/`#yPos`, något jag redan vid skapandet reflekterade över. Jag dividerade mellan att döpa dessa till `positionX`/`positionY`, `xPos`/`yPos` och enbart `x`/`y`. Någonstans hamnade jag i mitten under utvecklingen och döpte dem till olika, med tanken att längre fram justera detta. Jag valde att använda mig av enbart `x`/`y`. Genom att konsekvent använda samma namn för både fälten och accessorerna säkerställer jag att samma ord används för samma koncept genomgående i klassen. |
+| **Use Searchable Names** | Boken, s. 26, varnar för att alltför korta namn som `x` och `y` kan vara svåra att söka fram i en stor kodbas. Jag valde ändå att behålla dem eftersom de bara används inom det lilla scopet av `Sprite`-klassen (som fält, accessor och i konstruktorn), och sökningar efter t.ex. `sprite.x` blir ändå specifika nog tack vare kontexten runt omkring. |
+| **Avoid Mental Mapping** | Ett alternativ hade varit att behålla längre namn som `xPosition`/`positionX` för att undvika att läsaren behöver "översätta" `x` till position. Jag anser dock att `x` och `y` är så etablerat inom matematik, grafer och grafik att ingen mental mapping egentligen krävs. |
 
 ---
 
-**## `x` / `y`**
+### `sourceX`/`sourceY` → `x`/`y`
 
-**### Förklaring**
+#### Förklaring
 
 Privata fält och publika accessorer i `SpriteRegion`, vilka representerar regionens position i källbilden i pixlar.
 
-**### Reflektion**
+#### Reflektion
 
-****Avoid Mental Mapping:****
-
-Jag använde först namnen `sourceX` och `sourceY` eftersom de tydligt beskrev att koordinaterna kommer från källbilden. När jag började testa och använda modulen mer insåg jag dock att det blev onödigt för användaren att behöva tänka på koordinaterna som ett separat koncept.
-
-En användare som arbetar med både `Sprite` och `SpriteRegion` förväntar sig naturligt att kunna använda `x` och `y` för att komma åt objektens position. Med `sourceX` och `sourceY` behöver användaren istället komma ihåg att en region använder ett annat namn för sin x- och y-koordinat.
-
-Det skapar en form av mental mapping där `sourceX` måste översättas till "regionens x-position". Jag valde därför att byta till `x` och `y`. Skillnaden mellan en sprites position på canvasen och en regions position i källbilden framgår av vilket objekt koordinaten tillhör, så jag tycker inte längre att `source`-prefixet tillför tillräckligt mycket för att motivera det extra namnet.
-
-****Pick One Word per Concept:****
-
-Det här gjorde också att jag omvärderade hur jag såg på "Pick One Word per Concept". Tidigare tänkte jag att `sourceX` och `sourceY` var tydligare eftersom de beskrev vilken typ av koordinat det var. Vid testningen blev det istället tydligare att `x` och `y` är ett mer konsekvent namn för en koordinat i modulen.
-
-Även om `sprite.x` och `region.x` används för olika ändamål representerar båda en x-position för det objekt som de tillhör. Jag tycker därför att `x` och `y` ger ett enklare gränssnitt och minskar mängden information användaren behöver hålla reda på.
-
-
-## `isLoaded`
-
-### Förklaring
-
-Getter i både `Sprite` och `ImageAsset` som returnerar om bildens tillgång har laddats klart eller inte.
-
-### Reflektion
-
-**Method Names:**
-
-Boken nämner att booleska metoder/attribut bör namnges så att de läses som en fråga eller ett påstående, gärna med prefix som `get`, `set` eller `is`. `isLoaded` följer det här mönstret rakt av, det är tydligt att det handlar om ett sant/falskt-värde redan av namnet.
-
-**Don't Pun:**
-
-Jag funderade på om `isLoaded` betyder exakt samma sak i båda klasserna eftersom namnet är identiskt i `Sprite` och `ImageAsset`. Efter att ha kollat igenom koden ser jag att `Sprite.isLoaded` bara vidarebefordrar värdet från `this.#imageAsset.isLoaded`, så det är faktiskt samma koncept i båda fallen, bara på olika nivåer i kedjan.
-
-Det är alltså inte ett exempel på pun (samma namn men olika betydelse) s.26, utan snarare ett medvetet val att låta samma namn följa med genom lagren, vilket jag tycker känns rätt eftersom det är samma information som bara "syns igenom" `Sprite`.
-
-**Slutsats:**
-
-Jag behåller `isLoaded` i båda klasserna eftersom det är samma koncept som förs vidare, inte två olika betydelser som råkar dela namn.
+| Regel | Reflektion |
+| --- | --- |
+| **Avoid Mental Mapping** | Jag använde först namnen `sourceX` och `sourceY` eftersom de tydligt beskrev att koordinaterna kommer från källbilden. När jag började testa och använda modulen mer insåg jag dock att det blev onödigt för användaren att behöva tänka på koordinaterna som ett separat koncept. En användare som arbetar med både `Sprite` och `SpriteRegion` förväntar sig naturligt att kunna använda `x` och `y` för att komma åt objektens position. Med `sourceX` och `sourceY` behöver användaren istället komma ihåg att en region använder ett annat namn för sin x- och y-koordinat. Det skapar en form av mental mapping där `sourceX` måste översättas till "regionens x-position". Jag valde därför att byta till `x` och `y`. Skillnaden mellan en sprites position på canvasen och en regions position i källbilden framgår av vilket objekt koordinaten tillhör, så jag tycker inte längre att `source`-prefixet tillför tillräckligt mycket för att motivera det extra namnet. |
+| **Pick One Word per Concept** | Det här gjorde också att jag omvärderade hur jag såg på "Pick One Word per Concept". Tidigare tänkte jag att `sourceX` och `sourceY` var tydligare eftersom de beskrev vilken typ av koordinat det var. Vid testningen blev det istället tydligare att `x` och `y` är ett mer konsekvent namn för en koordinat i modulen. Även om `sprite.x` och `region.x` används för olika ändamål representerar båda en x-position för det objekt som de tillhör. Jag tycker därför att `x` och `y` ger ett enklare gränssnitt och minskar mängden information användaren behöver hålla reda på. |
 
 ---
 
-## Reflektion kring kapitel 2
+### `isLoaded`
+
+#### Förklaring
+
+Getter i både `Sprite` och `ImageAsset` som returnerar om bildens tillgång har laddats klart eller inte.
+
+#### Reflektion
+
+| Regel | Reflektion |
+| --- | --- |
+| **Method Names** | Boken nämner att booleska metoder/attribut bör namnges så att de läses som en fråga eller ett påstående, gärna med prefix som `get`, `set` eller `is`. `isLoaded` följer det här mönstret rakt av, det är tydligt att det handlar om ett sant/falskt-värde redan av namnet. |
+| **Don't Pun** | Jag funderade på om `isLoaded` betyder exakt samma sak i båda klasserna eftersom namnet är identiskt i `Sprite` och `ImageAsset`. Efter att ha kollat igenom koden ser jag att `Sprite.isLoaded` bara vidarebefordrar värdet från `this.#imageAsset.isLoaded`, så det är faktiskt samma koncept i båda fallen, bara på olika nivåer i kedjan. Det är alltså inte ett exempel på pun (samma namn men olika betydelse, s. 26), utan snarare ett medvetet val att låta samma namn följa med genom lagren, vilket jag tycker känns rätt eftersom det är samma information som bara "syns igenom" `Sprite`. |
+| **Slutsats** | Jag behåller `isLoaded` i båda klasserna eftersom det är samma koncept som förs vidare, inte två olika betydelser som råkar dela namn. |
+
+---
+
+### Reflektion kring kapitel 2
 
 Jag tycker att det finns mycket i kapitel 2 som är bra. En del är överdrivet, men jag tar med mig mycket till framtiden, bland annat att sätta mig i användarens ögon istället för mina egna. Jag har flera gånger gått tillbaka och ändrat variabelnamn, och vissa delar missade jag helt.
 
@@ -137,55 +104,42 @@ Mitt resonemang är att den som använder modulen vet att den handlar om sprites
 
 Om jag hänvisar till boken säger regeln **Use Searchable Names** att `x` och `y` är för korta namn, medan **Avoid Mental Mapping** och **Use Solution Domain Names** talar för dem. Jag anser därför att boken är lite för svartvit. Sökbarhet spelar mindre roll för namn som bara lever i en enda klass, och jag tycker att sammanhanget är viktigare än namnets längd.
 
-Den tydligaste bristen i min namngivning var `xPos` / `positionX` och `yPos` / `positionY`. Jag visste om problemet men sköt upp det med tanken att fixa det senare. I det fallet bröt jag mot regeln **Pick One Word per Concept** och borde ha tagit tag i det direkt för att undvika inkonsekvenser i koden.
+Den tydligaste bristen i min namngivning var `xPos`/`positionX` och `yPos`/`positionY`. Jag visste om problemet men sköt upp det med tanken att fixa det senare. I det fallet bröt jag mot regeln **Pick One Word per Concept** och borde ha tagit tag i det direkt för att undvika inkonsekvenser i koden.
 
 Slutligen tycker jag att reglerna fungerar bäst som en fråga att ställa sig när man granskar sin kod, till exempel "skulle någon annan förstå detta utan att läsa implementationen?", snarare än som en checklista där saker ska bockas av.
 
----
+## 2. Funktioner
 
-# Funktioner
-
-| Metod | Regler som tas upp | Förändring |
-| --- | --- | --- |
-| [`SpriteRenderer.render()`](#spriterendererrender) | Small, Blocks and Indenting, Do One Thing, Function Arguments | Delas upp i `#drawSprite()`, `#drawRegion()` och `#drawWhole()` |
-| [`ImageAsset.#createLoadPromise()`](#imageassetcreateloadpromise) | Blocks and Indenting, Have No Side Effects | `#handleLoad()` och `#image` som fält |
-| [`SpriteAnimation.update()`](#spriteanimationupdate) | Small, Blocks and Indenting, Do One Thing, Function Arguments, Have No Side Effects | Delas upp i tre metoder |
-| [`SpriteRenderer.add()`](#spriterendereradd) | Small, Blocks and Indenting, Do One Thing, Have No Side Effects | `#renderWhenLoaded()` |
-| [`Sprite.constructor()`](#spriteconstructor) | Function Arguments | Options-objekt |
-
-Övergripande reflektion: [Reflektion kring kapitel 3](#reflektion-kring-kapitel-3)
+| Metodnamn | Länk eller kod | Antal rader (ej ws) | Förändring |
+| --- | --- | --- | --- |
+| [`SpriteRenderer.render()`](#spriterendererrender) | [SpriteRenderer.js](../src/SpriteRenderer.js) | 27 → 6/8/9/14 | Delas upp i `#drawSprite()`, `#drawRegion()` och `#drawWhole()` |
+| [`ImageAsset.#createLoadPromise()`](#imageassetcreateloadpromise) | [ImageAsset.js](../src/ImageAsset.js) | 8 | `#handleLoad()` och `#image` som fält |
+| [`SpriteAnimation.update()`](#spriteanimationupdate) | [SpriteAnimation.js](../src/SpriteAnimation.js) | 8 → 5/1/1/3 | Delas upp i tre metoder |
+| [`SpriteRenderer.add()`](#spriterendereradd) | [SpriteRenderer.js](../src/SpriteRenderer.js) | 8 → 8/5 | `#renderWhenLoaded()` |
+| [`Sprite.constructor()`](#spriteconstructor) | [Sprite.js](../src/Sprite.js) | 8 | Options-objekt |
 
 ---
 
-## `SpriteRenderer.render()`
+### `SpriteRenderer.render()`
 
-### Förklaring
+#### Förklaring
 
 Renderar alla laddade sprites på canvasen. Metoden rensar först canvasen och går sedan igenom alla sprites. Sprites vars bild inte är laddad hoppas över. Sprites med en `region` (ett utsnitt ur en sprite sheet) ritas med utsnittet, övriga ritas med hela bilden.
 
-### Reflektion
+#### Reflektion
 
-**Small:**
+| Regel | Reflektion |
+| --- | --- |
+| **Small** | Metoden är 27 rader lång. Enligt boken (s. 34–35) ska funktioner vara små, och sedan ännu mindre än så. De bör sällan vara över ca 20 rader, och exemplen i boken är ofta bara 2–4 rader. Denna metod bryter därmed mot regeln. |
+| **Blocks and Indenting** | Boken säger att blocken i `if`, `else` och `while` bör vara en rad långa (helst ett funktionsanrop) och att indenteringsnivån inte bör vara över en eller två. Här finns två `if`-satser inuti en `for`-loop, vilket ger indenteringsnivå på 2, och `if`-satsen är alltså nästlad i loopen. |
+| **Do One Thing / One Level of Abstraction per Function** | Metoden gör flera saker på olika abstraktionsnivåer: den rensar canvasen, loopar, filtrerar bort ej laddade sprites, väljer ritsätt och anger alla detaljerade `drawImage`-argument. Den bryter därför mot båda reglerna. |
+| **Function Arguments** | Funktionen använder inga argument vilket är idealiskt enligt författaren, s. 40. |
 
-Metoden är 27 rader lång. Enligt boken (s. 34–35) ska funktioner vara små, och sedan ännu mindre än så. De bör sällan vara över ca 20 rader, och exemplen i boken är ofta bara 2–4 rader. Denna metod bryter därmed mot regeln.
-
-**Blocks and Indenting:**
-
-Boken säger att blocken i `if`, `else` och `while` bör vara en rad långa (helst ett funktionsanrop) och att indenteringsnivån inte bör vara över en eller två. Här finns två `if`-satser inuti en `for`-loop, vilket ger indenteringsnivå på 2, och `if`-satsen är alltså nästlad i loopen.
-
-**Do One Thing / One Level of Abstraction per Function:**
-
-Metoden gör flera saker på olika abstraktionsnivåer: den rensar canvasen, loopar, filtrerar bort ej laddade sprites, väljer ritsätt och anger alla detaljerade `drawImage`-argument. Den bryter därför mot båda reglerna.
-
-**Function Arguments:**
-
-Funktionen använder inga argument vilket är idealiskt enligt författaren, s. 40.
-
-### Förbättring & Analys
+#### Förbättring & Analys
 
 En förbättring är att dela upp metoden i flera mindre metoder. Jag anser dock själv att detta inte är något jag hade gjort utanför kursen då det skapar, enligt mig, onödigt många metoder för en väldigt enkel metod. Jag förstår dock syftet och kan anse att läsbarheten absolut förbättras.
 
-Efter uppdelningen är render() 6 rader, #drawSprite() 8, #drawWhole() 9 och #drawRegion() 14. Alla ligger under 20 rader och ingen har mer än en indenteringsnivå.
+Efter uppdelningen är `render()` 6 rader, `#drawSprite()` 8, `#drawWhole()` 9 och `#drawRegion()` 14. Alla ligger under 20 rader och ingen har mer än en indenteringsnivå.
 
 ```javascript
 render () {
@@ -235,27 +189,20 @@ render () {
 
 ---
 
-## `ImageAsset.#createLoadPromise()`
+### `ImageAsset.#createLoadPromise()`
 
-### Förklaring
+#### Förklaring
 
 Skapar ett löfte (promise) som löses när bilden har laddats och avvisas om laddningen misslyckas. Metoden kopplar `onload` och `onerror` till bilden och startar sedan laddningen genom att sätta bildens källa. När bilden har laddats sätts även flaggan `#isLoaded`.
 
-### Reflektion
+#### Reflektion
 
-**Blocks and Indenting:**
+| Regel | Reflektion |
+| --- | --- |
+| **Blocks and Indenting** | Metoden har två indenteringsnivåer. Blocket i `onload` innehåller dessutom två instruktioner: det sätter flaggan `this.#isLoaded` och löser löftet. Enligt boken, s. 35, bör indenteringsnivån inte vara större än en eller två nivåer. Blocken inuti `if`, `else` och `while` bör dessutom helst endast innehålla en rad, gärna ett funktionsanrop. Samma princip kan tillämpas här genom att flytta ansvaret för vad som händer när bilden har laddats till en separat metod. |
+| **Have No Side Effects** | Namnet på metoden `#createLoadPromise()` antyder att metoden enbart skapar ett löfte. Metoden gör dock även flera andra saker. Den startar laddningen av bilden genom `this.#setImageSource()`, sätter händelsehanterare för `onload` och `onerror` samt ändrar flaggan `#isLoaded`. Metoden är även beroende av att `this.#image = new Image()` har körts innan metoden anropas. Genom att skapa bilden direkt vid deklarationen försvinner detta beroende på ordningen i konstruktorn. |
 
-Metoden har två indenteringsnivåer. Blocket i `onload` innehåller dessutom två instruktioner: det sätter flaggan `this.#isLoaded` och löser löftet. Enligt boken, s. 35, bör indenteringsnivån inte vara större än en eller två nivåer. Blocken inuti `if`, `else` och `while` bör dessutom helst endast innehålla en rad, gärna ett funktionsanrop.
-
-Samma princip kan tillämpas här genom att flytta ansvaret för vad som händer när bilden har laddats till en separat metod.
-
-**Have No Side Effects:**
-
-Namnet på metoden `#createLoadPromise()` antyder att metoden enbart skapar ett löfte. Metoden gör dock även flera andra saker. Den startar laddningen av bilden genom `this.#setImageSource()`, sätter händelsehanterare för `onload` och `onerror` samt ändrar flaggan `#isLoaded`.
-
-Metoden är även beroende av att `this.#image = new Image()` har körts innan metoden anropas. Genom att skapa bilden direkt vid deklarationen försvinner detta beroende på ordningen i konstruktorn.
-
-### Förbättring & Analys
+#### Förbättring & Analys
 
 Jag skulle göra två förändringar här. Den första är att flytta det som händer när bilden laddas till en egen metod. På så sätt kan `onload` endast innehålla ett funktionsanrop och metoden får ett tydligare ansvar.
 
@@ -301,35 +248,23 @@ constructor (src) {
 
 ---
 
-## `SpriteAnimation.update()`
+### `SpriteAnimation.update()`
 
-### Förklaring
+#### Förklaring
 
 Uppdaterar animationen med hjälp av förfluten tid. Den förflutna tiden läggs till i en räknare. När räknaren har nått bildrutans varaktighet går animationen vidare till nästa bildruta. Om animationen har nått den sista bildrutan återställs den till den första.
 
-### Reflektion
+#### Reflektion
 
-**Small:**
+| Regel | Reflektion |
+| --- | --- |
+| **Small** | Metoden är 8 rader lång, vilket jag anser inte är så farligt, dock så går nog det att minska. |
+| **Blocks and Indenting** | Metoden har en indenteringsnivå, vilket följer regeln. Däremot innehåller blocket inuti `if`-satsen flera rader. Boken, s. 35, beskriver att ett sådant block helst enbart ska innehålla ett funktionsanrop. Detta kan därför förbättras genom att flytta ansvaret till separata metoder. |
+| **Do One Thing** | Metoden gör flera saker. Den räknar upp den förflutna tiden (`this.#elapsedTime += deltaTime`), kontrollerar om det är dags att byta bildruta och uppdaterar sedan den aktuella bildrutan. Den ansvarar även för att återställa animationen när den sista bildrutan har nåtts. |
+| **Function Arguments** | Metoden tar endast ett argument, vilket gör den monadisk, s. 40. Enligt boken är en monadisk funktion att föredra framför funktioner med flera argument, även om en funktion utan argument är ännu bättre. |
+| **Have No Side Effects** | Metoden har en sidoeffekt eftersom den ändrar animationens interna tillstånd genom att uppdatera `elapsedTime` och `currentFrame`. Detta är dock en del av metodens avsedda ansvar eftersom syftet med `update()` är att uppdatera animationens tillstånd. Metoden gör alltså det som förväntas av den: den för animationen framåt och börjar om från den första bildrutan när den sista har nåtts. |
 
-Metoden är 8 rader lång, vilket jag anser inte är så farligt, dock så går nog det att minska.
-
-**Blocks and Indenting:**
-
-Metoden har en indenteringsnivå, vilket följer regeln. Däremot innehåller blocket inuti `if`-satsen flera rader. Boken, s. 35, beskriver att ett sådant block helst enbart ska innehålla ett funktionsanrop. Detta kan därför förbättras genom att flytta ansvaret till separata metoder.
-
-**Do One Thing:**
-
-Metoden gör flera saker. Den räknar upp den förflutna tiden (`this.#elapsedTime += deltaTime`), kontrollerar om det är dags att byta bildruta och uppdaterar sedan den aktuella bildrutan. Den ansvarar även för att återställa animationen när den sista bildrutan har nåtts.
-
-**Function Arguments:**
-
-Metoden tar endast ett argument, vilket gör den monadisk, s. 40. Enligt boken är en monadisk funktion att föredra framför funktioner med flera argument, även om en funktion utan argument är ännu bättre.
-
-**Have No Side Effects:**
-
-Metoden har en sidoeffekt eftersom den ändrar animationens interna tillstånd genom att uppdatera `elapsedTime` och `currentFrame`. Detta är dock en del av metodens avsedda ansvar eftersom syftet med `update()` är att uppdatera animationens tillstånd. Metoden gör alltså det som förväntas av den: den för animationen framåt och börjar om från den första bildrutan när den sista har nåtts.
-
-### Förbättring & Analys
+#### Förbättring & Analys
 
 Jag anser att det finns ett par saker som kan göras annorlunda för att lösa de problem som har identifierats. Genom att dela upp ansvaret i mindre metoder blir `update()` kortare och varje metod får ett tydligare ansvar.
 
@@ -387,41 +322,22 @@ På detta sätt har varje metod ett mer avgränsat ansvar och namnen beskriver v
 
 ---
 
-## `SpriteRenderer.add()`
+### `SpriteRenderer.add()`
 
-### Förklaring
+#### Förklaring
 
 Lägger till en sprite i renderaren. Om spritens bild inte är laddad ännu väntar metoden på att bilden ska laddas och schemalägger därefter en ny rendering. Om laddningen misslyckas ignoreras felet och spriten ritas då inte.
 
-### Reflektion
+#### Reflektion
 
-**Small:**
+| Regel | Reflektion |
+| --- | --- |
+| **Small** | Metoden är 8 rader lång, vilket enligt författaren ligger inom en den nivå som tagits upp tidigare. Metoden skulle dock kunna förbättras genom att flytta delar av ansvaret till en separat metod. |
+| **Blocks and Indenting** | Metoden har endast en indenteringsnivå, vilket är i enlighet med regeln, s. 35. Däremot innehåller `if`-blocket inte endast ett enkelt funktionsanrop i den ursprungliga implementationen: `sprite.waitForLoad().then(() => this.#scheduleRender()).catch(() => {})`. Enligt boken bör blocken helst endast innehålla ett funktionsanrop. Detta kan förbättras genom att flytta ansvaret för att vänta på laddningen till en separat metod. |
+| **Do One Thing** | Metoden gör för närvarande två saker. Den lägger till spriten i arrayen (`this.#sprites.push(sprite)`) och ser samtidigt till att renderingen uppdateras när bilden har laddats. Detta innebär att metoden både hanterar lagringen av spriten och laddningen av dess bild. Ansvaret för att vänta på laddningen kan därför flyttas till en separat metod. |
+| **Have No Side Effects** | Metoden ändrar renderarens interna tillstånd genom att lägga till spriten i `this.#sprites`. Detta är dock inte en oväntad sidoeffekt, eftersom det är själva syftet med metoden `add()`. Metoden påverkar däremot även renderingen genom att schemalägga en ny rendering när bilden har laddats. Detta är en del av det beteende som krävs för att en ny sprite ska kunna visas även om bilden ännu inte är laddad. Jag väljer därför att behålla detta ansvar i `SpriteRenderer`, men flyttar väntan på laddningen till en separat metod för att göra `add()` enklare. |
 
-Metoden är 8 rader lång, vilket enligt författaren ligger inom en den nivå som tagits upp tidigare. Metoden skulle dock kunna förbättras genom att flytta delar av ansvaret till en separat metod.
-
-**Blocks and Indenting:**
-
-Metoden har endast en indenteringsnivå, vilket är i enlighet med regeln, s. 35. Däremot innehåller `if`-blocket inte endast ett enkelt funktionsanrop i den ursprungliga implementationen:
-
-```javascript
-sprite.waitForLoad().then(() => this.#scheduleRender()).catch(() => {})
-```
-
-Enligt boken bör blocken helst endast innehålla ett funktionsanrop. Detta kan förbättras genom att flytta ansvaret för att vänta på laddningen till en separat metod.
-
-**Do One Thing:**
-
-Metoden gör för närvarande två saker. Den lägger till spriten i arrayen (`this.#sprites.push(sprite)`) och ser samtidigt till att renderingen uppdateras när bilden har laddats.
-
-Detta innebär att metoden både hanterar lagringen av spriten och laddningen av dess bild. Ansvaret för att vänta på laddningen kan därför flyttas till en separat metod.
-
-**Have No Side Effects:**
-
-Metoden ändrar renderarens interna tillstånd genom att lägga till spriten i `this.#sprites`. Detta är dock inte en oväntad sidoeffekt, eftersom det är själva syftet med metoden `add()`.
-
-Metoden påverkar däremot även renderingen genom att schemalägga en ny rendering när bilden har laddats. Detta är en del av det beteende som krävs för att en ny sprite ska kunna visas även om bilden ännu inte är laddad. Jag väljer därför att behålla detta ansvar i `SpriteRenderer`, men flyttar väntan på laddningen till en separat metod för att göra `add()` enklare.
-
-### Förbättring & Analys
+#### Förbättring & Analys
 
 Jag valde efter genomgången av reglerna att flytta ut väntan på laddningen till en egen metod. På så sätt blir `if`-blocket endast en rad och ett funktionsanrop.
 
@@ -456,25 +372,19 @@ add (sprite) {
 
 ---
 
-## `Sprite.constructor()`
+### `Sprite.constructor()`
 
-### Förklaring
+#### Förklaring
 
 Skapar en sprite med en bildkälla, position, storlek och eventuellt en region. Konstruktorn sätter fälten och hämtar bildtillgången genom `assignImageAsset()`.
 
-### Reflektion
+#### Reflektion
 
-**Function Arguments:**
+| Regel | Reflektion |
+| --- | --- |
+| **Function Arguments** | Här bryter konstruktorn tydligt mot regeln om antalet argument. Konstruktorn har sex argument (`src`, `x`, `y`, `width`, `height` och `region`). Boken beskriver att fler än tre argument kräver särskild motivering och att man helst bör undvika så många argument (s. 40). Boken föreslår att argument som hör ihop istället kan samlas i ett objekt, s. 43. I det här fallet hör `x`, `y`, `width`, `height` och `region` ihop eftersom de beskriver spritens egenskaper. Anropet `new Sprite(src, 0, 0, 32, 32)` är dessutom svårt att läsa eftersom det inte framgår vad de olika värdena representerar. Det är också lätt att råka ange argumenten i fel ordning. Det finns även ett problem med standardvärdena. `x` och `y` har standardvärdet `0`, medan `width` och `height` saknar standardvärden. Eftersom JavaScript inte tillåter att man hoppar över argument i mitten måste en användare ändå ange `x` och `y` om den vill ange `width` och `height`. Detta var något jag inte hade reflekterat över tidigare. |
 
-Här bryter konstruktorn tydligt mot regeln om antalet argument. Konstruktorn har sex argument (`src`, `x`, `y`, `width`, `height` och `region`). Boken beskriver att fler än tre argument kräver särskild motivering och att man helst bör undvika så många argument (s. 40).
-
-Boken föreslår att argument som hör ihop istället kan samlas i ett objekt, s. 43. I det här fallet hör `x`, `y`, `width`, `height` och `region` ihop eftersom de beskriver spritens egenskaper.
-
-Anropet `new Sprite(src, 0, 0, 32, 32)` är dessutom svårt att läsa eftersom det inte framgår vad de olika värdena representerar. Det är också lätt att råka ange argumenten i fel ordning.
-
-Det finns även ett problem med standardvärdena. `x` och `y` har standardvärdet `0`, medan `width` och `height` saknar standardvärden. Eftersom JavaScript inte tillåter att man hoppar över argument i mitten måste en användare ändå ange `x` och `y` om den vill ange `width` och `height`. Detta var något jag inte hade reflekterat över tidigare.
-
-### Förbättring
+#### Förbättring
 
 Jag tog hjälp av en LLM (Claude Sonnet 5 Medium) för att undersöka hur detta kunde lösas, eftersom jag inte hade tidigare kunskap om options-objekt som lösning på många funktionsargument. Förslaget var att använda ett objekt för position, storlek och region:
 
@@ -546,33 +456,42 @@ Jag väljer därför options-objektet som lösning. Det minskar antalet argument
 
 ---
 
-## Reflektion kring kapitel 3
+### Reflektion kring kapitel 3
+
 Jag tycker att det finns mycket bra att ta med sig från kapitlet. Att tänka efter vad en funktion faktiskt gör, och inte bara vad jag tror att den gör, ger mycket renare kod. De viktigaste reglerna tycker jag är **Do One Thing**, **Small**, **Blocks and Indenting** och **Function Arguments**. Det tydligaste exemplet i min egen kod var `SpriteRenderer.render()`, som rensade canvasen, loopade, filtrerade bort sprites, valde ritsätt och innehöll ett `drawImage`-anrop med nio argument. Först när jag räknade rader och såg de nästlade `if`-satserna blev det svårt att hävda att den gjorde en sak. **Blocks and Indenting** är den regel jag tycker är enklast att använda i praktiken, eftersom ett block på flera rader inuti en `if`-sats direkt visar att något borde flyttas till en egen metod, och namnet på metoden blir en form av dokumentation.
 
 Den största överraskningen var **Function Arguments**. `Sprite`-konstruktorn hade sex argument, och jag hade inte tänkt på att standardvärdena på `x` och `y` inte går att använda när `width` och `height` kommer efter dem. Ett anrop som `new Sprite(src, 0, 0, 32, 32)` säger dessutom inget om vad siffrorna betyder. Jag kände inte till options-objekt som lösning och tog hjälp av en LLM för att hitta den. Jag övervägde också att skapa egna klasser för position och storlek, som boken föreslår, men det kändes för tungt för den som ska använda modulen.
 
 Jag håller dock inte med om allt. När jag delade upp `update()` blev två av metoderna bara en rad var, och `render()` blev fyra metoder för något som egentligen är enkelt, så man får hoppa mer mellan metoder för att förstå helheten. Även **Have No Side Effects** ser jag som ett sätt att upptäcka problem snarare än en regel som alltid måste följas. Jag tog bort ordningsberoendet i `#createLoadPromise()`, men behöll att metoden startar laddningen, eftersom löftet och laddningen hör ihop, och dokumenterade det i stället. Precis som i kapitel 2 handlar det alltså om avvägningar, och det jag tar med mig är målet snarare än siffrorna: en metod ska göra en sak, ligga på en abstraktionsnivå och gå att förklara utan ordet "och".
 
----
-
-## Användning av LLM/AI
-
-Jag har använt LLM i den här laborationen för mer komplexa problem. Bland annat behövde jag hjälp med att minska tiden det tog att ladda in sprites, och där föreslog LLM:en att jag skulle använda en cache i `ImageAsset`, något jag inte hade tänkt på själv. Det är ett bra exempel på hur jag vill använda AI: som stöd för att hitta lösningar jag inte känner till, medan jag själv fattar besluten.
-
-I övrigt vill jag inte att LLM ska programmera åt mig. Programmeringen är det jag själv vill göra, och jag vill att AI ska hjälpa mig att lära mig, ge tips och öka min egen förmåga, inte göra mitt jobb. Jag har även använt LLM för att formulera vissa JSDoc-kommentarer bättre. Då har jag alltid skrivit kommentaren själv först och sedan bett om råd för att formulera den korrekt. Det tycker jag är det bästa sättet att använda AI utan att ge bort ansvaret.
-
-Just nu vill jag inte heller använda AI direkt i VS Code. Jag upplever att det stör mitt arbetsflöde, och jag tror dessutom att det finns en risk att man tappar både förståelsen och greppet om sitt eget lärande.
-
-Jag har däremot använt AI för att formatera det här dokumentet, till exempel för att göra rubriker och radbrytningar enhetliga. Det är monotont och tidskrävande arbete, och jag tycker att det är bättre att lägga tiden på att göra själva uppgifterna och låta LLM:en se till att dokumentet blir enhetligt.
-
-Jag har även tagit hjälp av en LLM för att mocka upp vissa delar av `SpriteRenderer.test.js`, dels för att jag tycker det fortfarande är lite klurigt, dels för att jag bara skrivit tester tidigare under 1DV613 och då med Jest. Jag fick också hjälp med hur man triggar asynkrona events, till exempel när en `Image` laddar eller misslyckas ladda, i `ImageAsset.test.js.`
-
----
-
-## Reflektion över egen kodkvalitet
+## 3. Din kodkvalitet
 
 Jag tycker att min kodkvalitet överlag är hyfsat god. Jag gick in i laborationen väl förberedd och har tidigare skrivit kod som jag är nöjd med. Samtidigt har jag en del kvar att lära mig, framför allt när det gäller regeln **Do One Thing**. Ibland tror jag att jag följer den när jag skriver koden för att få den att fungera, men när jag nu har gått igenom koden flera gånger ser jag att det absolut finns förbättringspotential.
 
 Jag vill också bli mer oberoende av AI när jag lär mig. Jag sitter mycket med StackOverflow, MDN och andra uppslagsverk/forum, men när jag inte har skrivit JavaScript på ett tag blir även inbyggda metoder som `split`, `push` och `pop` svåra att använda. JavaScript är dessutom ett ganska löst språk, till skillnad från Java där jag känner mig mer insatt i hur man arbetar objektorienterat.
 
 Därför behöver jag arbeta mer med båda språken, och kanske bygga saker som jag egentligen inte "behöver" men som är bra för lärandet. Jag har till exempel inte byggt några webbkomponenter sedan 1dv025, medan jag har hållit på en hel del med backend sedan 1dv026, bland annat i projektarbetet 1dv613.
+
+## 4. Att skriva en modul
+
+Det svåraste var faktiskt att komma på vad för modul jag skulle skriva. Jag funderade ett par dagar utan att komma fram till något och frågade till slut Daniel om tips, vilket gav mig lite inspiration. Innan dess hade jag tänkt göra någon typ av quest-modul för spel, i Java.
+
+Att skriva en modul skiljer sig mycket från en app. I en app vet jag oftast exakt vad koden ska lösa, men i en modul måste jag försöka gissa vilka olika sätt andra kan vilja använda den på, utan att veta säkert.
+
+Ett exempel är `SpriteRenderer`, som just nu ritar sprites i den ordning de lagts till via `context.drawImage()`. Det räcker för min egen test-app, men någon annan kanske vill kunna bestämma vilken sprite som ska ligga överst, till exempel med ett enkelt lagersystem (z-index). Den funktionaliteten finns inte just nu, vilket gör modulen mindre generell än den hade kunnat vara.
+
+Projektet blev därför enklare än jag först tänkt mig — ett litet bibliotek för grundläggande sprite-rendering och animation, inte något helt ramverk. Under arbetets gång insåg jag att det är bättre att göra få saker ordentligt och dokumentera dem bra, än att gissa mig till allt användare skulle kunna vilja ha och riskera att modulen blir rörig. Lagerhantering hade varit en naturlig utökning, men jag valde att skippa det och fokusera på att hinna klart med grunderna istället.
+
+## 5. Testning
+
+Jag valde att köra både unit- och integrationstester, mest för att jag gjort det tidigare och redan hade en fungerande arbetsmetod. Unit-testerna täcker varje klass för sig (`Sprite`, `SpriteRegion`, `SpriteAnimation`, `SpriteRenderer`, `ImageAsset`), medan integrationstesterna i `integration.test.js` kollar att klasserna faktiskt fungerar ihop, med riktiga instanser istället för mockar — t.ex. att en riktig `Sprite` renderas korrekt via en riktig `SpriteRenderer` med en riktig `SpriteRegion`.
+
+Svårast var den asynkrona bildladdningen i `ImageAsset`. Att trigga `load`- och `error`-events på ett `Image`-objekt i JSDOM är inte helt uppenbart hur man gör, så jag tog hjälp av en LLM för att lista ut hur man simulerar det på ett bra sätt i testerna.
+
+## 6. AI-samarbete
+
+Jag använde AI ungefär likadant som i förra laborationen. Jag försöker alltid göra jobbet själv och använder AI mer som ett uppslagsverk när jag kör fast på saker jag inte kan sedan tidigare, till exempel options-objekt för att slippa för många konstruktorargument, eller hur man triggar asynkrona events i tester. Jag undviker att kopiera kod rakt av — jag skriver själv först och använder AI för att bekräfta eller putsa på en lösning jag redan kommit fram till.
+
+Jag har även använt AI för att formulera vissa JSDoc-kommentarer bättre. Där skriver jag alltid kommentaren själv först och ber sedan om hjälp att formulera den snyggare. Det känns som det bästa sättet att använda AI utan att lämna ifrån mig ansvaret. Jag vill fortfarande inte köra AI direkt i VS Code — det stör mitt arbetsflöde, och jag tror man lätt tappar greppet om sitt eget lärande då.
+
+Största skillnaden mot förra laborationen är att jag den här gången även använt AI till tråkiga, monotona saker som inte kräver eget tänkande, t.ex. att formatera texten i det här dokumentet (rubriker, radbrytningar) och hjälp att mocka upp delar av `SpriteRenderer.test.js` samt trigga asynkrona events i `ImageAsset.test.js`. Det känns som ett bra sätt att spara tid till det som faktiskt kräver eget tänkande, istället för att låta AI ta över själva programmeringen eller reflektionerna.
