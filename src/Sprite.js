@@ -59,12 +59,13 @@ export class Sprite {
   /**
    * Creates an instance of the Sprite class.
    *
-   * @param {string} src The source of the image.
-   * @param {number} x The X coordinate in pixels (default: 0).
-   * @param {number} y The Y coordinate in pixels (default: 0).
-   * @param {number} width The width of the sprite in pixels.
-   * @param {number} height The height of the sprite in pixels.
-   * @param {SpriteRegion|null} region The region of the source image to use (default: null).
+   * @param {string} src - The source of the image.
+   * @param {object} [options] - The sprite options.
+   * @param {number} [options.x=0] - The X coordinate in pixels.
+   * @param {number} [options.y=0] - The Y coordinate in pixels.
+   * @param {number} [options.width=0] - The width of the sprite in pixels.
+   * @param {number} [options.height=0] - The height of the sprite in pixels.
+   * @param {SpriteRegion|null} [options.region=null] - The region of the source image to use.
    */
   constructor (src, {x = 0, y = 0, width = 0, height = 0, region = null} = {}) {
     this.x = x

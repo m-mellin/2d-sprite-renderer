@@ -39,10 +39,11 @@ export class SpriteRegion {
   /**
    * Creates a SpriteRegion.
    *
-   * @param {number} x - X coordinate of the region in the source image.
-   * @param {number} y - Y coordinate of the region in the source image.
-   * @param {number} width - Width of the region.
-   * @param {number} height - Height of the region.
+   * @param {object} [options] - The region options.
+   * @param {number} [options.x=0] - X coordinate of the region in the source image.
+   * @param {number} [options.y=0] - Y coordinate of the region in the source image.
+   * @param {number} [options.width=0] - Width of the region.
+   * @param {number} [options.height=0] - Height of the region.
    */
   constructor ({x = 0, y = 0, width = 0, height = 0} = {}) {
     this.x = x

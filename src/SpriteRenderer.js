@@ -1,3 +1,5 @@
+import { Sprite } from './Sprite.js'
+
 /**
  * Renders sprites on an HTML canvas.
  * 

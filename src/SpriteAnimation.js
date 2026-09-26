@@ -1,3 +1,5 @@
+import { SpriteRegion } from './SpriteRegion.js'
+
 /**
  * Defines an animation for a sprite.
  * 
