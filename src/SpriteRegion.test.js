@@ -59,21 +59,21 @@ describe('SpriteRegion', () => {
     const region = new SpriteRegion({x: 5, y: 10, width: 10, height: 20})
 
     it('get width returns correct size', () => {
-      expect(region.x).toBe(5)
+      expect(region.width).toBe(10)
     })
 
     it('get height returns correct size', () => {
-      expect(region.y).toBe(10)
+      expect(region.height).toBe(20)
     })
 
     it('set width assigns correct size', () => {
-      region.x = 20
-      expect(region.x).toBe(20)
+      region.width = 20
+      expect(region.width).toBe(20)
     })
 
     it('set height assigns correct size', () => {
-      region.y = 5
-      expect(region.y).toBe(5)
+      region.height = 5
+      expect(region.height).toBe(5)
     })
   })
 
