@@ -1,25 +1,26 @@
 @startuml spriteRenderer
 
 class Sprite {
-  - asset
-  - xPos
-  - yPos
+  - imageAsset
+  - x
+  - y
   - width
   - height
   - region
 
-  + Sprite(src, xPos, yPos, width, height, region)
-  - setSpriteSize(width, height)
-  + setImageSource(src)
-  + get positionX()
-  - set positionX(xPos)
-  + get positionY()
-  - set positionY(yPos)
+  + Sprite(src, {x = 0, y = 0, width = 0, height = 0, region = null} = {})
+  + assingImageAsset(src)
+  + get x()
+  - set x(xPos)
+  + get y()
+  - set y(yPos)
   + get image()
   + get isLoaded()
-  + waitForLoad()
+  + async waitForLoad()
   + get width()
+  + set width()
   + get height()
+  + set height()
   + get region()
   + set region()
 }
@@ -36,8 +37,12 @@ class SpriteRenderer {
   + remove(sprite)
   + clear()
   - clearCanvas()
+  - renderWhenLoaded(sprite)
   - scheduleRender()
   + render()
+  - drawSprite(sprite)
+  - drawRegion(sprite)
+  - drawWhole(sprite)
 }
 
 class ImageAsset {
@@ -47,37 +52,43 @@ class ImageAsset {
   - loaded
 
   + ImageAsset(src)
-  + getAsset(src)
+  + {static} getAsset(src)
+  - {static} createAsset(src)
   - createLoadPromise(src)
+  - handleLoad(resolve)
   - setImageSource(src)
   + get image()
   + get isLoaded()
-  + waitForLoad()
+  + async waitForLoad()
 }
 
 class SpriteRegion {
-  - sourceX
-  - sourceY
+  - x
+  - y
   - width
   - height
 
-  + SpriteRegion(sourceX, sourceY, width, height)
-  + get sourceX()
-  + get sourceY()
+  + SpriteRegion({x = 0, y = 0, width = 0, height = 0} = {})
+  + get x()
+  + set x()
+  + get y()
+  + set y()
   + get width()
+  + set width()
   + get height()
+  + set height()
 }
 
 class SpriteAnimation {
   - frames
   - frameDuration
-  - currentFrame = 0
-  - elasped = 0
+  - currentFrame
+  - elaspedTime
 
   + SpriteAnimation(frames, frameDuration)
-  + update()
+  + update(deltaTime)
   - resetCurrentFrame()
-  + get region
+  + get region()
 }
 
 
