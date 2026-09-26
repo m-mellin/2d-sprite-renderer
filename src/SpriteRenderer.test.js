@@ -2,6 +2,11 @@ import { describe, it, expect, vi } from 'vitest'
 import { SpriteRegion } from './SpriteRegion.js'
 import { SpriteRenderer } from './SpriteRenderer.js'
 
+/**
+ * Creates a canvas with a mocked 2D context, for use in tests.
+ *
+ * @returns {{canvas: HTMLCanvasElement, context: object}} The canvas and its mocked context.
+ */
 const createCanvas = () => {
   const context = {
     clearRect: vi.fn(),
@@ -16,6 +21,13 @@ const createCanvas = () => {
   return { canvas, context }
 }
 
+/**
+ * Creates a mocked sprite-like object for use with SpriteRenderer, without
+ * relying on a real Sprite or ImageAsset.
+ *
+ * @param {object} [overrides] - Properties to override on the default mocked sprite.
+ * @returns {object} A mocked sprite with `isLoaded`, `image`, `x`, `y`, `width`, `height`, `region`, and a mocked `waitForLoad`.
+ */
 const createSprite = (overrides = {}) => ({
   isLoaded: true,
   image: {},
