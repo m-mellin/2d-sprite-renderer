@@ -94,6 +94,7 @@ class SpriteAnimation {
 
 SpriteRenderer "1" --> "*" Sprite : uses
 Sprite "*" --> "1" ImageAsset : uses
-Sprite "1" *-- "0..1" SpriteRegion : has
+Sprite "1" o-- "0..1" SpriteRegion : has
+SpriteAnimation "1" --> "*" SpriteRegion : has frames
 
 @enduml
