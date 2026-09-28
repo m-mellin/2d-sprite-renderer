@@ -3,12 +3,17 @@
   "version": "1.0.5",
   "description": "2D-sprite-renderer is a small JavaScript-library for drawing and animating 2D-sprites on a HTMLCanvasElement.",
   "main": "src/index.js",
+  "types": "types/index.d.ts",
   "exports": {
-    ".": "./src/index.js"
+    ".": {
+      "types": "./types/index.d.ts",
+      "default": "./src/index.js"
+    }
   },
   "engines": {
-    "node": ">=24.12.0"
+    "node": ">=18"
   },
+  "files": ["src", "types", "!src/**/*.test.js"],
   "scripts": {
     "test": "vitest",
     "test:run": "vitest run",
@@ -16,7 +21,10 @@
     "lint": "eslint ./src --cache",
     "lint:fix": "eslint ./src --cache --fix",
     "format": "prettier --write ./src",
-    "format:check": "prettier ./src --check"
+    "format:check": "prettier ./src --check",
+    "clean:types": "node -e \"fs.rmSync('types',{recursive:true,force:true})\"",
+    "build:types": "npm run clean:types && tsc",
+    "prepublishOnly": "npm run build:types"
   },
   "repository": {
     "type": "git",
@@ -42,8 +50,9 @@
     "eslint-plugin-regexp": "^3.3.0",
     "eslint-plugin-security": "^4.0.1",
     "globals": "^17.12.0",
+    "jsdom": "^30.1.1",
     "prettier": "^3.9.6",
-    "vitest": "^5.0.0",
-    "jsdom": "^30.1.1"
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.0"
   }
 }
