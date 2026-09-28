@@ -112,11 +112,15 @@ jobs:
       - auto-tag
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ needs.auto-tag.outputs.tag }}
-          VERSION: ${{ needs.auto-tag.outputs.version }}
         run: |
           gh release create "$TAG" \
             --title "$TAG" \
