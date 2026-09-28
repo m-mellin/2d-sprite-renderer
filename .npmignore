@@ -1,0 +1,15 @@
+.eslintcache
+
+.github/
+.gitignore
+
+test/
+test-app/
+
+*.test.js
+
+eslint.config.js
+vitest.config.js
+SpriteRenderer.puml
+REFLECTION.md
+TEST_REPORT.md
