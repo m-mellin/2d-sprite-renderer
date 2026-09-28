@@ -1,6 +1,6 @@
 {
   "name": "2d-sprite-renderer",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "2D-sprite-renderer is a small JavaScript-library for drawing and animating 2D-sprites on a HTMLCanvasElement.",
   "main": "src/index.js",
   "exports": {
