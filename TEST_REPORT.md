@@ -133,3 +133,5 @@ method, while manual testing verified the expected visual result.
 | What was tested | How it was tested | Test Type | Result |
 | ---------------- | ------------------ | --------- | ------- |
 | Visual rendering, movement, and animation switching in the browser (`app.js`). | Ran the app, pressed arrow keys, observed movement and animations. | Manual | ✅ Passed |
+| Using the published module in a separate project. | Created a new project, ran `npm install 2d-sprite-renderer` and imported the classes in VS Code. | Manual | ❌ Failed, see issue #1|
+| Using the published module again after the fix (version 1.0.5). | Ran `npm i 2d-sprite-renderer@latest` in the same project and restarted the TS server. | Manual | ✅ Passed |
