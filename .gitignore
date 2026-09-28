@@ -142,4 +142,10 @@ vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
 
+# Typescript declarations
 types/
+
+# REFLECTION.md
+REFLECTION.md
+*.puml
+
