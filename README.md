@@ -1,7 +1,7 @@
 # 2d-sprite-renderer
 
 [![npm version](https://img.shields.io/npm/v/2d-sprite-renderer.svg)](https://www.npmjs.com/package/2d-sprite-renderer)
-[![CI](https://github.com/m-mellin/2d-sprite-renderer/actions/workflows/ci.yml/badge.svg)](https://github.com/m-mellin/2d-sprite-renderer/actions)
+[![CI](https://github.com/m-mellin/2d-sprite-renderer/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/m-mellin/2d-sprite-renderer/actions)
 
 2d-sprite-renderer is a small JavaScript library for drawing and animating 2D sprites on an `HTMLCanvasElement`.
 
