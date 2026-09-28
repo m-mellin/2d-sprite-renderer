@@ -8,6 +8,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: release-main
+  cancel-in-progress: false
+
 jobs:
   lint:
     name: Lint
@@ -66,7 +70,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Create version tag
+      - name: Create version
         id: version
         env:
           VERSION_MAJOR: ${{ vars.VERSION_MAJOR }}
@@ -99,8 +103,14 @@ jobs:
           echo "version=$NEW_VERSION" >> "$GITHUB_OUTPUT"
           echo "tag=$NEW_TAG" >> "$GITHUB_OUTPUT"
 
+          npm version "$NEW_VERSION" --no-git-tag-version
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add package.json package-lock.json
+          git commit -m "chore: release $NEW_TAG"
+          git push origin main
 
           git tag "$NEW_TAG"
           git push origin "$NEW_TAG"
