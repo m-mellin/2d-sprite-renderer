@@ -11,7 +11,7 @@ export class ImageAsset {
    * @type {Map<string, ImageAsset>}
    * @private
    */
-  static #cache = new Map()
+  static #cache = new Map();
 
   /**
    * The image element used by the asset.
@@ -19,7 +19,7 @@ export class ImageAsset {
    * @type {HTMLImageElement}
    * @private
    */
-  #image = new Image()
+  #image = new Image();
 
   /**
    * Indicates whether the image has finished loading.
@@ -27,7 +27,7 @@ export class ImageAsset {
    * @type {boolean}
    * @private
    */
-  #isLoaded = false
+  #isLoaded = false;
 
   /**
    * Promise that resolves when the image has finished loading.
@@ -35,16 +35,16 @@ export class ImageAsset {
    * @type {Promise<HTMLImageElement>}
    * @private
    */
-  #loaded
+  #loaded;
 
   /**
    * Creates an image asset and starts loading the image.
    *
    * @param {string} src - Source of the image.
    */
-  constructor (src) {
-    this.#loaded = this.#createLoadPromise(src)
-    this.#loaded.catch(() => {})
+  constructor(src) {
+    this.#loaded = this.#createLoadPromise(src);
+    this.#loaded.catch(() => {});
   }
 
   /**
@@ -53,14 +53,14 @@ export class ImageAsset {
    * @param {string} src - Source of the image.
    * @returns {ImageAsset} The image asset associated with the source.
    */
-  static getAsset (src) {
-    let asset = ImageAsset.#cache.get(src)
+  static getAsset(src) {
+    let asset = ImageAsset.#cache.get(src);
 
     if (!asset) {
-      asset = this.#createAsset(src)
+      asset = this.#createAsset(src);
     }
 
-    return asset
+    return asset;
   }
 
   /**
@@ -69,11 +69,11 @@ export class ImageAsset {
    * @param {string} src - Source of the image.
    * @returns {ImageAsset} The newly created image asset.
    */
-  static #createAsset (src) {
-    const asset = new ImageAsset(src)
-    ImageAsset.#cache.set(src, asset)
+  static #createAsset(src) {
+    const asset = new ImageAsset(src);
+    ImageAsset.#cache.set(src, asset);
 
-    return asset
+    return asset;
   }
 
   /**
@@ -82,14 +82,14 @@ export class ImageAsset {
    * @param {string} src - Source of the image.
    * @returns {Promise<HTMLImageElement>} A promise that resolves with the image when it has loaded.
    */
-  #createLoadPromise (src) {
+  #createLoadPromise(src) {
     return new Promise((resolve, reject) => {
       /**
        * Handles the image's load event.
        *
        * @returns {void}
        */
-      this.#image.onload = () => this.#handleLoad(resolve)
+      this.#image.onload = () => this.#handleLoad(resolve);
 
       /**
        * Handles the image's error event.
@@ -97,10 +97,10 @@ export class ImageAsset {
        * @param {Event} err - The error event dispatched by the image.
        * @returns {void}
        */
-      this.#image.onerror = (err) => reject(err)
+      this.#image.onerror = (err) => reject(err);
 
-      this.#setImageSource(src)
-    })
+      this.#setImageSource(src);
+    });
   }
 
   /**
@@ -108,9 +108,9 @@ export class ImageAsset {
    *
    * @param {(image: HTMLImageElement) => void} resolve - Resolves the load promise with the image.
    */
-  #handleLoad (resolve) {
-    this.#isLoaded = true
-    resolve(this.#image)
+  #handleLoad(resolve) {
+    this.#isLoaded = true;
+    resolve(this.#image);
   }
 
   /**
@@ -118,8 +118,8 @@ export class ImageAsset {
    *
    * @param {string} src - Source of the image.
    */
-  #setImageSource (src) {
-    this.#image.src = src
+  #setImageSource(src) {
+    this.#image.src = src;
   }
 
   /**
@@ -127,8 +127,8 @@ export class ImageAsset {
    *
    * @returns {HTMLImageElement} The image element.
    */
-  get image () {
-    return this.#image
+  get image() {
+    return this.#image;
   }
 
   /**
@@ -136,8 +136,8 @@ export class ImageAsset {
    *
    * @returns {boolean} True if the image has loaded, otherwise false.
    */
-  get isLoaded () {
-    return this.#isLoaded
+  get isLoaded() {
+    return this.#isLoaded;
   }
 
   /**
@@ -146,6 +146,6 @@ export class ImageAsset {
    * @returns {Promise<void>} A promise that resolves when the image has loaded.
    */
   async waitForLoad() {
-    await this.#loaded
+    await this.#loaded;
   }
 }
