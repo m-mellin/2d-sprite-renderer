@@ -26,7 +26,7 @@ export class SpriteRenderer {
   /**
    * The sprited managed by the renderer.
    *
-   * @type {Array<Sprite>}
+   * @type {Array<Sprite>|TextSprite}
    * @private
    */
   #sprites = [];
@@ -60,7 +60,7 @@ export class SpriteRenderer {
    * Adds a sprite to the renderer.
    * If the sprite is not loaded yet, a render is scheduled once it has loaded.
    *
-   * @param {Sprite} sprite - Sprite to add.
+   * @param {Sprite|TextSprite} sprite - Sprite to add.
    */
   add(sprite) {
     this.#sprites.push(sprite);
@@ -75,7 +75,7 @@ export class SpriteRenderer {
    *
    * Does nothing if the sprite is not in the renderer.
    *
-   * @param {Sprite} sprite - Sprite to remove.
+   * @param {Sprite|TextSprite} sprite - Sprite to remove.
    */
   remove(sprite) {
     const index = this.#sprites.indexOf(sprite);
@@ -144,7 +144,7 @@ export class SpriteRenderer {
   /**
    * Draws a loaded sprite using either its whole image or a selected region.
    *
-   * @param {Sprite} sprite - Sprite to draw.
+   * @param {Sprite|TextSprite} sprite - Sprite to draw.
    */
   #drawSprite(sprite) {
     if (!sprite.isLoaded) return;
