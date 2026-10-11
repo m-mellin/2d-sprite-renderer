@@ -1,4 +1,5 @@
 import { Sprite } from "./Sprite.js";
+import { TextSprite } from "./TextSprite.js";
 
 /**
  * Renders sprites on an HTML canvas.
@@ -148,7 +149,9 @@ export class SpriteRenderer {
   #drawSprite(sprite) {
     if (!sprite.isLoaded) return;
 
-    if (sprite.region) {
+    if (sprite instanceof TextSprite) {
+      this.#drawText(sprite);
+    } else if (sprite.region) {
       this.#drawRegion(sprite);
     } else {
       this.#drawWhole(sprite);
@@ -189,5 +192,17 @@ export class SpriteRenderer {
       sprite.width,
       sprite.height,
     );
+  }
+
+  /**
+   * Draws a text sprite on the canvas.
+   *
+   * @param {TextSprite} textSprite - Text sprite to draw.
+   */
+  #drawText(textSprite) {
+    this.#context.font = textSprite.font;
+    this.#context.fillStyle = textSprite.color;
+    this.#context.textBaseline = "top";
+    this.#context.fillText(textSprite.text, textSprite.x, textSprite.y)
   }
 }

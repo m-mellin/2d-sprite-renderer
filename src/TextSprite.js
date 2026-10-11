@@ -1,11 +1,61 @@
+/**
+ * Represents a piece of text that can be rendered on a canvas.
+ */
 export class TextSprite {
+  /**
+   * The text to draw.
+   *
+   * @type {string}
+   * @private
+   */
   #text
+
+  /**
+   * The X coordinate of the text in pixels.
+   *
+   * @type {number}
+   * @private
+   */
   #x
+
+  /**
+   * The Y coordinate of the top of the text in pixels.
+   *
+   * @type {number}
+   * @private
+   */
   #y
+
+  /**
+   * The CSS font used to draw the text, for example "16px sans-serif".
+   *
+   * @type {string}
+   * @private
+   */
   #font
+
+  /**
+   * The CSS color used to draw the text, for example "#000000"
+   *
+   * @type {string}
+   * @private
+   */
   #color
-  
-  constructor(text, {x = 0, y = 0, font = "16px sans-serif", color = "#000"} = {}) {
+
+  /**
+   * Creates a TextSprite.
+   *
+   * @param {string} text - The text to draw.
+   * @param {object} [options] - The text options.
+   * @param {number} [options.x=0] - The X coordinate in pixels.
+   * @param {number} [options.y=0] - The Y coordinate of the top of the text in pixels.
+   * @param {string} [options.font="16px sans-serif"] - The CSS font.
+   * @param {string} [options.color="#000"] - The CSS color.
+   */
+  constructor(
+    text,
+    { x = 0, y = 0, font = "16px sans-serif", color = "#000" } = {},
+  ) {
     this.text = text;
     this.x = x;
     this.y = y;
@@ -13,10 +63,20 @@ export class TextSprite {
     this.color = color;
   }
 
+  /**
+   * Returns the text.
+   *
+   * @returns {string} The text to draw.
+   */
   get text() {
     return this.#text;
   }
 
+  /**
+   * Sets the text.
+   *
+   * @param {string} text The text to draw.
+   */
   set text(text) {
     if (typeof text !== "string") {
       throw new TypeError("text must be a string");
@@ -25,10 +85,20 @@ export class TextSprite {
     this.#text = text;
   }
 
+  /**
+   * Returns the X coordinate of the text.
+   *
+   * @returns {number} The X coordinate in pixels.
+   */
   get x() {
     return this.#x;
   }
 
+  /**
+   * Sets the X coordinate of the text.
+   *
+   * @param {number} x The X coordinate in pixels.
+   */
   set x(x) {
     if (!Number.isFinite(x)) {
       throw new TypeError("x must be a finite number");
@@ -37,10 +107,20 @@ export class TextSprite {
     this.#x = x;
   }
 
+  /**
+   * Returns the Y coordinate of the text.
+   *
+   * @returns {number} The Y coordinate in pixels.
+   */
   get y() {
     return this.#y;
   }
 
+  /**
+   * Sets the Y coordinate of the text.
+   *
+   * @param {number} y The Y coordinate in pixels.
+   */
   set y(y) {
     if (!Number.isFinite(y)) {
       throw new TypeError("y must be a finite number");
@@ -49,10 +129,20 @@ export class TextSprite {
     this.#y = y;
   }
 
+  /**
+   * Returns the CSS font of the text.
+   *
+   * @returns {string} The CSS font.
+   */
   get font() {
     return this.#font;
   }
 
+  /**
+   * Sets the CSS font of the text.
+   *
+   * @param {string} font The CSS font, for example "16px monospace".
+   */
   set font(font) {
     if (typeof font !== "string") {
       throw new TypeError("font must be a string");
@@ -61,10 +151,20 @@ export class TextSprite {
     this.#font = font;
   }
 
+  /**
+   * Returns the CSS color of the text.
+   *
+   * @returns {string} The CSS color.
+   */
   get color() {
     return this.#color;
   }
 
+  /**
+   * Sets the CSS color of the text.
+   *
+   * @param {string} color The CSS color.
+   */
   set color(color) {
     if (typeof color !== "string") {
       throw new TypeError("color must be a string");
@@ -73,8 +173,12 @@ export class TextSprite {
     this.#color = color;
   }
 
+  /**
+   * Returns whether the text is ready to draw. Text needs no image, so it always is.
+   *
+   * @returns {boolean} Always true.
+   */
   get isLoaded() {
     return true;
   }
-
 }
