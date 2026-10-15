@@ -4,13 +4,15 @@ export class BlockSprite {
   #width
   #height
   #color
+  #opacity
 
-  constructor(width = 0, height = 0, {x = 0, y = 0, color = '#000'} = {}) {
+  constructor(width = 0, height = 0, {x = 0, y = 0, color = '#000', opacity = 1} = {}) {
     this.x = x
     this.y = y
     this.width = width
     this.height = height
     this.color = color
+    this.opacity = opacity
   }
 
   /**
@@ -121,6 +123,22 @@ export class BlockSprite {
     }
 
     this.#color = color;
+  }
+
+  get opacity() {
+    return this.#opacity
+  }
+
+  set opacity(value) {
+    if (!Number.isFinite(value)) {
+      throw new TypeError("opacity must be a finite number");
+    }
+
+    if (value > 1 || value < 0) {
+      throw new RangeError("opacity must be between 0 and 1")
+    }
+
+    this.#opacity = value
   }
 
   /**
