@@ -1,3 +1,8 @@
+/**
+ * Represents a filled rectangle that can be rendered on a canvas.
+ *
+ * A block needs no image, so it can be drawn as soon as it is added to a renderer.
+ */
 export class BlockSprite {
   #x
   #y
@@ -6,6 +11,18 @@ export class BlockSprite {
   #color
   #opacity
 
+  /**
+   * Creates a BlockSprite.
+   *
+   * @param {number} [width=0] - The width of the block in pixels.
+   * @param {number} [height=0] - The height of the block in pixels.
+   * @param {object} [options] - The block options.
+   * @param {number} [options.x=0] - The X coordinate in pixels.
+   * @param {number} [options.y=0] - The Y coordinate in pixels.
+   * @param {string} [options.color="#000"] - The CSS color of the block.
+   * @param {number} [options.opacity=1] - The opacity from 0 (invisible) to 1 (fully visible).
+   * @throws {TypeError} If a value has the wrong type.
+   */
   constructor(width = 0, height = 0, {x = 0, y = 0, color = '#000', opacity = 1} = {}) {
     this.x = x
     this.y = y
@@ -125,10 +142,21 @@ export class BlockSprite {
     this.#color = color;
   }
 
+  /**
+   * Returns the opacity of the block.
+   * 
+   * @returns {number} The opacity
+   */
   get opacity() {
     return this.#opacity
   }
 
+  /**
+   * Sets the opacity of the block
+   * 
+   * @throws {TypeError} If the opacity is not a finite number
+   * @throws {RangeError} If the opacity is not between 0 and 1
+   */
   set opacity(value) {
     if (!Number.isFinite(value)) {
       throw new TypeError("opacity must be a finite number");

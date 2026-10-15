@@ -209,6 +209,11 @@ export class SpriteRenderer {
     this.#context.fillText(textSprite.text, textSprite.x, textSprite.y)
   }
 
+  /**
+   * Draws a block sprite on the canvas.
+   * 
+   * @param {BlockSprite} blockSprite - Block sprite to draw.
+   */
   #drawBlock(blockSprite) {
     this.#context.beginPath()
     this.#context.rect(blockSprite.x, blockSprite.y, blockSprite.width, blockSprite.height)
