@@ -218,7 +218,6 @@ export class SpriteRenderer {
     this.#context.beginPath()
     this.#context.rect(blockSprite.x, blockSprite.y, blockSprite.width, blockSprite.height)
     this.#context.fillStyle = blockSprite.color
-    this.#context.globalAlpha = blockSprite.opacity
     this.#context.fill()
   }
 }

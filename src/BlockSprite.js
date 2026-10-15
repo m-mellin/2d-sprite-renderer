@@ -9,7 +9,6 @@ export class BlockSprite {
   #width
   #height
   #color
-  #opacity
 
   /**
    * Creates a BlockSprite.
@@ -19,17 +18,15 @@ export class BlockSprite {
    * @param {object} [options] - The block options.
    * @param {number} [options.x=0] - The X coordinate in pixels.
    * @param {number} [options.y=0] - The Y coordinate in pixels.
-   * @param {string} [options.color="#000"] - The CSS color of the block.
-   * @param {number} [options.opacity=1] - The opacity from 0 (invisible) to 1 (fully visible).
+   * @param {string} [options.color="rgba(0, 0, 0, 0)"] - The CSS color of the block.
    * @throws {TypeError} If a value has the wrong type.
    */
-  constructor(width = 0, height = 0, {x = 0, y = 0, color = '#000', opacity = 1} = {}) {
+  constructor(width = 0, height = 0, {x = 0, y = 0, color = 'rgba(0, 0, 0, 0)'} = {}) {
     this.x = x
     this.y = y
     this.width = width
     this.height = height
     this.color = color
-    this.opacity = opacity
   }
 
   /**
@@ -140,33 +137,6 @@ export class BlockSprite {
     }
 
     this.#color = color;
-  }
-
-  /**
-   * Returns the opacity of the block.
-   * 
-   * @returns {number} The opacity
-   */
-  get opacity() {
-    return this.#opacity
-  }
-
-  /**
-   * Sets the opacity of the block
-   * 
-   * @throws {TypeError} If the opacity is not a finite number
-   * @throws {RangeError} If the opacity is not between 0 and 1
-   */
-  set opacity(value) {
-    if (!Number.isFinite(value)) {
-      throw new TypeError("opacity must be a finite number");
-    }
-
-    if (value > 1 || value < 0) {
-      throw new RangeError("opacity must be between 0 and 1")
-    }
-
-    this.#opacity = value
   }
 
   /**
