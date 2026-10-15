@@ -21,7 +21,7 @@ export class BlockSprite {
    * @param {string} [options.color="rgba(0, 0, 0, 0)"] - The CSS color of the block.
    * @throws {TypeError} If a value has the wrong type.
    */
-  constructor(width = 0, height = 0, {x = 0, y = 0, color = 'rgba(0, 0, 0, 0)'} = {}) {
+  constructor(width = 0, height = 0, {x = 0, y = 0, color = 'rgba(0, 0, 0, 1)'} = {}) {
     this.x = x
     this.y = y
     this.width = width
