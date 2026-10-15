@@ -1,3 +1,4 @@
+import { BlockSprite } from "./BlockSprite.js";
 import { Sprite } from "./Sprite.js";
 import { TextSprite } from "./TextSprite.js";
 
@@ -151,6 +152,8 @@ export class SpriteRenderer {
 
     if (sprite instanceof TextSprite) {
       this.#drawText(sprite);
+    } else if (sprite instanceof BlockSprite) {
+      this.#drawBlock(sprite);
     } else if (sprite.region) {
       this.#drawRegion(sprite);
     } else {
@@ -204,5 +207,12 @@ export class SpriteRenderer {
     this.#context.fillStyle = textSprite.color;
     this.#context.textBaseline = "top";
     this.#context.fillText(textSprite.text, textSprite.x, textSprite.y)
+  }
+
+  #drawBlock(blockSprite) {
+    this.#context.beginPath()
+    this.#context.rect(blockSprite.x, blockSprite.y, blockSprite.width, blockSprite.height)
+    this.#context.fillStyle = blockSprite.color
+    this.#context.fill()
   }
 }
