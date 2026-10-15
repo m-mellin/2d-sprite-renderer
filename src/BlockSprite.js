@@ -89,7 +89,7 @@ export class BlockSprite {
   }
 
   /**
-   * Sets the height coordinate of the text.
+   * Sets the height coordinate of the block.
    *
    * @param {number} height The height in pixels.
    */
@@ -102,7 +102,7 @@ export class BlockSprite {
   }
 
   /**
-   * Returns the CSS color of the text.
+   * Returns the CSS color of the block.
    *
    * @returns {string} The CSS color.
    */
@@ -111,7 +111,7 @@ export class BlockSprite {
   }
 
   /**
-   * Sets the CSS color of the text.
+   * Sets the CSS color of the block.
    *
    * @param {string} color The CSS color.
    */
@@ -121,5 +121,14 @@ export class BlockSprite {
     }
 
     this.#color = color;
+  }
+
+  /**
+   * Returns whether the block is ready to draw. A block needs no image, so it always is.
+   *
+   * @returns {boolean} Always true.
+   */
+  get isLoaded() {
+    return true
   }
 }
