@@ -61,7 +61,7 @@ export class SpriteRenderer {
    * Adds a sprite to the renderer.
    * If the sprite is not loaded yet, a render is scheduled once it has loaded.
    *
-   * @param {Sprite|TextSprite} sprite - Sprite to add.
+   * @param {Sprite|TextSprite|BlockSprite} sprite - Sprite to add.
    */
   add(sprite) {
     this.#sprites.push(sprite);
