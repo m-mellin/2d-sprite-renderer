@@ -1,4 +1,4 @@
-import { SpriteRegion } from "./SpriteRegion.js";
+import { SpriteRegion } from './SpriteRegion.js'
 
 /**
  * Defines an animation for a sprite.
@@ -13,7 +13,7 @@ export class SpriteAnimation {
    * @type {SpriteRegion[]}
    * @private
    */
-  #frames;
+  #frames
 
   /**
    * The duration of each animation frame in miliseconds.
@@ -21,7 +21,7 @@ export class SpriteAnimation {
    * @type {number}
    * @private
    */
-  #frameDuration;
+  #frameDuration
 
   /**
    * The index of the current animation frame.
@@ -29,7 +29,7 @@ export class SpriteAnimation {
    * @type {number}
    * @private
    */
-  #currentFrame = 0;
+  #currentFrame = 0
 
   /**
    * The time elapsed since the current frame started in miliseconds.
@@ -37,7 +37,7 @@ export class SpriteAnimation {
    * @type {number}
    * @private
    */
-  #elapsedTime = 0;
+  #elapsedTime = 0
 
   /**
    * Creates a SpriteAnimation.
@@ -46,8 +46,8 @@ export class SpriteAnimation {
    * @param {number} frameDuration - Duration of each frame in miliseconds.
    */
   constructor(frames, frameDuration) {
-    this.#frames = frames;
-    this.#frameDuration = frameDuration;
+    this.#frames = frames
+    this.#frameDuration = frameDuration
   }
 
   /**
@@ -56,14 +56,14 @@ export class SpriteAnimation {
    * @param {number} deltaTime - Time elapsed since the last update in miliseconds.
    */
   update(deltaTime) {
-    this.#elapsedTime += deltaTime;
+    this.#elapsedTime += deltaTime
 
     if (this.#elapsedTime >= this.#frameDuration) {
-      this.#elapsedTime -= this.#frameDuration;
+      this.#elapsedTime -= this.#frameDuration
 
-      this.#currentFrame++;
+      this.#currentFrame++
 
-      this.#resetCurrentFrame();
+      this.#resetCurrentFrame()
     }
   }
 
@@ -74,7 +74,7 @@ export class SpriteAnimation {
    */
   #resetCurrentFrame() {
     if (this.#currentFrame >= this.#frames.length) {
-      this.#currentFrame = 0;
+      this.#currentFrame = 0
     }
   }
 
@@ -84,6 +84,6 @@ export class SpriteAnimation {
    * @returns {SpriteRegion} The current animation frame.
    */
   get region() {
-    return this.#frames[this.#currentFrame];
+    return this.#frames[this.#currentFrame]
   }
 }

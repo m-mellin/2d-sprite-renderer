@@ -1,4 +1,6 @@
-import { Sprite } from "./Sprite.js";
+import { BlockSprite } from './BlockSprite.js'
+import { Sprite } from './Sprite.js'
+import { TextSprite } from './TextSprite.js'
 
 /**
  * Renders sprites on an HTML canvas.
@@ -13,22 +15,22 @@ export class SpriteRenderer {
    * @type {HTMLCanvasElement}
    * @private
    */
-  #canvas;
+  #canvas
 
   /**
    * The 2D rendering context of the canvas.
    *
    * @type {CanvasRenderingContext2D}
    */
-  #context;
+  #context
 
   /**
    * The sprited managed by the renderer.
    *
-   * @type {Array<Sprite>}
+   * @type {Array<Sprite>|TextSprite}
    * @private
    */
-  #sprites = [];
+  #sprites = []
 
   /**
    * The ID of the scheduled animation frame.
@@ -36,7 +38,7 @@ export class SpriteRenderer {
    * @type {number|null}
    * @private
    */
-  #frame = null;
+  #frame = null
 
   /**
    * Creates a SpriteRenderer.
@@ -44,28 +46,28 @@ export class SpriteRenderer {
    * @param {HTMLCanvasElement} canvas - Canvas used to render sprites on.
    */
   constructor(canvas) {
-    this.#canvas = canvas;
-    this.#setContext();
+    this.#canvas = canvas
+    this.#setContext()
   }
 
   /**
    * Sets the 2D rendering context of the canvas.
    */
   #setContext() {
-    this.#context = this.#canvas.getContext("2d");
+    this.#context = this.#canvas.getContext('2d')
   }
 
   /**
    * Adds a sprite to the renderer.
    * If the sprite is not loaded yet, a render is scheduled once it has loaded.
    *
-   * @param {Sprite} sprite - Sprite to add.
+   * @param {Sprite|TextSprite|BlockSprite} sprite - Sprite to add.
    */
   add(sprite) {
-    this.#sprites.push(sprite);
+    this.#sprites.push(sprite)
 
     if (!sprite.isLoaded) {
-      this.#renderWhenLoaded(sprite);
+      this.#renderWhenLoaded(sprite)
     }
   }
 
@@ -74,13 +76,13 @@ export class SpriteRenderer {
    *
    * Does nothing if the sprite is not in the renderer.
    *
-   * @param {Sprite} sprite - Sprite to remove.
+   * @param {Sprite|TextSprite} sprite - Sprite to remove.
    */
   remove(sprite) {
-    const index = this.#sprites.indexOf(sprite);
+    const index = this.#sprites.indexOf(sprite)
 
     if (index !== -1) {
-      this.#sprites.splice(index, 1);
+      this.#sprites.splice(index, 1)
     }
   }
 
@@ -88,8 +90,8 @@ export class SpriteRenderer {
    * Removes all sprites from the renderer and clears the canvas.
    */
   clear() {
-    this.#sprites = [];
-    this.#clearCanvas();
+    this.#sprites = []
+    this.#clearCanvas()
   }
 
   /**
@@ -98,7 +100,7 @@ export class SpriteRenderer {
    * @private
    */
   #clearCanvas() {
-    this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height);
+    this.#context.clearRect(0, 0, this.#canvas.width, this.#canvas.height)
   }
 
   /**
@@ -110,7 +112,7 @@ export class SpriteRenderer {
     sprite
       .waitForLoad()
       .then(() => this.#scheduleRender())
-      .catch(() => {});
+      .catch(() => {})
   }
 
   /**
@@ -121,37 +123,41 @@ export class SpriteRenderer {
    * @private
    */
   #scheduleRender() {
-    if (this.#frame !== null) return;
+    if (this.#frame !== null) return
 
     this.#frame = requestAnimationFrame(() => {
-      this.#frame = null;
-      this.render();
-    });
+      this.#frame = null
+      this.render()
+    })
   }
 
   /**
    * Renders all loaded sprites on the canvas
    */
   render() {
-    this.#clearCanvas();
+    this.#clearCanvas()
 
     for (const sprite of this.#sprites) {
-      this.#drawSprite(sprite);
+      this.#drawSprite(sprite)
     }
   }
 
   /**
    * Draws a loaded sprite using either its whole image or a selected region.
    *
-   * @param {Sprite} sprite - Sprite to draw.
+   * @param {Sprite|TextSprite} sprite - Sprite to draw.
    */
   #drawSprite(sprite) {
-    if (!sprite.isLoaded) return;
+    if (!sprite.isLoaded) return
 
-    if (sprite.region) {
-      this.#drawRegion(sprite);
+    if (sprite instanceof TextSprite) {
+      this.#drawText(sprite)
+    } else if (sprite instanceof BlockSprite) {
+      this.#drawBlock(sprite)
+    } else if (sprite.region) {
+      this.#drawRegion(sprite)
     } else {
-      this.#drawWhole(sprite);
+      this.#drawWhole(sprite)
     }
   }
 
@@ -161,7 +167,7 @@ export class SpriteRenderer {
    * @param {Sprite} sprite - Sprite containing the image region to draw.
    */
   #drawRegion(sprite) {
-    const region = sprite.region;
+    const region = sprite.region
 
     this.#context.drawImage(
       sprite.image,
@@ -172,8 +178,8 @@ export class SpriteRenderer {
       sprite.x,
       sprite.y,
       sprite.width,
-      sprite.height,
-    );
+      sprite.height
+    )
   }
 
   /**
@@ -187,7 +193,36 @@ export class SpriteRenderer {
       sprite.x,
       sprite.y,
       sprite.width,
-      sprite.height,
-    );
+      sprite.height
+    )
+  }
+
+  /**
+   * Draws a text sprite on the canvas.
+   *
+   * @param {TextSprite} textSprite - Text sprite to draw.
+   */
+  #drawText(textSprite) {
+    this.#context.font = textSprite.font
+    this.#context.fillStyle = textSprite.color
+    this.#context.textBaseline = 'top'
+    this.#context.fillText(textSprite.text, textSprite.x, textSprite.y)
+  }
+
+  /**
+   * Draws a block sprite on the canvas.
+   *
+   * @param {BlockSprite} blockSprite - Block sprite to draw.
+   */
+  #drawBlock(blockSprite) {
+    this.#context.beginPath()
+    this.#context.rect(
+      blockSprite.x,
+      blockSprite.y,
+      blockSprite.width,
+      blockSprite.height
+    )
+    this.#context.fillStyle = blockSprite.color
+    this.#context.fill()
   }
 }

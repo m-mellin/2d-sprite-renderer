@@ -27,7 +27,7 @@ const createCanvas = () => {
 /**
  * Simulates the browser finishing loading an image.
  * This is needed because of the limitations of JSDOM.
- * 
+ *
  * @param {Sprite} sprite - The sprite which image should be marked as loaded.
  */
 const simulateImageLoad = (sprite) => {
@@ -45,7 +45,6 @@ let sourceCounter = 0
 const createUniqueSource = () => {
   return `/dir/image-${++sourceCounter}.png`
 }
-
 
 describe('Integration', () => {
   describe('Sprite + ImageAsset', () => {
@@ -76,14 +75,19 @@ describe('Integration', () => {
       const { canvas, context } = createCanvas()
       const renderer = new SpriteRenderer(canvas)
 
-      const sprite = new Sprite(createUniqueSource(), {x: 10, y: 10, width: 64, height: 64})
-      
+      const sprite = new Sprite(createUniqueSource(), {
+        x: 10,
+        y: 10,
+        width: 64,
+        height: 64
+      })
+
       expect(sprite.isLoaded).toBe(false)
 
       const loaded = sprite.waitForLoad()
       simulateImageLoad(sprite)
       await loaded
-      
+
       expect(sprite.isLoaded).toBe(true)
 
       renderer.add(sprite)
@@ -97,21 +101,27 @@ describe('Integration', () => {
         sprite.height
       )
     })
-    
+
     it('renders a real loaded Sprite using a real SpriteRegion', async () => {
       const { canvas, context } = createCanvas()
       const renderer = new SpriteRenderer(canvas)
 
-      const region = new SpriteRegion({x: 0, y: 0, width: 64, height: 64})
+      const region = new SpriteRegion({ x: 0, y: 0, width: 64, height: 64 })
 
-      const sprite = new Sprite(createUniqueSource(), {x: 10, y: 10, width: 64, height: 64, region})
-      
+      const sprite = new Sprite(createUniqueSource(), {
+        x: 10,
+        y: 10,
+        width: 64,
+        height: 64,
+        region
+      })
+
       expect(sprite.isLoaded).toBe(false)
 
       const loaded = sprite.waitForLoad()
       simulateImageLoad(sprite)
       await loaded
-      
+
       expect(sprite.isLoaded).toBe(true)
 
       renderer.add(sprite)
@@ -136,7 +146,12 @@ describe('Integration', () => {
       const { canvas, context } = createCanvas()
 
       const renderer = new SpriteRenderer(canvas)
-      const sprite = new Sprite(createUniqueSource(), {x: 10, y: 10, width: 64, height: 64})
+      const sprite = new Sprite(createUniqueSource(), {
+        x: 10,
+        y: 10,
+        width: 64,
+        height: 64
+      })
 
       const frame1 = new SpriteRegion({ x: 0, y: 0, width: 64, height: 64 })
       const frame2 = new SpriteRegion({ x: 64, y: 0, width: 64, height: 64 })
