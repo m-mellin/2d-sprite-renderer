@@ -55,11 +55,13 @@ export class BlockSprite {
    * @param {string} [options.color="rgba(0, 0, 0, 1)"] - The CSS color inside of the block.
    * @throws {TypeError} If a value has the wrong type.
    */
-  constructor(
+  constructor({
     width = 0,
     height = 0,
-    { x = 0, y = 0, color = 'rgba(0, 0, 0, 1)' } = {}
-  ) {
+    x = 0,
+    y = 0,
+    color = 'rgba(0, 0, 0, 1)'
+  } = {}) {
     this.x = x
     this.y = y
     this.width = width
@@ -130,6 +132,10 @@ export class BlockSprite {
       throw new TypeError('width must be a finite number')
     }
 
+    if (width < 0) {
+      throw new RangeError("width can't be negative")
+    }
+
     this.#width = width
   }
 
@@ -150,6 +156,10 @@ export class BlockSprite {
   set height(height) {
     if (!Number.isFinite(height)) {
       throw new TypeError('height must be a finite number')
+    }
+
+    if (height < 0) {
+      throw new RangeError("height can't be negative")
     }
 
     this.#height = height

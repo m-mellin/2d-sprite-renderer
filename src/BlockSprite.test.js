@@ -14,7 +14,7 @@ describe('BlockSprite', () => {
     })
 
     it('creates a BlockSprite with specified position', () => {
-      const block = new BlockSprite({x: 20, y: 40 })
+      const block = new BlockSprite({ x: 20, y: 40 })
 
       expect(block.x).toBe(20)
       expect(block.y).toBe(40)
