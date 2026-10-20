@@ -4,10 +4,44 @@
  * A block needs no image, so it can be drawn as soon as it is added to a renderer.
  */
 export class BlockSprite {
+  /**
+   * The X coordinate of the block in pixels.
+   *
+   * @type {number}
+   * @private
+   */
   #x
+
+  /**
+   * The Y coordinate of the top of the block in pixels.
+   *
+   * @type {number}
+   * @private
+   */
   #y
-  #width
+
+  /**
+   * The width of the block in pixels.
+   *
+   * @type {number}
+   * @private
+   */
+  #width;
+
+  /**
+   * The height of the block in pixels.
+   *
+   * @type {number}
+   * @private
+   */
   #height
+
+  /**
+   * The CSS color used to inside the block, for example rgba(0, 0, 0, 1)"
+   *
+   * @type {string}
+   * @private
+   */
   #color
 
   /**
@@ -18,7 +52,7 @@ export class BlockSprite {
    * @param {object} [options] - The block options.
    * @param {number} [options.x=0] - The X coordinate in pixels.
    * @param {number} [options.y=0] - The Y coordinate in pixels.
-   * @param {string} [options.color="rgba(0, 0, 0, 0)"] - The CSS color of the block.
+   * @param {string} [options.color="rgba(0, 0, 0, 0)"] - The CSS color inside of the block.
    * @throws {TypeError} If a value has the wrong type.
    */
   constructor(width = 0, height = 0, {x = 0, y = 0, color = 'rgba(0, 0, 0, 1)'} = {}) {
