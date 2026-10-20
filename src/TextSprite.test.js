@@ -2,7 +2,7 @@ import { describe, it, expect, beforeEach, vi } from 'vitest'
 
 /**
  * JSDOM has no real canvas, so measuring text is mocked before TextSprite is imported.
- * 
+ *
  * Every character is as wide as the font size, and the text is as tall as the font size.
  */
 vi.hoisted(() => {

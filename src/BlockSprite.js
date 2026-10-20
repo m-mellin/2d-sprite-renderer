@@ -46,7 +46,7 @@ export class BlockSprite {
 
   /**
    * Creates a BlockSprite.
-   * 
+   *
    * @param {object} [options] - The block options.
    * @param {number} [options.width=0] - The width of the block in pixels.
    * @param {number} [options.height=0] - The height of the block in pixels.
