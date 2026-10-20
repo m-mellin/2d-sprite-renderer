@@ -128,10 +128,78 @@ method, while manual testing verified the expected visual result.
 | Renders a real loaded `Sprite` using a real `SpriteRegion`. | Created a real `Sprite` with a real `SpriteRegion`, loaded it, rendered, checked `drawImage` args (9-arg form). | Integration | ✅ Passed |
 | Draws the frame matching the animation. | Created a real `Sprite`, two `SpriteRegion` frames, and a `SpriteAnimation`; advanced it, assigned `animation.region` to `sprite.region`, rendered twice, checked `drawImage` args per frame. | Integration | ✅ Passed |
 
+### TextSprite.test.js
+
+*Added in version 1.1.0.* Text measuring uses a mocked canvas context, where every character is as wide as the font size.
+
+| What was tested | How it was tested | Test Type | Result |
+| ---------------- | ------------------ | --------- | ------- |
+| Creates a TextSprite with default values. | Created a `TextSprite` with only a text, checked `text`, `x`, `y`, `font` (`'16px sans-serif'`) and `color` (`'#000'`). | Unit | ✅ Passed |
+| Creates a TextSprite with specified position. | Created a `TextSprite` with `x`/`y` options, checked values. | Unit | ✅ Passed |
+| Creates a TextSprite with specified font. | Created a `TextSprite` with a `font` option, checked `font`. | Unit | ✅ Passed |
+| Creates a TextSprite with specified color. | Created a `TextSprite` with a `color` option, checked `color`. | Unit | ✅ Passed |
+| Get `x` returns correct position. | Created a `TextSprite` with `x` set, read `x`. | Unit | ✅ Passed |
+| Get `y` returns correct position. | Created a `TextSprite` with `y` set, read `y`. | Unit | ✅ Passed |
+| Set `x` assigns correct position. | Set `x` on a `TextSprite`, read it back. | Unit | ✅ Passed |
+| Set `y` assigns correct position. | Set `y` on a `TextSprite`, read it back. | Unit | ✅ Passed |
+| Knows its width as soon as it is created. | Created `'test'` in `10px`, checked that `width` is 40 without changing anything. | Unit | ✅ Passed |
+| Knows its height as soon as it is created. | Created `'test'` in `10px`, checked that `height` is 10. | Unit | ✅ Passed |
+| Measures again when the text changes. | Changed `text` to `'longer text'`, checked that `width` is 110. | Unit | ✅ Passed |
+| Measures again when the font changes. | Changed `font` to `20px`, checked that `width` is 80 and `height` is 20. | Unit | ✅ Passed |
+| Has no width for an empty text. | Changed `text` to `''`, checked that `width` is 0. | Unit | ✅ Passed |
+| `width` cannot be set from outside. | Assigned `width`, checked that it throws `TypeError` (read-only). | Unit | ✅ Passed |
+| `height` cannot be set from outside. | Assigned `height`, checked that it throws `TypeError` (read-only). | Unit | ✅ Passed |
+| Throws `TypeError` when the text is not a string. | Created a `TextSprite` with `42`, `null` and `undefined` as text. | Unit | ✅ Passed |
+| Throws `TypeError` when `x` is not a finite number. | Set `x` to `NaN`, `Infinity` and `'10'`. | Unit | ✅ Passed |
+| Throws `TypeError` when `y` is not a finite number. | Set `y` to `NaN`, `Infinity` and `'10'`. | Unit | ✅ Passed |
+| Throws `TypeError` when the font is not a string. | Set `font` to `16` and `null`. | Unit | ✅ Passed |
+| Throws `TypeError` when the color is not a string. | Set `color` to `0` and `null`. | Unit | ✅ Passed |
+| Allows zero as position. | Set `x` and `y` to `0`, checked values. | Unit | ✅ Passed |
+| Allows position to be negative. | Set `x`/`y` to negative values, checked values. | Unit | ✅ Passed |
+| `isLoaded` is always `true`. | Created a `TextSprite`, checked `isLoaded`. | Unit | ✅ Passed |
+
+### BlockSprite.test.js
+
+*Added in version 1.1.0.*
+
+| What was tested | How it was tested | Test Type | Result |
+| ---------------- | ------------------ | --------- | ------- |
+| Creates a BlockSprite with default values. | Created a `BlockSprite` with no options, checked `width`, `height`, `x`, `y` (all `0`) and `color` (`'rgba(0, 0, 0, 1)'`). | Unit | ✅ Passed |
+| Creates a BlockSprite with specified position. | Created a `BlockSprite` with `x`/`y` options, checked values. | Unit | ✅ Passed |
+| Creates a BlockSprite with specified size. | Created a `BlockSprite` with `width`/`height` options, checked values. | Unit | ✅ Passed |
+| Get `x` returns correct position. | Created a `BlockSprite` with `x` set, read `x`. | Unit | ✅ Passed |
+| Get `y` returns correct position. | Created a `BlockSprite` with `y` set, read `y`. | Unit | ✅ Passed |
+| Set `x` assigns correct position. | Set `x` on a `BlockSprite`, read it back. | Unit | ✅ Passed |
+| Set `y` assigns correct position. | Set `y` on a `BlockSprite`, read it back. | Unit | ✅ Passed |
+| Get `width` returns correct size. | Created a `BlockSprite` with `width` set, read `width`. | Unit | ✅ Passed |
+| Get `height` returns correct size. | Created a `BlockSprite` with `height` set, read `height`. | Unit | ✅ Passed |
+| Set `width` assigns correct size. | Set `width` on a `BlockSprite`, read it back. | Unit | ✅ Passed |
+| Set `height` assigns correct size. | Set `height` on a `BlockSprite`, read it back. | Unit | ✅ Passed |
+| Throws `RangeError` when `width` is negative. | Set `width` to `-5`. | Unit | ✅ Passed |
+| Throws `RangeError` when `height` is negative. | Set `height` to `-5`. | Unit | ✅ Passed |
+| Throws `TypeError` when `width` is not a finite number. | Set `width` to `'test'`, `NaN`, and `Infinity`. | Unit | ✅ Passed |
+| Throws `TypeError` when `height` is not a finite number. | Set `height` to `'test'`, `NaN`, and `Infinity`. | Unit | ✅ Passed |
+| Throws `TypeError` when `x` is not a finite number. | Set `x` to `NaN`, `'test'`, and `Infinity`. | Unit | ✅ Passed |
+| Throws `TypeError` when `y` is not a finite number. | Set `y` to `NaN`, `'test'`, and `Infinity`. | Unit | ✅ Passed |
+| Allows zero as position and size. | Set `x`, `y`, `width`, `height` to `0`, checked values. | Unit | ✅ Passed |
+| Allows position to be negative. | Set `x`/`y` to negative values, checked values. | Unit | ✅ Passed |
+| `isLoaded` is always `true`. | Created a `BlockSprite`, checked `isLoaded`. | Unit | ✅ Passed |
+
 ## Manual Test Result
 
 | What was tested | How it was tested | Test Type | Result |
 | ---------------- | ------------------ | --------- | ------- |
 | Visual rendering, movement, and animation switching in the browser (`app.js`). | Ran the app, pressed arrow keys, observed movement and animations. | Manual | ✅ Passed |
-| Using the published module in a separate project. | Created a new project, ran `npm install 2d-sprite-renderer` and imported the classes in VS Code. | Manual | ❌ Failed, see issue #1|
+| Using the published module in a separate project. | Created a new project, ran `npm install 2d-sprite-renderer` and imported the classes in VS Code. | Manual | ❌ Failed, see issue #1 |
 | Using the published module again after the fix (version 1.0.5). | Ran `npm i 2d-sprite-renderer@latest` in the same project and restarted the TS server. | Manual | ✅ Passed |
+| Centring a `TextSprite` whose text is set after it is created. | In Checkpoint Twentyone, created a `TextSprite` with an empty text, set the text to `'DAY 1'` and centred it with `width`. | Manual | ❌ Failed: the text started at the middle of the screen, because the size was only measured in the constructor. Fixed by measuring again in `set text` and `set font`. |
+| Centring a `TextSprite` after the fix. | Repeated the test above with the fixed version. | Manual | ✅ Passed |
+| Drawing and fading a `BlockSprite`. | In Checkpoint Twentyone, covered the game with a `BlockSprite` and changed the alpha in its `rgba` colour every frame. | Manual | ✅ Passed |
+
+## Lack of tests
+
+Because of limited time, `TextSprite` and `BlockSprite` are only covered by unit tests of the classes
+themselves. There are no automated tests yet that check how `SpriteRenderer` draws them, neither in
+`SpriteRenderer.test.js` nor in `integration.test.js`. Drawing text and blocks, their order and fading a
+`BlockSprite` were instead verified manually in the application Checkpoint Twentyone (see
+*Manual Test Result*). Automated tests for drawing them are planned for a later release.
