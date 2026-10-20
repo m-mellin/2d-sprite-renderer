@@ -52,7 +52,7 @@ export class BlockSprite {
    * @param {object} [options] - The block options.
    * @param {number} [options.x=0] - The X coordinate in pixels.
    * @param {number} [options.y=0] - The Y coordinate in pixels.
-   * @param {string} [options.color="rgba(0, 0, 0, 0)"] - The CSS color inside of the block.
+   * @param {string} [options.color="rgba(0, 0, 0, 1)"] - The CSS color inside of the block.
    * @throws {TypeError} If a value has the wrong type.
    */
   constructor(
