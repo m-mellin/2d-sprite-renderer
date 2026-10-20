@@ -26,7 +26,7 @@ export class BlockSprite {
    * @type {number}
    * @private
    */
-  #width;
+  #width
 
   /**
    * The height of the block in pixels.
@@ -55,7 +55,11 @@ export class BlockSprite {
    * @param {string} [options.color="rgba(0, 0, 0, 0)"] - The CSS color inside of the block.
    * @throws {TypeError} If a value has the wrong type.
    */
-  constructor(width = 0, height = 0, {x = 0, y = 0, color = 'rgba(0, 0, 0, 1)'} = {}) {
+  constructor(
+    width = 0,
+    height = 0,
+    { x = 0, y = 0, color = 'rgba(0, 0, 0, 1)' } = {}
+  ) {
     this.x = x
     this.y = y
     this.width = width
@@ -69,7 +73,7 @@ export class BlockSprite {
    * @returns {number} The X coordinate in pixels.
    */
   get x() {
-    return this.#x;
+    return this.#x
   }
 
   /**
@@ -79,10 +83,10 @@ export class BlockSprite {
    */
   set x(x) {
     if (!Number.isFinite(x)) {
-      throw new TypeError("x must be a finite number");
+      throw new TypeError('x must be a finite number')
     }
 
-    this.#x = x;
+    this.#x = x
   }
 
   /**
@@ -91,7 +95,7 @@ export class BlockSprite {
    * @returns {number} The Y coordinate in pixels.
    */
   get y() {
-    return this.#y;
+    return this.#y
   }
 
   /**
@@ -101,10 +105,10 @@ export class BlockSprite {
    */
   set y(y) {
     if (!Number.isFinite(y)) {
-      throw new TypeError("y must be a finite number");
+      throw new TypeError('y must be a finite number')
     }
 
-    this.#y = y;
+    this.#y = y
   }
 
   /**
@@ -113,7 +117,7 @@ export class BlockSprite {
    * @returns {number} The width in pixels.
    */
   get width() {
-    return this.#width;
+    return this.#width
   }
 
   /**
@@ -123,10 +127,10 @@ export class BlockSprite {
    */
   set width(width) {
     if (!Number.isFinite(width)) {
-      throw new TypeError("width must be a finite number");
+      throw new TypeError('width must be a finite number')
     }
 
-    this.#width = width;
+    this.#width = width
   }
 
   /**
@@ -135,7 +139,7 @@ export class BlockSprite {
    * @returns {number} The height in pixels.
    */
   get height() {
-    return this.#height;
+    return this.#height
   }
 
   /**
@@ -145,10 +149,10 @@ export class BlockSprite {
    */
   set height(height) {
     if (!Number.isFinite(height)) {
-      throw new TypeError("height must be a finite number");
+      throw new TypeError('height must be a finite number')
     }
 
-    this.#height = height;
+    this.#height = height
   }
 
   /**
@@ -157,7 +161,7 @@ export class BlockSprite {
    * @returns {string} The CSS color.
    */
   get color() {
-    return this.#color;
+    return this.#color
   }
 
   /**
@@ -166,11 +170,11 @@ export class BlockSprite {
    * @param {string} color The CSS color.
    */
   set color(color) {
-    if (typeof color !== "string") {
-      throw new TypeError("color must be a string");
+    if (typeof color !== 'string') {
+      throw new TypeError('color must be a string')
     }
 
-    this.#color = color;
+    this.#color = color
   }
 
   /**

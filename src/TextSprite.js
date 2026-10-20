@@ -54,13 +54,13 @@ export class TextSprite {
    */
   constructor(
     text,
-    { x = 0, y = 0, font = "16px sans-serif", color = "#000" } = {},
+    { x = 0, y = 0, font = '16px sans-serif', color = '#000' } = {}
   ) {
-    this.text = text;
-    this.x = x;
-    this.y = y;
-    this.font = font;
-    this.color = color;
+    this.text = text
+    this.x = x
+    this.y = y
+    this.font = font
+    this.color = color
   }
 
   /**
@@ -69,7 +69,7 @@ export class TextSprite {
    * @returns {string} The text to draw.
    */
   get text() {
-    return this.#text;
+    return this.#text
   }
 
   /**
@@ -78,11 +78,11 @@ export class TextSprite {
    * @param {string} text The text to draw.
    */
   set text(text) {
-    if (typeof text !== "string") {
-      throw new TypeError("text must be a string");
+    if (typeof text !== 'string') {
+      throw new TypeError('text must be a string')
     }
 
-    this.#text = text;
+    this.#text = text
   }
 
   /**
@@ -91,7 +91,7 @@ export class TextSprite {
    * @returns {number} The X coordinate in pixels.
    */
   get x() {
-    return this.#x;
+    return this.#x
   }
 
   /**
@@ -101,10 +101,10 @@ export class TextSprite {
    */
   set x(x) {
     if (!Number.isFinite(x)) {
-      throw new TypeError("x must be a finite number");
+      throw new TypeError('x must be a finite number')
     }
 
-    this.#x = x;
+    this.#x = x
   }
 
   /**
@@ -113,7 +113,7 @@ export class TextSprite {
    * @returns {number} The Y coordinate in pixels.
    */
   get y() {
-    return this.#y;
+    return this.#y
   }
 
   /**
@@ -123,10 +123,10 @@ export class TextSprite {
    */
   set y(y) {
     if (!Number.isFinite(y)) {
-      throw new TypeError("y must be a finite number");
+      throw new TypeError('y must be a finite number')
     }
 
-    this.#y = y;
+    this.#y = y
   }
 
   /**
@@ -135,7 +135,7 @@ export class TextSprite {
    * @returns {string} The CSS font.
    */
   get font() {
-    return this.#font;
+    return this.#font
   }
 
   /**
@@ -144,11 +144,11 @@ export class TextSprite {
    * @param {string} font The CSS font, for example "16px monospace".
    */
   set font(font) {
-    if (typeof font !== "string") {
-      throw new TypeError("font must be a string");
+    if (typeof font !== 'string') {
+      throw new TypeError('font must be a string')
     }
 
-    this.#font = font;
+    this.#font = font
   }
 
   /**
@@ -157,7 +157,7 @@ export class TextSprite {
    * @returns {string} The CSS color.
    */
   get color() {
-    return this.#color;
+    return this.#color
   }
 
   /**
@@ -166,11 +166,11 @@ export class TextSprite {
    * @param {string} color The CSS color.
    */
   set color(color) {
-    if (typeof color !== "string") {
-      throw new TypeError("color must be a string");
+    if (typeof color !== 'string') {
+      throw new TypeError('color must be a string')
     }
 
-    this.#color = color;
+    this.#color = color
   }
 
   /**
@@ -179,6 +179,6 @@ export class TextSprite {
    * @returns {boolean} Always true.
    */
   get isLoaded() {
-    return true;
+    return true
   }
 }
