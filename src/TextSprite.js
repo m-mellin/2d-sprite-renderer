@@ -82,7 +82,6 @@ export class TextSprite {
     this.y = y
     this.font = font
     this.color = color
-    this.#measureTextAndSetSize()
   }
 
   /**
@@ -190,6 +189,7 @@ export class TextSprite {
     }
 
     this.#font = font
+    this.#measureTextAndSetSize()
   }
 
   /**
