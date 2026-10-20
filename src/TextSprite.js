@@ -27,6 +27,20 @@ export class TextSprite {
   #y
 
   /**
+   * The width of the text, in pixels.
+   *
+   * @type {number}
+   */
+  #width = 0
+
+  /**
+   * The height of the text, in pixels.
+   *
+   * @type {number}
+   */
+  #height = 0
+
+  /**
    * The CSS font used to draw the text, for example "16px sans-serif".
    *
    * @type {string}
@@ -41,6 +55,13 @@ export class TextSprite {
    * @private
    */
   #color
+
+  /**
+   * A canvas context shared by every text line, used only for measuring text.
+   *
+   * @type {CanvasRenderingContext2D | null}
+   */
+  static #context = document.createElement('canvas').getContext('2d')
 
   /**
    * Creates a TextSprite.
@@ -61,6 +82,7 @@ export class TextSprite {
     this.y = y
     this.font = font
     this.color = color
+    this.#measureTextAndSetSize()
   }
 
   /**
@@ -130,6 +152,24 @@ export class TextSprite {
   }
 
   /**
+   * Returns the width of the text.
+   *
+   * @returns {number} The width in pixels.
+   */
+  get width() {
+    return this.#width
+  }
+
+  /**
+   * Returns the height of the text.
+   *
+   * @returns {number} The height in pixels.
+   */
+  get height() {
+    return this.#height
+  }
+
+  /**
    * Returns the CSS font of the text.
    *
    * @returns {string} The CSS font.
@@ -180,5 +220,26 @@ export class TextSprite {
    */
   get isLoaded() {
     return true
+  }
+
+  /**
+   * Measures the text with the sprite's font and stores its width and height.
+   *
+   * @throws {Error} If the browser cannot create a context for measuring text.
+   */
+  #measureTextAndSetSize() {
+    const context = TextSprite.#context
+
+    if (context === null) {
+      throw new Error('Could not create a 2D context for measuring text')
+    }
+
+    context.font = this.#font
+    const metrics = context.measureText(this.#text)
+
+    this.#width = Math.ceil(metrics.width)
+    this.#height = Math.ceil(
+      metrics.fontBoundingBoxAscent + metrics.fontBoundingBoxDescent
+    )
   }
 }
