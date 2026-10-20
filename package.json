@@ -21,6 +21,8 @@
   "scripts": {
     "test": "vitest",
     "test:run": "vitest run",
+    "test:unit": "vitest run src",
+    "test:integration": "vitest run test",
     "test:match": "vitest run -t",
     "lint": "eslint ./src --cache",
     "lint:fix": "eslint ./src --cache --fix",
