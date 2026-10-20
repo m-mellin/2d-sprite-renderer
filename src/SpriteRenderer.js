@@ -143,9 +143,11 @@ export class SpriteRenderer {
   }
 
   /**
-   * Draws a loaded sprite using either its whole image or a selected region.
+   * Draws a sprite that has finished loading. Text is drawn as text, a block as a filled rectangle,
+   * and an image sprite with either its whole image or its selected region.
+   * Does nothing if the sprite has not loaded yet.
    *
-   * @param {Sprite|TextSprite} sprite - Sprite to draw.
+   * @param {Sprite | TextSprite | BlockSprite} sprite - The sprite to draw.
    */
   #drawSprite(sprite) {
     if (!sprite.isLoaded) return
