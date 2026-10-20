@@ -105,6 +105,7 @@ export class TextSprite {
     }
 
     this.#text = text
+    this.#measureTextAndSetSize()
   }
 
   /**
