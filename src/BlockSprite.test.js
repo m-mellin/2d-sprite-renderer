@@ -137,9 +137,11 @@ describe('BlockSprite', () => {
       expect(block.x).toBe(-10)
       expect(block.y).toBe(-5)
     })
+  })
 
-    it('should always be ready to draw', () => {
-      expect(block.isLoaded).toBeTruthy()
+  describe('isLoaded', () => {
+    it('is always ready to draw, since text needs no image', () => {
+      expect(new BlockSprite().isLoaded).toBeTruthy()
     })
   })
 })

@@ -71,11 +71,11 @@ export class TextSprite {
    * @param {number} [options.x=0] - The X coordinate in pixels.
    * @param {number} [options.y=0] - The Y coordinate of the top of the text in pixels.
    * @param {string} [options.font="16px sans-serif"] - The CSS font.
-   * @param {string} [options.color="#000"] - The CSS color.
+   * @param {string} [options.color="rbgba(0, 0, 0, 1)"] - The CSS color.
    */
   constructor(
     text,
-    { x = 0, y = 0, font = '16px sans-serif', color = '#000' } = {}
+    { x = 0, y = 0, font = '16px sans-serif', color = 'rgba(0, 0, 0, 1)' } = {}
   ) {
     this.text = text
     this.x = x
