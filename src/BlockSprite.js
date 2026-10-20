@@ -46,14 +46,13 @@ export class BlockSprite {
 
   /**
    * Creates a BlockSprite.
-   *
-   * @param {number} [width=0] - The width of the block in pixels.
-   * @param {number} [height=0] - The height of the block in pixels.
+   * 
    * @param {object} [options] - The block options.
+   * @param {number} [options.width=0] - The width of the block in pixels.
+   * @param {number} [options.height=0] - The height of the block in pixels.
    * @param {number} [options.x=0] - The X coordinate in pixels.
    * @param {number} [options.y=0] - The Y coordinate in pixels.
    * @param {string} [options.color="rgba(0, 0, 0, 1)"] - The CSS color inside of the block.
-   * @throws {TypeError} If a value has the wrong type.
    */
   constructor({
     width = 0,
@@ -82,6 +81,7 @@ export class BlockSprite {
    * Sets the X coordinate of the block.
    *
    * @param {number} x The X coordinate in pixels.
+   * @throws {TypeError} If x is not finite.
    */
   set x(x) {
     if (!Number.isFinite(x)) {
@@ -104,6 +104,7 @@ export class BlockSprite {
    * Sets the Y coordinate of the block.
    *
    * @param {number} y The Y coordinate in pixels.
+   * @throws {TypeError} If y is not finite.
    */
   set y(y) {
     if (!Number.isFinite(y)) {
@@ -126,6 +127,8 @@ export class BlockSprite {
    * Sets the width of the block.
    *
    * @param {number} width The width in pixels.
+   * @throws {TypeError} If width is not finite.
+   * @throws {RangeError} If width is a negative number.
    */
   set width(width) {
     if (!Number.isFinite(width)) {
@@ -152,6 +155,8 @@ export class BlockSprite {
    * Sets the height coordinate of the block.
    *
    * @param {number} height The height in pixels.
+   * @throws {TypeError} If height is not finite.
+   * @throws {RangeError} If height is a negative number.
    */
   set height(height) {
     if (!Number.isFinite(height)) {
@@ -178,6 +183,7 @@ export class BlockSprite {
    * Sets the CSS color of the block.
    *
    * @param {string} color The CSS color.
+   * @throws {TypeError} If color is not a string.
    */
   set color(color) {
     if (typeof color !== 'string') {
