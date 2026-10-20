@@ -97,6 +97,7 @@ export class TextSprite {
    * Sets the text.
    *
    * @param {string} text The text to draw.
+   * @throws {TypeError} If text is not a sprite.
    */
   set text(text) {
     if (typeof text !== 'string') {
@@ -120,6 +121,7 @@ export class TextSprite {
    * Sets the X coordinate of the text.
    *
    * @param {number} x The X coordinate in pixels.
+   * @throws {TypeError} If x is not finite.
    */
   set x(x) {
     if (!Number.isFinite(x)) {
@@ -142,6 +144,7 @@ export class TextSprite {
    * Sets the Y coordinate of the text.
    *
    * @param {number} y The Y coordinate in pixels.
+   * @throws {TypeError} If y is not finite.
    */
   set y(y) {
     if (!Number.isFinite(y)) {
@@ -182,6 +185,7 @@ export class TextSprite {
    * Sets the CSS font of the text.
    *
    * @param {string} font The CSS font, for example "16px monospace".
+   * @throws {TypeError} If font is not a string.
    */
   set font(font) {
     if (typeof font !== 'string') {
@@ -205,6 +209,7 @@ export class TextSprite {
    * Sets the CSS color of the text.
    *
    * @param {string} color The CSS color.
+   * @throws {TypeError} If color is not a string.
    */
   set color(color) {
     if (typeof color !== 'string') {
